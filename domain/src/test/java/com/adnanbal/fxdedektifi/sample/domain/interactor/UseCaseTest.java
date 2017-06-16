@@ -15,6 +15,9 @@
  */
 package com.adnanbal.fxdedektifi.sample.domain.interactor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+
 import com.adnanbal.fxdedektifi.sample.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.sample.domain.executor.ThreadExecutor;
 import io.reactivex.Observable;
@@ -27,9 +30,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UseCaseTest {

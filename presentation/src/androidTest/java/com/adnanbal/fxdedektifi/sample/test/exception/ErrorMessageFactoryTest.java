@@ -15,14 +15,14 @@
  */
 package com.adnanbal.fxdedektifi.sample.test.exception;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import android.test.AndroidTestCase;
 import com.adnanbal.fxdedektifi.sample.data.exception.NetworkConnectionException;
 import com.adnanbal.fxdedektifi.sample.data.exception.UserNotFoundException;
 import com.adnanbal.fxdedektifi.sample.presentation.exception.ErrorMessageFactory;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ErrorMessageFactoryTest extends AndroidTestCase {
 

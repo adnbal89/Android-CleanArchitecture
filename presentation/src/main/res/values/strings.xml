@@ -22,6 +22,50 @@
 
   <string name="login">LogIn</string>
 
-  <string name="auth0_client_id">WcUEJsWpXMI0qwJ5DTXGER7HBNDemgUo</string>
+  <string name="auth0_client_id">HDCACO0SodnDkLKJtEFL9Ya_Cj5gYfVA</string>
   <string name="auth0_domain">adnbal89.eu.auth0.com</string>
+
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="title_activity_personal_positions">PersonalPositionsActivity</string>
+
+  <string name="title_section1">Section 1</string>
+  <string name="title_section2">Section 2</string>
+  <string name="title_section3">Section 3</string>
+
+  <string name="navigation_drawer_open">Open navigation drawer</string>
+  <string name="navigation_drawer_close">Close navigation drawer</string>
+
+  <string name="action_example">Example action</string>
+
+  <string name="action_settings">Settings</string>
+
+
+  //Bottom Navigation Bar
+
+  <string name="menu">Menu</string>
+  <string name="personal_positions">Positions</string>
+  <string name="signals">Signals</string>
+  <string name="profit">Profit</string>
+  <string name="signal_history">History</string>
+  <!-- TODO: Remove or change this placeholder text -->
+
+  //Fragment Names
+  <string name="personal_positions_fragment">Personal Positions Fragment</string>
+  <string name="signals_fragment">Signals Fragment</string>
+  <string name="profit_fragment">Profit Fragment</string>
+  <string name="signal_history_fragment">History Fragment</string>
+
+  //Toolbar
+  <string name="title_personal_positions">Personal Positions</string>
+
+  //Position
+  <string name="position_buy">Buy</string>
+  <string name="position_sell">Sell</string>
+
+  //Button text
+  <string name="btn_text_personal_positions">Personal Positions</string>
+
+
+
 </resources>

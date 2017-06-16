@@ -15,18 +15,18 @@
  */
 package com.adnanbal.fxdedektifi.sample.test.mapper;
 
-import com.adnanbal.fxdedektifi.sample.presentation.model.UserModel;
-import com.adnanbal.fxdedektifi.sample.domain.User;
-import com.adnanbal.fxdedektifi.sample.presentation.mapper.UserModelDataMapper;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import junit.framework.TestCase;
-
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
+
+import com.adnanbal.fxdedektifi.sample.domain.model.User;
+import com.adnanbal.fxdedektifi.sample.presentation.mapper.UserModelDataMapper;
+import com.adnanbal.fxdedektifi.sample.presentation.model.UserModel;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import junit.framework.TestCase;
 
 public class UserModelDataMapperTest extends TestCase {
 

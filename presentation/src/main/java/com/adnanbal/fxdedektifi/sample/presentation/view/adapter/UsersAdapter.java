@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.adnanbal.fxdedektifi.sample.presentation.model.UserModel;
 import java.util.Collection;
@@ -81,7 +81,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
   }
 
   static class UserViewHolder extends RecyclerView.ViewHolder {
-    @Bind(com.adnanbal.fxdedektifi.sample.presentation.R.id.title) TextView textViewTitle;
+    @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.title) TextView textViewTitle;
 
     UserViewHolder(View itemView) {
       super(itemView);

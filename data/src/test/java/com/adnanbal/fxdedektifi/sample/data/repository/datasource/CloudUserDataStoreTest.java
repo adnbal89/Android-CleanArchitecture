@@ -15,6 +15,9 @@
  */
 package com.adnanbal.fxdedektifi.sample.data.repository.datasource;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+
 import com.adnanbal.fxdedektifi.sample.data.cache.UserCache;
 import com.adnanbal.fxdedektifi.sample.data.entity.UserEntity;
 import com.adnanbal.fxdedektifi.sample.data.net.RestApi;
@@ -24,9 +27,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CloudUserDataStoreTest {

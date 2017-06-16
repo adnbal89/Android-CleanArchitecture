@@ -1,10 +1,12 @@
 package com.adnanbal.fxdedektifi.sample.presentation.view.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import com.adnanbal.fxdedektifi.sample.presentation.AndroidApplication;
+import com.adnanbal.fxdedektifi.sample.presentation.R;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.components.ApplicationComponent;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.modules.ActivityModule;
 import com.adnanbal.fxdedektifi.sample.presentation.navigation.Navigator;
@@ -13,13 +15,15 @@ import javax.inject.Inject;
 /**
  * Base {@link android.app.Activity} class for every Activity in this application.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
-  @Inject Navigator navigator;
+  @Inject
+  Navigator navigator;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     this.getApplicationComponent().inject(this);
   }
 
@@ -51,5 +55,20 @@ public abstract class BaseActivity extends Activity {
    */
   protected ActivityModule getActivityModule() {
     return new ActivityModule(this);
+  }
+
+  protected void setUpToolbar() {
+    // Find the toolbar view inside the activity layout
+    Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
+
+    // Sets the Toolbar to act as the ActionBar for this Activity window.
+    // Make sure the toolbar exists in the activity and is not null
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+  }
+
+  protected  void setUpBottombar(){
+
   }
 }

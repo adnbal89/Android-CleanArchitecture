@@ -28,7 +28,8 @@ public class AndroidApplication extends Application {
 
   private ApplicationComponent applicationComponent;
 
-  @Override public void onCreate() {
+  @Override
+  public void onCreate() {
     super.onCreate();
     this.initializeInjector();
     this.initializeLeakDetection();

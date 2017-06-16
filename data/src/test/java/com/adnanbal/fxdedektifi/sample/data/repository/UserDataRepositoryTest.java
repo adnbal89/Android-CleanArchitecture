@@ -15,11 +15,15 @@
  */
 package com.adnanbal.fxdedektifi.sample.data.repository;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.verify;
+
 import com.adnanbal.fxdedektifi.sample.data.entity.UserEntity;
 import com.adnanbal.fxdedektifi.sample.data.entity.mapper.UserEntityDataMapper;
-import com.adnanbal.fxdedektifi.sample.data.repository.datasource.UserDataStoreFactory;
-import com.adnanbal.fxdedektifi.sample.domain.User;
 import com.adnanbal.fxdedektifi.sample.data.repository.datasource.UserDataStore;
+import com.adnanbal.fxdedektifi.sample.data.repository.datasource.UserDataStoreFactory;
+import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import io.reactivex.Observable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +32,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserDataRepositoryTest {

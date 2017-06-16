@@ -15,6 +15,8 @@
  */
 package com.adnanbal.fxdedektifi.sample.data.repository.datasource;
 
+import static org.mockito.Mockito.verify;
+
 import com.adnanbal.fxdedektifi.sample.data.cache.UserCache;
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,8 +25,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DiskUserDataStoreTest {

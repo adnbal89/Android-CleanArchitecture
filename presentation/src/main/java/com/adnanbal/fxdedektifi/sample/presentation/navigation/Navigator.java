@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,10 +17,12 @@ package com.adnanbal.fxdedektifi.sample.presentation.navigation;
 
 import android.content.Context;
 import android.content.Intent;
+import com.adnanbal.fxdedektifi.sample.presentation.view.activity.LoginActivity;
 import com.adnanbal.fxdedektifi.sample.presentation.view.activity.UserDetailsActivity;
 import com.adnanbal.fxdedektifi.sample.presentation.view.activity.UserListActivity;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import com.adnanbal.fxdedektifi.sample.presentation.view.activity.PersonalPositionsActivity;
 
 /**
  * Class used to navigate through the application.
@@ -53,6 +55,32 @@ public class Navigator {
   public void navigateToUserDetails(Context context, int userId) {
     if (context != null) {
       Intent intentToLaunch = UserDetailsActivity.getCallingIntent(context, userId);
+      context.startActivity(intentToLaunch);
+    }
+  }
+
+
+//  /**
+//   * Goes to the login screen.
+//   *
+//   * @param context A Context needed to open the destiny activity.
+//   */
+//  public void navigateToLogin(Context context) {
+//    if (context != null) {
+//      Intent intentToLaunch = LoginActivity.getCallingIntent(context);
+//      context.startActivity(intentToLaunch);
+//    }
+//  }
+
+
+  /**
+   * Goes to the {@link PersonalPositionsActivity} screen.
+   *
+   * @param context A Context needed to open the destiny activity.
+   */
+  public void navigateToPersonalPositions(Context context) {
+    if (context != null) {
+      Intent intentToLaunch = PersonalPositionsActivity.getCallingIntent(context);
       context.startActivity(intentToLaunch);
     }
   }

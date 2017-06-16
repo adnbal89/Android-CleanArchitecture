@@ -15,19 +15,19 @@
  */
 package com.adnanbal.fxdedektifi.sample.data.repository.datasource;
 
-import com.adnanbal.fxdedektifi.sample.data.ApplicationTestCase;
-import com.adnanbal.fxdedektifi.sample.data.cache.UserCache;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.robolectric.RuntimeEnvironment;
-
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+
+import com.adnanbal.fxdedektifi.sample.data.ApplicationTestCase;
+import com.adnanbal.fxdedektifi.sample.data.cache.UserCache;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.robolectric.RuntimeEnvironment;
 
 public class UserDataStoreFactoryTest extends ApplicationTestCase {
 

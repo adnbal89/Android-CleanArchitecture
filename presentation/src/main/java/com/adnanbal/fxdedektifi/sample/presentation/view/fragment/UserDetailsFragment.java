@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2014 android10.org. All rights reserved.
+ *
  * @author Fernando Cejas (the android10 coder)
  */
 package com.adnanbal.fxdedektifi.sample.presentation.view.fragment;
@@ -12,14 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.components.UserComponent;
 import com.adnanbal.fxdedektifi.sample.presentation.model.UserModel;
 import com.adnanbal.fxdedektifi.sample.presentation.presenter.UserDetailsPresenter;
-import com.adnanbal.fxdedektifi.sample.presentation.view.component.AutoLoadImageView;
 import com.adnanbal.fxdedektifi.sample.presentation.view.UserDetailsView;
+import com.adnanbal.fxdedektifi.sample.presentation.view.component.AutoLoadImageView;
 import com.fernandocejas.arrow.checks.Preconditions;
 import javax.inject.Inject;
 
@@ -27,20 +29,30 @@ import javax.inject.Inject;
  * Fragment that shows details of a certain user.
  */
 public class UserDetailsFragment extends BaseFragment implements UserDetailsView {
+
   private static final String PARAM_USER_ID = "param_user_id";
+
+  Unbinder unbinder;
 
   @Inject
   UserDetailsPresenter userDetailsPresenter;
 
-  @Bind(com.adnanbal.fxdedektifi.sample.presentation.R.id.iv_cover)
+  @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.iv_cover)
   AutoLoadImageView iv_cover;
-  @Bind(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_fullname) TextView tv_fullname;
-  @Bind(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_email) TextView tv_email;
-  @Bind(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_followers) TextView tv_followers;
-  @Bind(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_description) TextView tv_description;
-  @Bind(com.adnanbal.fxdedektifi.sample.presentation.R.id.rl_progress) RelativeLayout rl_progress;
-  @Bind(com.adnanbal.fxdedektifi.sample.presentation.R.id.rl_retry) RelativeLayout rl_retry;
-  @Bind(com.adnanbal.fxdedektifi.sample.presentation.R.id.bt_retry) Button bt_retry;
+  @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_fullname)
+  TextView tv_fullname;
+  @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_email)
+  TextView tv_email;
+  @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_followers)
+  TextView tv_followers;
+  @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_description)
+  TextView tv_description;
+  @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.rl_progress)
+  RelativeLayout rl_progress;
+  @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.rl_retry)
+  RelativeLayout rl_retry;
+  @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.bt_retry)
+  Button bt_retry;
 
   public static UserDetailsFragment forUser(int userId) {
     final UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
@@ -54,19 +66,25 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
     setRetainInstance(true);
   }
 
-  @Override public void onCreate(Bundle savedInstanceState) {
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     this.getComponent(UserComponent.class).inject(this);
+
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    final View fragmentView = inflater.inflate(com.adnanbal.fxdedektifi.sample.presentation.R.layout.fragment_user_details, container, false);
-    ButterKnife.bind(this, fragmentView);
+    final View fragmentView = inflater
+        .inflate(com.adnanbal.fxdedektifi.sample.presentation.R.layout.fragment_user_details,
+            container, false);
+    unbinder = ButterKnife.bind(this, fragmentView);
     return fragmentView;
   }
 
-  @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+  @Override
+  public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     this.userDetailsPresenter.setView(this);
     if (savedInstanceState == null) {
@@ -74,27 +92,33 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
     }
   }
 
-  @Override public void onResume() {
+  @Override
+  public void onResume() {
     super.onResume();
+
     this.userDetailsPresenter.resume();
   }
 
-  @Override public void onPause() {
+  @Override
+  public void onPause() {
     super.onPause();
     this.userDetailsPresenter.pause();
   }
 
-  @Override public void onDestroyView() {
+  @Override
+  public void onDestroyView() {
     super.onDestroyView();
-    ButterKnife.unbind(this);
+    unbinder.unbind();
   }
 
-  @Override public void onDestroy() {
+  @Override
+  public void onDestroy() {
     super.onDestroy();
     this.userDetailsPresenter.destroy();
   }
 
-  @Override public void renderUser(UserModel user) {
+  @Override
+  public void renderUser(UserModel user) {
     if (user != null) {
       this.iv_cover.setImageUrl(user.getCoverUrl());
       this.tv_fullname.setText(user.getFullName());
@@ -104,29 +128,35 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
     }
   }
 
-  @Override public void showLoading() {
+  @Override
+  public void showLoading() {
     this.rl_progress.setVisibility(View.VISIBLE);
     this.getActivity().setProgressBarIndeterminateVisibility(true);
   }
 
-  @Override public void hideLoading() {
+  @Override
+  public void hideLoading() {
     this.rl_progress.setVisibility(View.GONE);
     this.getActivity().setProgressBarIndeterminateVisibility(false);
   }
 
-  @Override public void showRetry() {
+  @Override
+  public void showRetry() {
     this.rl_retry.setVisibility(View.VISIBLE);
   }
 
-  @Override public void hideRetry() {
+  @Override
+  public void hideRetry() {
     this.rl_retry.setVisibility(View.GONE);
   }
 
-  @Override public void showError(String message) {
+  @Override
+  public void showError(String message) {
     this.showToastMessage(message);
   }
 
-  @Override public Context context() {
+  @Override
+  public Context context() {
     return getActivity().getApplicationContext();
   }
 

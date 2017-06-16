@@ -1,10 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
 
-  <FrameLayout
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include
+      android:id="@+id/idAppbar"
+      layout="@layout/view_appbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      />
+
+    <FrameLayout
       android:id="@+id/fragmentContainer"
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="match_parent"
+      android:layout_below="@id/idAppbar"
+
+      />
+
+    <include
+      android:id="@+id/idBottombar"
+      layout="@layout/view_bottom_menu_bar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      />
+
+  </RelativeLayout>
 
 </RelativeLayout>

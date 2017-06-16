@@ -16,7 +16,7 @@
 package com.adnanbal.fxdedektifi.sample.data.entity.mapper;
 
 import com.adnanbal.fxdedektifi.sample.data.entity.UserEntity;
-import com.adnanbal.fxdedektifi.sample.domain.User;
+import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

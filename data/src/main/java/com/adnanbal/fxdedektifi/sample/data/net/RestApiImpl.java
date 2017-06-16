@@ -47,7 +47,9 @@ public class RestApiImpl implements RestApi {
     this.userEntityJsonMapper = userEntityJsonMapper;
   }
 
-  @Override public Observable<List<UserEntity>> userEntityList() {
+
+  @Override
+  public Observable<List<UserEntity>> userEntityList() {
     return Observable.create(emitter -> {
       if (isThereInternetConnection()) {
         try {
@@ -68,7 +70,8 @@ public class RestApiImpl implements RestApi {
     });
   }
 
-  @Override public Observable<UserEntity> userEntityById(final int userId) {
+  @Override
+  public Observable<UserEntity> userEntityById(final int userId) {
     return Observable.create(emitter -> {
       if (isThereInternetConnection()) {
         try {
@@ -87,6 +90,7 @@ public class RestApiImpl implements RestApi {
       }
     });
   }
+
 
   private String getUserEntitiesFromApi() throws MalformedURLException {
     return ApiConnection.createGET(API_URL_GET_USER_LIST).requestSyncCall();
@@ -112,4 +116,5 @@ public class RestApiImpl implements RestApi {
 
     return isConnected;
   }
+
 }

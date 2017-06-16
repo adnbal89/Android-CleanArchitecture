@@ -36,6 +36,11 @@
     </activity>
 
     <activity
+      android:label="@string/personal_positions"
+      android:name="com.adnanbal.fxdedektifi.sample.presentation.view.activity.PersonalPositionsActivity">
+    </activity>
+
+    <activity
       android:label="@string/app_name"
       android:launchMode="singleTask"
       android:name="com.auth0.android.lock.LockActivity"

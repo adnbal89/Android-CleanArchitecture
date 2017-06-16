@@ -18,6 +18,7 @@ package com.adnanbal.fxdedektifi.sample.presentation.internal.di.components;
 import android.content.Context;
 import com.adnanbal.fxdedektifi.sample.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.sample.domain.executor.ThreadExecutor;
+import com.adnanbal.fxdedektifi.sample.domain.repository.PositionRepository;
 import com.adnanbal.fxdedektifi.sample.domain.repository.UserRepository;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.modules.ApplicationModule;
 import com.adnanbal.fxdedektifi.sample.presentation.view.activity.BaseActivity;
@@ -36,5 +37,6 @@ public interface ApplicationComponent {
   Context context();
   ThreadExecutor threadExecutor();
   PostExecutionThread postExecutionThread();
+  PositionRepository positionRepository();
   UserRepository userRepository();
 }

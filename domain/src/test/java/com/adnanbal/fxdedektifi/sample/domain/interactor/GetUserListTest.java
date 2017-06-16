@@ -15,6 +15,10 @@
  */
 package com.adnanbal.fxdedektifi.sample.domain.interactor;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
+
 import com.adnanbal.fxdedektifi.sample.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.sample.domain.executor.ThreadExecutor;
 import com.adnanbal.fxdedektifi.sample.domain.repository.UserRepository;
@@ -23,10 +27,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetUserListTest {

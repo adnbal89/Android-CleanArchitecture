@@ -15,15 +15,15 @@
  */
 package com.adnanbal.fxdedektifi.sample.data.cache;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.adnanbal.fxdedektifi.sample.data.ApplicationTestCase;
 import java.io.File;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FileManagerTest extends ApplicationTestCase {
 

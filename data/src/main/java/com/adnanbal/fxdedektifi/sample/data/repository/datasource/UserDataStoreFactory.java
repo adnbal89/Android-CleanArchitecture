@@ -18,9 +18,9 @@ package com.adnanbal.fxdedektifi.sample.data.repository.datasource;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.adnanbal.fxdedektifi.sample.data.cache.UserCache;
-import com.adnanbal.fxdedektifi.sample.data.net.RestApiImpl;
 import com.adnanbal.fxdedektifi.sample.data.entity.mapper.UserEntityJsonMapper;
 import com.adnanbal.fxdedektifi.sample.data.net.RestApi;
+import com.adnanbal.fxdedektifi.sample.data.net.RestApiImpl;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

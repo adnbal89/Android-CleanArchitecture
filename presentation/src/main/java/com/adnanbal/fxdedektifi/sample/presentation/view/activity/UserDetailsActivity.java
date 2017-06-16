@@ -8,6 +8,7 @@ package com.adnanbal.fxdedektifi.sample.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.Window;
 import com.adnanbal.fxdedektifi.sample.presentation.R;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.HasComponent;
@@ -36,6 +37,7 @@ public class UserDetailsActivity extends BaseActivity implements HasComponent<Us
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     setContentView(R.layout.activity_layout);
+    setUpToolbar();
 
     this.initializeActivity(savedInstanceState);
     this.initializeInjector();
@@ -69,5 +71,13 @@ public class UserDetailsActivity extends BaseActivity implements HasComponent<Us
 
   @Override public UserComponent getComponent() {
     return userComponent;
+  }
+
+  // Menu icons are inflated just as they were with actionbar
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.appbar_menu, menu);
+    return true;
   }
 }

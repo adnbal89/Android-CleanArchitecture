@@ -15,21 +15,21 @@
  */
 package com.adnanbal.fxdedektifi.sample.test.presenter;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+
 import android.content.Context;
-import com.adnanbal.fxdedektifi.sample.presentation.view.UserListView;
 import com.adnanbal.fxdedektifi.sample.domain.interactor.GetUserList;
 import com.adnanbal.fxdedektifi.sample.presentation.mapper.UserModelDataMapper;
 import com.adnanbal.fxdedektifi.sample.presentation.presenter.UserListPresenter;
+import com.adnanbal.fxdedektifi.sample.presentation.view.UserListView;
 import io.reactivex.observers.DisposableObserver;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserListPresenterTest {

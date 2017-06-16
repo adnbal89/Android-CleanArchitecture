@@ -15,9 +15,9 @@
  */
 package com.adnanbal.fxdedektifi.sample.domain.interactor;
 
-import com.adnanbal.fxdedektifi.sample.domain.User;
 import com.adnanbal.fxdedektifi.sample.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.sample.domain.executor.ThreadExecutor;
+import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import com.adnanbal.fxdedektifi.sample.domain.repository.UserRepository;
 import com.fernandocejas.arrow.checks.Preconditions;
 import io.reactivex.Observable;

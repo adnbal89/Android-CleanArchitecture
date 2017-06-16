@@ -15,8 +15,13 @@
  */
 package com.adnanbal.fxdedektifi.sample.data.entity.mapper;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
+
 import com.adnanbal.fxdedektifi.sample.data.entity.UserEntity;
-import com.adnanbal.fxdedektifi.sample.domain.User;
+import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,11 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserEntityDataMapperTest {

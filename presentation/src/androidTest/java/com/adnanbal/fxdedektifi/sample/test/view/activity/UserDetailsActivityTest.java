@@ -15,21 +15,20 @@
  */
 package com.adnanbal.fxdedektifi.sample.test.view.activity;
 
-import android.app.Fragment;
-import android.content.Intent;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.test.ActivityInstrumentationTestCase2;
-import com.adnanbal.fxdedektifi.sample.presentation.view.activity.UserDetailsActivity;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
+
+import android.app.Fragment;
+import android.content.Intent;
+import android.support.test.espresso.matcher.ViewMatchers;
+import android.test.ActivityInstrumentationTestCase2;
+import com.adnanbal.fxdedektifi.sample.presentation.view.activity.UserDetailsActivity;
 
 public class UserDetailsActivityTest extends ActivityInstrumentationTestCase2<UserDetailsActivity> {
 

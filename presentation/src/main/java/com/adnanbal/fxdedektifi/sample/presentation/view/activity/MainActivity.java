@@ -1,10 +1,8 @@
 package com.adnanbal.fxdedektifi.sample.presentation.view.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.adnanbal.fxdedektifi.sample.presentation.R;
@@ -14,10 +12,10 @@ import com.adnanbal.fxdedektifi.sample.presentation.R;
  */
 public class MainActivity extends BaseActivity {
 
-  @Bind(R.id.btn_LoadData)
+  @BindView(R.id.btn_LoadData)
   Button btn_LoadData;
-  @Bind(R.id.btn_login)
-  Button btn_login;
+  @BindView(R.id.btn_personal_positions)
+  Button btn_personal_positions;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -26,17 +24,13 @@ public class MainActivity extends BaseActivity {
     ButterKnife.bind(this);
   }
 
-  @OnClick(R.id.btn_login)
-  void navigateToLogin() {
-    login(this);
-  }
 
-  public void login(Context context) {
-    if (context != null) {
-
-      Intent lockIntent = new Intent(this, LoginActivity.class);
-      startActivity(lockIntent);
-    }
+  /**
+   * Goes to the Personal Position screen.
+   */
+  @OnClick(R.id.btn_personal_positions)
+  void navigateToPersonalPositions() {
+    this.navigator.navigateToPersonalPositions(this);
   }
 
 
@@ -47,4 +41,6 @@ public class MainActivity extends BaseActivity {
   void navigateToUserList() {
     this.navigator.navigateToUserList(this);
   }
+
+
 }

@@ -15,6 +15,10 @@
  */
 package com.adnanbal.fxdedektifi.sample.data.entity.mapper;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.adnanbal.fxdedektifi.sample.data.entity.UserEntity;
 import com.google.gson.JsonSyntaxException;
 import java.util.Collection;
@@ -24,10 +28,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserEntityJsonMapperTest {

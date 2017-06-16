@@ -33,7 +33,7 @@ class ApiConnection implements Callable<String> {
 
   private static final String CONTENT_TYPE_LABEL = "Content-Type";
   private static final String CONTENT_TYPE_VALUE_JSON = "application/json; charset=utf-8";
-
+   int i = 0;
   private URL url;
   private String response;
 
@@ -54,6 +54,8 @@ class ApiConnection implements Callable<String> {
   @Nullable
   String requestSyncCall() {
     connectToApi();
+    i++;
+    System.out.println("rest response req. sync call "+ i +": " + response);
     return response;
   }
 
@@ -68,6 +70,7 @@ class ApiConnection implements Callable<String> {
     try {
       this.response = okHttpClient.newCall(request).execute().body().string();
     } catch (IOException e) {
+      System.out.println("rest exception : " + e);
       e.printStackTrace();
     }
   }

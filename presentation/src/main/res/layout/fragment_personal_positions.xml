@@ -1,0 +1,50 @@
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_positions"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"/>
+  <!--<RelativeLayout-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="match_parent"-->
+  <!--app:layout_heightPercent="75%"/>-->
+  <include
+    layout="@layout/view_progress"
+    />
+
+  <include
+    layout="@layout/view_retry"
+    />
+
+  <!--<View-->
+  <!--android:id="@+id/top_left"-->
+  <!--android:layout_width="0dp"-->
+  <!--android:layout_height="0dp"-->
+  <!--android:layout_alignParentTop="true"-->
+  <!--android:background="#ff44aacc"-->
+  <!--app:layout_heightPercent="20%"-->
+  <!--app:layout_widthPercent="70%" />-->
+
+  <!--<View-->
+  <!--android:id="@+id/top_right"-->
+  <!--android:layout_width="0dp"-->
+  <!--android:layout_height="0dp"-->
+  <!--android:layout_alignParentTop="true"-->
+  <!--android:layout_toRightOf="@+id/top_left"-->
+  <!--android:background="#ffe40000"-->
+  <!--app:layout_heightPercent="20%"-->
+  <!--app:layout_widthPercent="30%" />-->
+
+  <!--<View-->
+  <!--android:id="@+id/bottom"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="0dp"-->
+  <!--android:layout_below="@+id/top_left"-->
+  <!--android:background="#ff00ff22"-->
+  <!--app:layout_heightPercent="80%" />-->
+
+</RelativeLayout>

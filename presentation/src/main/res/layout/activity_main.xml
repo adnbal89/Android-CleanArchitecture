@@ -32,10 +32,10 @@
     />
 
   <Button
-    android:id="@+id/btn_login"
+    android:id="@+id/btn_personal_positions"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="@string/login"
+    android:text="@string/btn_text_personal_positions"
     />
 
 </LinearLayout>

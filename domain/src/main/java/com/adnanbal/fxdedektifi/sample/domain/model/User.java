@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.adnanbal.fxdedektifi.sample.domain;
+package com.adnanbal.fxdedektifi.sample.domain.model;
 
 /**
  * Class that represents a User in the domain layer.

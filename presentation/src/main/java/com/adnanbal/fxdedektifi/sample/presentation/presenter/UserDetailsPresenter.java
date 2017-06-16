@@ -16,16 +16,16 @@
 package com.adnanbal.fxdedektifi.sample.presentation.presenter;
 
 import android.support.annotation.NonNull;
-import com.adnanbal.fxdedektifi.sample.presentation.model.UserModel;
-import com.adnanbal.fxdedektifi.sample.domain.User;
 import com.adnanbal.fxdedektifi.sample.domain.exception.DefaultErrorBundle;
 import com.adnanbal.fxdedektifi.sample.domain.exception.ErrorBundle;
 import com.adnanbal.fxdedektifi.sample.domain.interactor.DefaultObserver;
 import com.adnanbal.fxdedektifi.sample.domain.interactor.GetUserDetails;
 import com.adnanbal.fxdedektifi.sample.domain.interactor.GetUserDetails.Params;
+import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import com.adnanbal.fxdedektifi.sample.presentation.exception.ErrorMessageFactory;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.PerActivity;
 import com.adnanbal.fxdedektifi.sample.presentation.mapper.UserModelDataMapper;
+import com.adnanbal.fxdedektifi.sample.presentation.model.UserModel;
 import com.adnanbal.fxdedektifi.sample.presentation.view.UserDetailsView;
 import javax.inject.Inject;
 

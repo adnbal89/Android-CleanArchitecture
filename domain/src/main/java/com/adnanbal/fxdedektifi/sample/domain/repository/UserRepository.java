@@ -15,7 +15,7 @@
  */
 package com.adnanbal.fxdedektifi.sample.domain.repository;
 
-import com.adnanbal.fxdedektifi.sample.domain.User;
+import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import io.reactivex.Observable;
 import java.util.List;
 

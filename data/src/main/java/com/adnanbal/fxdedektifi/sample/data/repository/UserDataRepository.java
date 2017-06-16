@@ -18,7 +18,7 @@ package com.adnanbal.fxdedektifi.sample.data.repository;
 import com.adnanbal.fxdedektifi.sample.data.entity.mapper.UserEntityDataMapper;
 import com.adnanbal.fxdedektifi.sample.data.repository.datasource.UserDataStore;
 import com.adnanbal.fxdedektifi.sample.data.repository.datasource.UserDataStoreFactory;
-import com.adnanbal.fxdedektifi.sample.domain.User;
+import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import com.adnanbal.fxdedektifi.sample.domain.repository.UserRepository;
 import io.reactivex.Observable;
 import java.util.List;
@@ -47,13 +47,15 @@ public class UserDataRepository implements UserRepository {
     this.userEntityDataMapper = userEntityDataMapper;
   }
 
-  @Override public Observable<List<User>> users() {
+  @Override
+  public Observable<List<User>> users() {
     //we always get all users from the cloud
     final UserDataStore userDataStore = this.userDataStoreFactory.createCloudDataStore();
     return userDataStore.userEntityList().map(this.userEntityDataMapper::transform);
   }
 
-  @Override public Observable<User> user(int userId) {
+  @Override
+  public Observable<User> user(int userId) {
     final UserDataStore userDataStore = this.userDataStoreFactory.create(userId);
     return userDataStore.userEntityDetails(userId).map(this.userEntityDataMapper::transform);
   }

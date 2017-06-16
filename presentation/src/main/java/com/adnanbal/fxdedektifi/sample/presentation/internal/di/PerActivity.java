@@ -15,10 +15,10 @@
  */
 package com.adnanbal.fxdedektifi.sample.presentation.internal.di;
 
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Retention;
 import javax.inject.Scope;
-
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * A scoping annotation to permit objects whose lifetime should

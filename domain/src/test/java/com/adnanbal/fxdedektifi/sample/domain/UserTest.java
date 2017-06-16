@@ -15,10 +15,11 @@
  */
 package com.adnanbal.fxdedektifi.sample.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTest {
 
