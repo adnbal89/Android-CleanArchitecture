@@ -20,6 +20,7 @@
     <item name="android:layout_gravity">center</item>
   </style>
 
+
   <style name="AppTheme.TextViewHeader">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
@@ -37,13 +38,13 @@
     <item name="android:textStyle">bold</item>
   </style>
 
-  <style name="MyCustomLogInTheme" parent="Lock.Theme">
-    <item name="Auth0.HeaderLogo">@drawable/com_auth0_lock_header_logo</item>
-    <item name="Auth0.HeaderTitle">@string/com_auth0_lock_header_title</item>
-    <item name="Auth0.HeaderTitleColor">@color/com_auth0_lock_text</item>
-    <item name="Auth0.HeaderBackground">@color/com_auth0_lock_header_background</item>
-    <item name="Auth0.PrimaryColor">@color/com_auth0_lock_social_github</item>
-    <item name="Auth0.DarkPrimaryColor">@color/com_auth0_lock_social_github</item>
-  </style>
+  <!--<style name="MyCustomLogInTheme" parent="Lock.Theme">-->
+    <!--<item name="Auth0.HeaderLogo">@drawable/com_auth0_lock_header_logo</item>-->
+    <!--<item name="Auth0.HeaderTitle">@string/com_auth0_lock_header_title</item>-->
+    <!--<item name="Auth0.HeaderTitleColor">@color/com_auth0_lock_text</item>-->
+    <!--<item name="Auth0.HeaderBackground">@color/com_auth0_lock_header_background</item>-->
+    <!--<item name="Auth0.PrimaryColor">@color/com_auth0_lock_social_github</item>-->
+    <!--<item name="Auth0.DarkPrimaryColor">@color/com_auth0_lock_social_github</item>-->
+  <!--</style>-->
 
 </resources>

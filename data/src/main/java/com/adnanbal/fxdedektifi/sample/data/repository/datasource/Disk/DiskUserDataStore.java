@@ -13,38 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.adnanbal.fxdedektifi.sample.data.repository.datasource;
+package com.adnanbal.fxdedektifi.sample.data.repository.datasource.Disk;
 
 import com.adnanbal.fxdedektifi.sample.data.cache.UserCache;
 import com.adnanbal.fxdedektifi.sample.data.entity.UserEntity;
-import com.adnanbal.fxdedektifi.sample.data.net.RestApi;
+import com.adnanbal.fxdedektifi.sample.data.repository.datasource.Datastore.UserDataStore;
 import io.reactivex.Observable;
 import java.util.List;
 
 /**
- * {@link UserDataStore} implementation based on connections to the api (Cloud).
+ * {@link UserDataStore} implementation based on file system data store.
  */
-class CloudUserDataStore implements UserDataStore {
+public class DiskUserDataStore implements UserDataStore {
 
-  private final RestApi restApi;
   private final UserCache userCache;
 
   /**
-   * Construct a {@link UserDataStore} based on connections to the api (Cloud).
+   * Construct a {@link UserDataStore} based file system data store.
    *
-   * @param restApi The {@link RestApi} implementation to use.
    * @param userCache A {@link UserCache} to cache data retrieved from the api.
    */
-  CloudUserDataStore(RestApi restApi, UserCache userCache) {
-    this.restApi = restApi;
+  public DiskUserDataStore(UserCache userCache) {
     this.userCache = userCache;
   }
 
-  @Override public Observable<List<UserEntity>> userEntityList() {
-    return this.restApi.userEntityList();
+  @Override
+  public Observable<List<UserEntity>> userEntityList() {
+    //TODO: implement simple cache for storing/retrieving collections of users.
+    throw new UnsupportedOperationException("Operation is not available!!!");
   }
 
-  @Override public Observable<UserEntity> userEntityDetails(final int userId) {
-    return this.restApi.userEntityById(userId).doOnNext(CloudUserDataStore.this.userCache::put);
+  @Override
+  public Observable<UserEntity> userEntityDetails(final int userId) {
+    return this.userCache.get(userId);
   }
 }

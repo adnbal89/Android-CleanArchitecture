@@ -41,6 +41,9 @@
   <string name="action_settings">Settings</string>
 
 
+  // App Name
+  <string name="AppName">FxingSign</string>
+
   //Bottom Navigation Bar
 
   <string name="menu">Menu</string>
@@ -58,13 +61,62 @@
 
   //Toolbar
   <string name="title_personal_positions">Personal Positions</string>
+  <string name="my_account">My Account</string>
+  <string name="title_account">My Account</string>
 
   //Position
   <string name="position_buy">Buy</string>
   <string name="position_sell">Sell</string>
 
+  //Signal
+  <string name="signal_buy">Buy</string>
+  <string name="signal_sell">Sell</string>
+
   //Button text
   <string name="btn_text_personal_positions">Personal Positions</string>
+  <string name="btn_text_signals">Signals</string>
+  <string name="text_extend_membership">Extend Membership</string>
+
+
+  <string name="text_total_profit">Total Profit</string>
+  .positiveText(R.string.longer_positive)
+  .negativeText(R.string.negative)
+
+  //Dialog strings
+  <string name="text_dialog_view_title">Close Position ?</string>
+  <string name="text_dialog_view_content">Do you want to close this position ?</string>
+  <string name="text_dialog_history_view_title">Closed Position Details</string>
+  <string name="text_dialog_history_view_content">Closed position details</string>
+  <string name="text_dialog_view_position_title">Position Comment</string>
+  <string name="text_dialog_view_signal_title">Signal Comment</string>
+
+
+  <string name="text_dialog_view_comment_content">Position Content</string>
+
+  <string name="text_dialog_no_content_title">No content</string>
+  <string name="text_dialog_view_no_comment_content">No comment found</string>
+
+
+  <string name="text_dialog_open_signal_view_title">Open Position</string>
+  <string name="text_dialog_open_signal_view_content">Are you sure to open this position ?</string>
+  <string name="text_dialog_close_signal_view_title">Close Position</string>
+  <string name="text_dialog_close_signal_view_content">Are you sure to close this position ?</string>
+
+
+  text_dialog_open_signal_view_title
+
+  <string name="text_dialog_view_OK">OK</string>
+  <string name="text_dialog_view_Cancel">Cancel</string>
+
+
+  //Toast messages
+  <string name="toast_dialog_confirmed">Position closed</string>
+  <string name="text_signal_opened">Position Opened</string>
+  <string name="text_signal_closed">Position Closed</string>
+
+  //TextView texts
+  <string name="text_membership_deadline">Your membership ends : </string>
+
 
 
 

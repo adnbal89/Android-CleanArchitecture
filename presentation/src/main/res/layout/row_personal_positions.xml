@@ -9,8 +9,10 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/custom_bg"
     android:minHeight="50dp"
     android:orientation="horizontal"
+
     android:weightSum="4">
 
     <TextView
@@ -43,8 +45,8 @@
         android:id="@+id/tv_position_volume"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@id/tv_buy_sell"
         android:layout_toEndOf="@id/tv_buy_sell"
+        android:layout_toRightOf="@id/tv_buy_sell"
         android:gravity="center_vertical"
         android:textColor="@color/color_textview_personal_positions_volume"
         android:textSize="12sp"
@@ -68,9 +70,9 @@
   <LinearLayout
     android:id="@+id/linear123"
     android:layout_width="fill_parent"
-    android:orientation="vertical"
     android:layout_height="1dp"
-    android:background="@color/color_separator_line">
+    android:background="@color/color_separator_line"
+    android:orientation="vertical">
   </LinearLayout>
 
 </LinearLayout>

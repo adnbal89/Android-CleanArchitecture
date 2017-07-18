@@ -5,14 +5,15 @@
  */
 package com.adnanbal.fxdedektifi.sample.presentation.view.fragment;
 
-import android.app.Fragment;
+import android.app.DialogFragment;
 import android.widget.Toast;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.HasComponent;
 
 /**
  * Base {@link android.app.Fragment} class for every fragment in this application.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends DialogFragment {
+
   /**
    * Shows a {@link android.widget.Toast} message.
    *

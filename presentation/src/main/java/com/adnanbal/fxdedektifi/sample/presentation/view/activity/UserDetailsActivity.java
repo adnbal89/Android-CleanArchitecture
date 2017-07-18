@@ -33,7 +33,8 @@ public class UserDetailsActivity extends BaseActivity implements HasComponent<Us
   private int userId;
   private UserComponent userComponent;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     setContentView(R.layout.activity_layout);
@@ -43,7 +44,10 @@ public class UserDetailsActivity extends BaseActivity implements HasComponent<Us
     this.initializeInjector();
   }
 
-  @Override protected void onSaveInstanceState(Bundle outState) {
+
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
     if (outState != null) {
       outState.putInt(INSTANCE_STATE_PARAM_USER_ID, this.userId);
     }
@@ -69,7 +73,8 @@ public class UserDetailsActivity extends BaseActivity implements HasComponent<Us
         .build();
   }
 
-  @Override public UserComponent getComponent() {
+  @Override
+  public UserComponent getComponent() {
     return userComponent;
   }
 
@@ -80,4 +85,6 @@ public class UserDetailsActivity extends BaseActivity implements HasComponent<Us
     getMenuInflater().inflate(R.menu.appbar_menu, menu);
     return true;
   }
+
+
 }

@@ -16,6 +16,9 @@ public class MainActivity extends BaseActivity {
   Button btn_LoadData;
   @BindView(R.id.btn_personal_positions)
   Button btn_personal_positions;
+  @BindView(R.id.btn_signals)
+  Button btn_signals;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,14 @@ public class MainActivity extends BaseActivity {
     this.navigator.navigateToPersonalPositions(this);
   }
 
+  /**
+   * Goes to the signals screen.
+   */
+  @OnClick(R.id.btn_signals)
+  void navigateToSignals() {
+    this.navigator.navigateToSignals(this);
+  }
+
 
   /**
    * Goes to the user list screen.
@@ -42,5 +53,9 @@ public class MainActivity extends BaseActivity {
     this.navigator.navigateToUserList(this);
   }
 
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+  }
 
 }

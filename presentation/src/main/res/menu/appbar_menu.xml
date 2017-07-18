@@ -5,9 +5,9 @@
 
   <!-- "Mark Favorite", should appear as action button if possible -->
   <item
-    android:id="@+id/action_favorite"
+    android:id="@+id/action_account"
     android:icon="@drawable/ic_personal_positions"
-    android:title="@string/title_personal_positions"
+    android:title="@string/title_account"
     app:showAsAction="ifRoom"/>
 
   <!-- Settings, should always be in the overflow -->

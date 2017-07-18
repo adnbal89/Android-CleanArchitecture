@@ -18,14 +18,22 @@ package com.adnanbal.fxdedektifi.sample.presentation.internal.di.modules;
 import android.content.Context;
 import com.adnanbal.fxdedektifi.sample.data.cache.PositionCache;
 import com.adnanbal.fxdedektifi.sample.data.cache.PositionCacheImpl;
+import com.adnanbal.fxdedektifi.sample.data.cache.PositionHistoryCache;
+import com.adnanbal.fxdedektifi.sample.data.cache.PositionHistoryCacheImpl;
+import com.adnanbal.fxdedektifi.sample.data.cache.SignalCache;
+import com.adnanbal.fxdedektifi.sample.data.cache.SignalCacheImpl;
 import com.adnanbal.fxdedektifi.sample.data.cache.UserCache;
 import com.adnanbal.fxdedektifi.sample.data.cache.UserCacheImpl;
 import com.adnanbal.fxdedektifi.sample.data.executor.JobExecutor;
 import com.adnanbal.fxdedektifi.sample.data.repository.PositionDataRepository;
+import com.adnanbal.fxdedektifi.sample.data.repository.PositionHistoryDataRepository;
+import com.adnanbal.fxdedektifi.sample.data.repository.SignalDataRepository;
 import com.adnanbal.fxdedektifi.sample.data.repository.UserDataRepository;
 import com.adnanbal.fxdedektifi.sample.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.sample.domain.executor.ThreadExecutor;
+import com.adnanbal.fxdedektifi.sample.domain.repository.PositionHistoryRepository;
 import com.adnanbal.fxdedektifi.sample.domain.repository.PositionRepository;
+import com.adnanbal.fxdedektifi.sample.domain.repository.SignalRepository;
 import com.adnanbal.fxdedektifi.sample.domain.repository.UserRepository;
 import com.adnanbal.fxdedektifi.sample.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.sample.presentation.UIThread;
@@ -64,6 +72,7 @@ public class ApplicationModule {
     return uiThread;
   }
 
+  //Caches
   @Provides
   @Singleton
   UserCache provideUserCache(UserCacheImpl userCache) {
@@ -78,6 +87,19 @@ public class ApplicationModule {
 
   @Provides
   @Singleton
+  SignalCache provideSignalCache(SignalCacheImpl signalCache) {
+    return signalCache;
+  }
+
+  @Provides
+  @Singleton
+  PositionHistoryCache providePositionHistoryCache(PositionHistoryCacheImpl positionHistoryCache) {
+    return positionHistoryCache;
+  }
+
+  //Repositories
+  @Provides
+  @Singleton
   PositionRepository providePositionRepository(PositionDataRepository positionDataRepository) {
     return positionDataRepository;
   }
@@ -86,5 +108,18 @@ public class ApplicationModule {
   @Singleton
   UserRepository provideUserRepository(UserDataRepository userDataRepository) {
     return userDataRepository;
+  }
+
+  @Provides
+  @Singleton
+  SignalRepository provideSignalRepository(SignalDataRepository signalDataRepository) {
+    return signalDataRepository;
+  }
+
+  @Provides
+  @Singleton
+  PositionHistoryRepository providePositionHistoryRepository(
+      PositionHistoryDataRepository positionHistoryDataRepository) {
+    return positionHistoryDataRepository;
   }
 }

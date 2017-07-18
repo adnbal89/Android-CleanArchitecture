@@ -46,7 +46,8 @@ public class AutoLoadImageView extends AppCompatImageView {
     super(context, attrs, defStyle);
   }
 
-  @Override protected Parcelable onSaveInstanceState() {
+  @Override
+  protected Parcelable onSaveInstanceState() {
     Parcelable superState = super.onSaveInstanceState();
     SavedState savedState = new SavedState(superState);
     savedState.imagePlaceHolderResId = this.imagePlaceHolderResId;
@@ -54,12 +55,13 @@ public class AutoLoadImageView extends AppCompatImageView {
     return savedState;
   }
 
-  @Override protected void onRestoreInstanceState(Parcelable state) {
-    if(!(state instanceof SavedState)) {
+  @Override
+  protected void onRestoreInstanceState(Parcelable state) {
+    if (!(state instanceof SavedState)) {
       super.onRestoreInstanceState(state);
       return;
     }
-    SavedState savedState = (SavedState)state;
+    SavedState savedState = (SavedState) state;
     super.onRestoreInstanceState(savedState.getSuperState());
     this.imagePlaceHolderResId = savedState.imagePlaceHolderResId;
     this.imageUrl = savedState.imageUrl;
@@ -88,7 +90,8 @@ public class AutoLoadImageView extends AppCompatImageView {
    */
   private void loadImageFromUrl(final String imageUrl) {
     new Thread() {
-      @Override public void run() {
+      @Override
+      public void run() {
         final Bitmap bitmap = AutoLoadImageView.this.getFromCache(getFileNameFromUrl(imageUrl));
         if (bitmap != null) {
           AutoLoadImageView.this.loadBitmap(bitmap);
@@ -96,12 +99,14 @@ public class AutoLoadImageView extends AppCompatImageView {
           if (isThereInternetConnection()) {
             final ImageDownloader imageDownloader = new ImageDownloader();
             imageDownloader.download(imageUrl, new ImageDownloader.Callback() {
-              @Override public void onImageDownloaded(Bitmap bitmap) {
+              @Override
+              public void onImageDownloaded(Bitmap bitmap) {
                 AutoLoadImageView.this.cacheBitmap(bitmap, getFileNameFromUrl(imageUrl));
                 AutoLoadImageView.this.loadBitmap(bitmap);
               }
 
-              @Override public void onError() {
+              @Override
+              public void onError() {
                 AutoLoadImageView.this.loadImagePlaceHolder();
               }
             });
@@ -120,7 +125,8 @@ public class AutoLoadImageView extends AppCompatImageView {
    */
   private void loadBitmap(final Bitmap bitmap) {
     ((Activity) getContext()).runOnUiThread(new Runnable() {
-      @Override public void run() {
+      @Override
+      public void run() {
         AutoLoadImageView.this.setImageBitmap(bitmap);
       }
     });
@@ -132,7 +138,8 @@ public class AutoLoadImageView extends AppCompatImageView {
   private void loadImagePlaceHolder() {
     if (this.imagePlaceHolderResId != -1) {
       ((Activity) getContext()).runOnUiThread(new Runnable() {
-        @Override public void run() {
+        @Override
+        public void run() {
           AutoLoadImageView.this.setImageResource(
               AutoLoadImageView.this.imagePlaceHolderResId);
         }
@@ -201,13 +208,16 @@ public class AutoLoadImageView extends AppCompatImageView {
    * Class used to download images from the internet
    */
   private static class ImageDownloader {
+
     interface Callback {
+
       void onImageDownloaded(Bitmap bitmap);
 
       void onError();
     }
 
-    ImageDownloader() {}
+    ImageDownloader() {
+    }
 
     /**
      * Download an image from an url.
@@ -301,6 +311,7 @@ public class AutoLoadImageView extends AppCompatImageView {
   }
 
   private static class SavedState extends BaseSavedState {
+
     int imagePlaceHolderResId;
     String imageUrl;
 

@@ -33,7 +33,8 @@ import org.robolectric.annotation.Config;
 @Config(constants = BuildConfig.class, application = ApplicationStub.class, sdk = 21)
 public abstract class ApplicationTestCase {
 
-  @Rule public TestRule injectMocksRule = (base, description) -> {
+  @Rule
+  public TestRule injectMocksRule = (base, description) -> {
     MockitoAnnotations.initMocks(ApplicationTestCase.this);
     return base;
   };

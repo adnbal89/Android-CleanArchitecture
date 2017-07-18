@@ -23,6 +23,7 @@ import com.adnanbal.fxdedektifi.sample.presentation.R;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.components.PositionComponent;
 import com.adnanbal.fxdedektifi.sample.presentation.model.PositionModel;
 import com.adnanbal.fxdedektifi.sample.presentation.presenter.PositionListPresenter;
+import com.adnanbal.fxdedektifi.sample.presentation.view.ConfirmDialogView;
 import com.adnanbal.fxdedektifi.sample.presentation.view.PositionListView;
 import com.adnanbal.fxdedektifi.sample.presentation.view.adapter.PositionsAdapter;
 import com.adnanbal.fxdedektifi.sample.presentation.view.adapter.PositionsLayoutManager;
@@ -34,19 +35,32 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 /**
  * Fragment that shows a list of Positions.
  */
-public class PersonalPositionsFragment extends BaseFragment implements PositionListView{
+public class PersonalPositionsFragment extends BaseFragment implements PositionListView,
+    ConfirmDialogView {
 
   /*
   * Butterknife unbinder, will be executed to clear callbacks
    */
   Unbinder unbinder;
 
+  private PositionListListener positionListListener;
+
+  /**
+   * When Position open dialog is confirmed
+   */
+  @Override
+  public void dialogConfirmed(PositionModel positionModel) {
+    positionModel.setOpen(false);
+    closePosition(positionModel);
+  }
+
+
   /**
    * Interface for listening position list events.
    */
   public interface PositionListListener {
 
-    void onPositionClicked(final PositionModel positionModel);
+    void onPositionClicked(final PositionModel positionModel, ConfirmDialogView view);
   }
 
   @Inject
@@ -63,7 +77,6 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
   @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.bt_retry)
   Button bt_retry;
 
-  private PositionListListener positionListListener;
 
   public PersonalPositionsFragment() {
     setRetainInstance(true);
@@ -81,6 +94,7 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     this.getComponent(PositionComponent.class).inject(this);
+
   }
 
   @Override
@@ -133,7 +147,6 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
   public void onDetach() {
     super.onDetach();
     this.positionListListener = null;
-
   }
 
   @Override
@@ -163,6 +176,7 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
     this.rl_retry.setVisibility(View.GONE);
   }
 
+
   @Override
   public void renderPositionList(Collection<PositionModel> positionModelCollection) {
     if (positionModelCollection != null) {
@@ -173,8 +187,20 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
   @Override
   public void viewPosition(PositionModel positionModel) {
     if (this.positionListListener != null) {
-      this.positionListListener.onPositionClicked(positionModel);
+      this.positionListListener.onPositionClicked(positionModel, this);
     }
+  }
+
+  @Override
+  public void closePositionConfirmedOnline(PositionModel positionModel) {
+    positionsAdapter.removePositionFromCurrentCollection(positionModel);
+    openPosition(positionModel);
+  }
+
+  //TODO : arrange the method for opening position usecase
+  @Override
+  public void openPositionConfirmedOnline(PositionModel positionModel) {
+//    positionsAdapter.addPositionToCurrentCollection(positionModel);
   }
 
   @Override
@@ -198,6 +224,23 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
     this.positionListPresenter.initialize();
   }
 
+  /**
+   * Close a positions.
+   */
+  private void closePosition(PositionModel positionModel) {
+    this.positionListPresenter.close(positionModel);
+  }
+
+  /**
+   * Close a positions.
+   */
+  private void openPosition(PositionModel positionModel) {
+    this.positionListPresenter.open(positionModel);
+  }
+
+  /**
+   * Retry button pressed & Loads all positions.
+   */
   @OnClick(com.adnanbal.fxdedektifi.sample.presentation.R.id.bt_retry)
   void onButtonRetryClick() {
     PersonalPositionsFragment.this.loadPositionList();

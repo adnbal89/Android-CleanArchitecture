@@ -10,12 +10,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.Window;
-import android.widget.Toast;
 import com.adnanbal.fxdedektifi.sample.presentation.R;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.HasComponent;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.components.DaggerPositionComponent;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.components.PositionComponent;
 import com.adnanbal.fxdedektifi.sample.presentation.model.PositionModel;
+import com.adnanbal.fxdedektifi.sample.presentation.view.ConfirmDialogView;
 import com.adnanbal.fxdedektifi.sample.presentation.view.fragment.PersonalPositionsFragment;
 import com.adnanbal.fxdedektifi.sample.presentation.view.fragment.PersonalPositionsFragment.PositionListListener;
 
@@ -64,12 +64,6 @@ public class PersonalPositionsActivity extends BaseActivity implements
   }
 
 
-  @Override
-  public void onPositionClicked(PositionModel positionModel) {
-  //  this.navigator.navigateToUserDetails(this, userModel.getUserId());
-    Toast.makeText(this, "Position Clicked!!!", Toast.LENGTH_SHORT).show();
-
-  }
 
   // Menu icons are inflated just as they were with actionbar
   @Override
@@ -80,4 +74,8 @@ public class PersonalPositionsActivity extends BaseActivity implements
   }
 
 
+  @Override
+  public void onPositionClicked(PositionModel positionModel, ConfirmDialogView view) {
+
+  }
 }

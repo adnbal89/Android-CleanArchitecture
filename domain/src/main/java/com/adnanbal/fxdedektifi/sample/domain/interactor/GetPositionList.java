@@ -13,6 +13,7 @@ import javax.inject.Inject;
  * retrieving a collection of all {@link Position}.
  */
 public class GetPositionList extends UseCase<List<Position>, Void> {
+
   private final PositionRepository positionRepository;
 
   @Inject

@@ -17,4 +17,6 @@ package com.adnanbal.fxdedektifi.sample.data;
 
 import android.app.Application;
 
-public class ApplicationStub extends Application {}
+public class ApplicationStub extends Application {
+
+}

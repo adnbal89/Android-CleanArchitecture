@@ -48,6 +48,7 @@ public class UserListActivity extends BaseActivity implements HasComponent<UserC
 
   }
 
+
   private void initializeInjector() {
     this.userComponent = DaggerUserComponent.builder()
         .applicationComponent(getApplicationComponent())
@@ -78,4 +79,6 @@ public class UserListActivity extends BaseActivity implements HasComponent<UserC
     super.onResume();
 
   }
+
+
 }

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,15 +21,19 @@ import io.reactivex.observers.DisposableObserver;
  * Default {@link DisposableObserver} base class to be used whenever you want default error handling.
  */
 public class DefaultObserver<T> extends DisposableObserver<T> {
-  @Override public void onNext(T t) {
+
+  @Override
+  public void onNext(T t) {
     // no-op by default.
   }
 
-  @Override public void onComplete() {
+  @Override
+  public void onComplete() {
     // no-op by default.
   }
 
-  @Override public void onError(Throwable exception) {
+  @Override
+  public void onError(Throwable exception) {
     // no-op by default.
   }
 }

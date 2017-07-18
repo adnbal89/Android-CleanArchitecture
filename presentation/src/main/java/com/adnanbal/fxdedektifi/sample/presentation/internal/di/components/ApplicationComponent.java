@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,7 +18,9 @@ package com.adnanbal.fxdedektifi.sample.presentation.internal.di.components;
 import android.content.Context;
 import com.adnanbal.fxdedektifi.sample.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.sample.domain.executor.ThreadExecutor;
+import com.adnanbal.fxdedektifi.sample.domain.repository.PositionHistoryRepository;
 import com.adnanbal.fxdedektifi.sample.domain.repository.PositionRepository;
+import com.adnanbal.fxdedektifi.sample.domain.repository.SignalRepository;
 import com.adnanbal.fxdedektifi.sample.domain.repository.UserRepository;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.modules.ApplicationModule;
 import com.adnanbal.fxdedektifi.sample.presentation.view.activity.BaseActivity;
@@ -31,12 +33,22 @@ import javax.inject.Singleton;
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
+
   void inject(BaseActivity baseActivity);
 
   //Exposed to sub-graphs.
   Context context();
+
   ThreadExecutor threadExecutor();
+
   PostExecutionThread postExecutionThread();
+
   PositionRepository positionRepository();
+
   UserRepository userRepository();
+
+  SignalRepository signalRepository();
+
+  PositionHistoryRepository positionHistoryRepository();
+
 }

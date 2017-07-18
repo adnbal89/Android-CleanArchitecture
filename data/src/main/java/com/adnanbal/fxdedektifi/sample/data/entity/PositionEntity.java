@@ -23,8 +23,36 @@ public class PositionEntity {
   @SerializedName("profit")
   private double profit;
 
+  @SerializedName("openingPrice")
+  private double openingPrice;
+
+  @SerializedName("closingPrice")
+  private double closingPrice;
+
+  @SerializedName("open")
+  private boolean open;
+
+  @SerializedName("status")
+  private String status;
+
+  @SerializedName("comment")
+  private String comment;
+
   public PositionEntity() {
     //empty
+  }
+
+
+  public PositionEntity(int positionId, String pair, double volume, boolean buy_sell,
+      double openingPrice, boolean open, String status, String comment) {
+    this.positionId = positionId;
+    this.pair = pair;
+    this.volume = volume;
+    this.buy_sell = buy_sell;
+    this.openingPrice = openingPrice;
+    this.open = open;
+    this.status = status;
+    this.comment = comment;
   }
 
   public int getPositionId() {
@@ -65,5 +93,61 @@ public class PositionEntity {
 
   public void setProfit(double profit) {
     this.profit = profit;
+  }
+
+  public double getOpeningPrice() {
+    return openingPrice;
+  }
+
+  public void setOpeningPrice(double openingPrice) {
+    this.openingPrice = openingPrice;
+  }
+
+  public double getClosingPrice() {
+    return closingPrice;
+  }
+
+  public void setClosingPrice(double closingPrice) {
+    this.closingPrice = closingPrice;
+  }
+
+  public boolean isOpen() {
+    return open;
+  }
+
+  public void setOpen(boolean open) {
+    this.open = open;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
+
+  @Override
+  public String toString() {
+    return "PositionEntity{" +
+        "positionId=" + positionId +
+        ", pair='" + pair + '\'' +
+        ", buy_sell=" + buy_sell +
+        ", volume=" + volume +
+        ", profit=" + profit +
+        ", openingPrice=" + openingPrice +
+        ", closingPrice=" + closingPrice +
+        ", open=" + open +
+        ", status='" + status + '\'' +
+        ", comment='" + comment + '\'' +
+        '}';
   }
 }

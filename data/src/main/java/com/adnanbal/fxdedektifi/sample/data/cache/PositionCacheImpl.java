@@ -43,14 +43,21 @@ public class PositionCacheImpl implements PositionCache {
     this.threadExecutor = executor;
   }
 
+
+  private PositionEntity getEntityFromCache(final int positionId) {
+    final File positionEntityFile = PositionCacheImpl.this.buildFile(positionId);
+    final String fileContent = PositionCacheImpl.this.fileManager
+        .readFileContent(positionEntityFile);
+    final PositionEntity positionEntity =
+        PositionCacheImpl.this.serializer.deserialize(fileContent, PositionEntity.class);
+    return positionEntity;
+  }
+
+
   @Override
   public Observable<PositionEntity> get(final int positionId) {
     return Observable.create(emitter -> {
-      final File positionEntityFile = PositionCacheImpl.this.buildFile(positionId);
-      final String fileContent = PositionCacheImpl.this.fileManager
-          .readFileContent(positionEntityFile);
-      final PositionEntity positionEntity =
-          PositionCacheImpl.this.serializer.deserialize(fileContent, PositionEntity.class);
+      final PositionEntity positionEntity = getEntityFromCache(positionId);
 
       if (positionEntity != null) {
         emitter.onNext(positionEntity);
@@ -61,17 +68,60 @@ public class PositionCacheImpl implements PositionCache {
     });
   }
 
+  //Todo : Correct method to return boolean
   @Override
-  public void put(PositionEntity positionEntity) {
-    if (positionEntity != null) {
-      final File positionEntityFile = this.buildFile(positionEntity.getPositionId());
-      if (!isCached(positionEntity.getPositionId())) {
-        final String jsonString = this.serializer.serialize(positionEntity, PositionEntity.class);
-        this.executeAsynchronously(
-            new CacheWriter(this.fileManager, positionEntityFile, jsonString));
-        setLastCacheUpdateTimeMillis();
+  public Observable<Boolean> put(PositionEntity positionEntity) {
+    return Observable.create(emitter -> {
+      if (positionEntity != null) {
+        final File positionEntityFile = this.buildFile(positionEntity.getPositionId());
+        if (!isCached(positionEntity.getPositionId())) {
+          final String jsonString = this.serializer.serialize(positionEntity, PositionEntity.class);
+          this.executeAsynchronously(
+              new CacheWriter(this.fileManager, positionEntityFile, jsonString));
+          setLastCacheUpdateTimeMillis();
+        } else {
+
+          //Todo : check
+          PositionEntity entityFromCache = getEntityFromCache(positionEntity.getPositionId());
+          if (entityFromCache.isOpen() != positionEntity.isOpen()) {
+            delete(positionEntity.getPositionId());
+            put(positionEntity);
+          }
+        }
+
+        //TODO : correct here
+        emitter.onNext(true);
+        emitter.onComplete();
+      } else {
+        emitter.onError(new PositionNotFoundException());
       }
-    }
+
+
+    });
+  }
+
+//TODO : correct
+  @Override
+  public Observable<Boolean> delete(int positionId) {
+    return Observable.create(emitter -> {
+
+      final File positionEntityFile = this.buildFile(positionId);
+
+      if (positionEntityFile != null) {
+        if (isCached(positionId)) {
+          this.executeAsynchronously(
+              new CacheDeleter(this.fileManager, positionEntityFile));
+          setLastCacheUpdateTimeMillis();
+
+        }
+        emitter.onNext(true);
+        emitter.onComplete();
+      } else {
+        emitter.onError(new PositionNotFoundException());
+      }
+
+
+    });
   }
 
   @Override
@@ -180,4 +230,25 @@ public class PositionCacheImpl implements PositionCache {
       this.fileManager.clearDirectory(this.cacheDir);
     }
   }
+
+  /**
+   * {@link Runnable} class for writing to disk.
+   */
+  private static class CacheDeleter implements Runnable {
+
+    private final FileManager fileManager;
+    private final File fileToDelete;
+
+    CacheDeleter(FileManager fileManager, File fileToDelete) {
+      this.fileManager = fileManager;
+      this.fileToDelete = fileToDelete;
+    }
+
+    @Override
+    public void run() {
+      this.fileManager.deleteFromFile(fileToDelete);
+    }
+  }
+
+
 }

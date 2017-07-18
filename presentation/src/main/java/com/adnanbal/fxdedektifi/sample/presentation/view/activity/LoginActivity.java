@@ -48,6 +48,7 @@ public class LoginActivity extends BaseActivity {
     mLock = null;
   }
 
+
   private final LockCallback mCallback = new AuthenticationCallback() {
 
     /**

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,10 +38,13 @@ public class UseCaseTest {
 
   private TestDisposableObserver<Object> testObserver;
 
-  @Mock private ThreadExecutor mockThreadExecutor;
-  @Mock private PostExecutionThread mockPostExecutionThread;
+  @Mock
+  private ThreadExecutor mockThreadExecutor;
+  @Mock
+  private PostExecutionThread mockPostExecutionThread;
 
-  @Rule public ExpectedException expectedException = ExpectedException.none();
+  @Rule
+  public ExpectedException expectedException = ExpectedException.none();
 
   @Before
   public void setUp() {
@@ -77,7 +80,8 @@ public class UseCaseTest {
       super(threadExecutor, postExecutionThread);
     }
 
-    @Override Observable<Object> buildUseCaseObservable(Params params) {
+    @Override
+    Observable<Object> buildUseCaseObservable(Params params) {
       return Observable.empty();
     }
 
@@ -88,23 +92,30 @@ public class UseCaseTest {
   }
 
   private static class TestDisposableObserver<T> extends DisposableObserver<T> {
+
     private int valuesCount = 0;
 
-    @Override public void onNext(T value) {
+    @Override
+    public void onNext(T value) {
       valuesCount++;
     }
 
-    @Override public void onError(Throwable e) {
+    @Override
+    public void onError(Throwable e) {
       // no-op by default.
     }
 
-    @Override public void onComplete() {
+    @Override
+    public void onComplete() {
       // no-op by default.
     }
   }
 
   private static class Params {
+
     private static Params EMPTY = new Params();
-    private Params() {}
+
+    private Params() {
+    }
   }
 }

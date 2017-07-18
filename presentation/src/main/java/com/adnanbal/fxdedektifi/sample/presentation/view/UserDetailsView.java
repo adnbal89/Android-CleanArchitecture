@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2014 android10.org. All rights reserved.
+ *
  * @author Fernando Cejas (the android10 coder)
  */
 package com.adnanbal.fxdedektifi.sample.presentation.view;
@@ -11,6 +12,7 @@ import com.adnanbal.fxdedektifi.sample.presentation.model.UserModel;
  * In this case is used as a view representing a user profile.
  */
 public interface UserDetailsView extends LoadDataView {
+
   /**
    * Render a user in the UI.
    *

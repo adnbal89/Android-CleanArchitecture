@@ -1,6 +1,9 @@
 buildscript {
     repositories {
+        google()
+        jcenter()
         mavenCentral()
+        maven { url 'https://maven.google.com' }
     }
     dependencies {
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
@@ -22,6 +25,8 @@ android {
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode globalConfiguration.getAt("androidVersionCode")
+        vectorDrawables.useSupportLibrary = true
+
     }
 
     compileOptions {

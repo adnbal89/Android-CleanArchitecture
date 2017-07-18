@@ -46,8 +46,6 @@ public class PositionEntityJsonMapper {
     final Type listOfPositionEntityType = new TypeToken<List<PositionEntity>>() {
     }.getType();
 
-    System.out.println("Json : " + positionListJsonResponse);
-
     List<PositionEntity> list = this.gson
         .fromJson(positionListJsonResponse, listOfPositionEntityType);
     return this.gson.fromJson(positionListJsonResponse, listOfPositionEntityType);

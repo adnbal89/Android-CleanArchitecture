@@ -25,9 +25,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultErrorBundleTest {
+
   private DefaultErrorBundle defaultErrorBundle;
 
-  @Mock private Exception mockException;
+  @Mock
+  private Exception mockException;
 
   @Before
   public void setUp() {

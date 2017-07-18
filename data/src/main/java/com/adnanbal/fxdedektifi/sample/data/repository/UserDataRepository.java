@@ -16,8 +16,8 @@
 package com.adnanbal.fxdedektifi.sample.data.repository;
 
 import com.adnanbal.fxdedektifi.sample.data.entity.mapper.UserEntityDataMapper;
-import com.adnanbal.fxdedektifi.sample.data.repository.datasource.UserDataStore;
-import com.adnanbal.fxdedektifi.sample.data.repository.datasource.UserDataStoreFactory;
+import com.adnanbal.fxdedektifi.sample.data.repository.datasource.Datastore.UserDataStore;
+import com.adnanbal.fxdedektifi.sample.data.repository.datasource.DatastoreFactory.UserDataStoreFactory;
 import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import com.adnanbal.fxdedektifi.sample.domain.repository.UserRepository;
 import io.reactivex.Observable;

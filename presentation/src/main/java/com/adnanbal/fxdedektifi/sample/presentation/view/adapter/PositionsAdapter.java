@@ -17,10 +17,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by adnbal89 on 12.06.2017.
- */
-
-/**
  * Adapter that manages a collection of {@link PositionModel}.
  */
 public class PositionsAdapter extends RecyclerView.Adapter<PositionsAdapter.PositionViewHolder> {
@@ -44,7 +40,6 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsAdapter.Posi
         (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     this.positionsCollection = Collections.emptyList();
   }
-
 
   @Override
   public int getItemCount() {
@@ -95,10 +90,21 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsAdapter.Posi
     this.notifyDataSetChanged();
   }
 
+  public void removePositionFromCurrentCollection(final PositionModel positionModel) {
+    this.validatePositionsCollection(positionsCollection);
+    this.positionsCollection.remove(positionModel);
+    this.notifyDataSetChanged();
+  }
+
+  public void addPositionToCurrentCollection(final PositionModel positionModel) {
+    this.validatePositionsCollection(positionsCollection);
+    this.positionsCollection.add(0,positionModel);
+    this.notifyDataSetChanged();
+  }
+
   public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
     this.onItemClickListener = onItemClickListener;
   }
-
 
   private void validatePositionsCollection(Collection<PositionModel> positionsCollection) {
     if (positionsCollection == null) {

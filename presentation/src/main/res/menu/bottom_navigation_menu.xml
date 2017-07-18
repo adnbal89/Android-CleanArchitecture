@@ -4,20 +4,28 @@
   >
 
   <item
-    android:id="@+id/action_personal_positions"
-    android:enabled="true"
-    android:icon="@drawable/ic_personal_positions"
-    android:title="@string/personal_positions"
-    app:showAsAction="ifRoom"
-    />
-
-  <item
     android:id="@+id/action_signals"
     android:enabled="true"
     android:icon="@drawable/ic_signals"
     android:title="@string/signals"
     app:showAsAction="ifRoom"
     />
+
+  <!--<item-->
+  <!--android:id="@+id/action_history"-->
+  <!--android:enabled="true"-->
+  <!--android:icon="@drawable/ic_history"-->
+  <!--android:title="@string/signal_history"-->
+  <!--app:showAsAction="ifRoom"-->
+  <!--/>-->
+
+  <!--<item-->
+  <!--android:id="@+id/action_personal_positions"-->
+  <!--android:enabled="true"-->
+  <!--android:icon="@drawable/ic_personal_positions"-->
+  <!--android:title="@string/personal_positions"-->
+  <!--app:showAsAction="ifRoom"-->
+  <!--/>-->
 
   <item
     android:id="@+id/action_profit"
@@ -27,11 +35,5 @@
     app:showAsAction="ifRoom"
     />
 
-  <item
-    android:id="@+id/action_history"
-    android:enabled="true"
-    android:icon="@drawable/ic_history"
-    android:title="@string/signal_history"
-    app:showAsAction="ifRoom"
-    />
+
 </menu>

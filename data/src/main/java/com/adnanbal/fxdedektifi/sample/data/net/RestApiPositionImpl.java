@@ -76,13 +76,80 @@ public class RestApiPositionImpl implements RestApiPosition {
     });
   }
 
+
+  //Todo : implement true false mechanism
+  @Override
+  public Observable<Boolean> removeEntityById(int positionId) {
+    return Observable.create(emitter -> {
+      if (isThereInternetConnection()) {
+        try {
+          String responseRemoveEntity = removeEntityFromApi(positionId);
+          if (responseRemoveEntity != null) {
+
+            //positionEntityJsonMapper.transformPositionEntity(responseRemoveEntity)
+            emitter
+                .onNext(true);
+            emitter.onComplete();
+          } else {
+            emitter.onError(new NetworkConnectionException());
+          }
+        } catch (Exception e) {
+          emitter.onError(new NetworkConnectionException(e.getCause()));
+        }
+      } else {
+        //TODO : implement offline Data access;
+        emitter.onError(new NetworkConnectionException());
+      }
+    });
+  }
+
+  //TODO : implement
+  @Override
+  public Observable<Boolean> addEntityToCloud(PositionEntity positionEntity) {
+    return Observable.create(emitter -> {
+      if (isThereInternetConnection()) {
+        try {
+          String responseAddEntity = postEntitytoApi(positionEntity);
+          if (responseAddEntity != null) {
+
+            //TODO : correct here
+            //positionEntityJsonMapper.transformPositionEntity(responseRemoveEntity)
+            emitter
+                .onNext(true);
+            emitter.onComplete();
+          } else {
+            emitter.onError(new NetworkConnectionException());
+          }
+        } catch (Exception e) {
+          emitter.onError(new NetworkConnectionException(e.getCause()));
+        }
+      } else {
+        //TODO : implement offline Data access;
+        emitter.onError(new NetworkConnectionException());
+      }
+    });
+  }
+
+
+
+  private String removeEntityFromApi(int positionId) throws MalformedURLException {
+    String apiUrl = API_URL_DELETE_POSITION + positionId;
+    return ApiConnection.createDelete(apiUrl).request_deleteSyncCall();
+  }
+
   private String getPositionEntitiesFromApi() throws MalformedURLException {
-    return ApiConnection.createGET(API_URL_GET_USER_LIST).requestSyncCall();
+    return ApiConnection.createGET(API_URL_GET_POSITION_LIST).request_getSyncCall();
   }
 
   private String getPositionDetailsFromApi(int positionId) throws MalformedURLException {
-    String apiUrl = API_URL_GET_USER_DETAILS + positionId;
-    return ApiConnection.createGET(apiUrl).requestSyncCall();
+    String apiUrl = API_URL_GET_POSITION_DETAILS + positionId;
+    return ApiConnection.createGET(apiUrl).request_getSyncCall();
+  }
+
+  //Todo : correct sync call
+  private String postEntitytoApi(PositionEntity positionEntity) throws MalformedURLException {
+    String apiUrl = API_URL_POST_POSITION_HISTORY ;
+    return ApiConnection.createPost(apiUrl).request_postSyncCall(positionEntity);
   }
 
   /**

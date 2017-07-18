@@ -7,6 +7,7 @@ import dagger.Module;
  */
 @Module
 public class PositionModule {
+
   public PositionModule() {
   }
 

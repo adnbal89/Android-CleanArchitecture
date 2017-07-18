@@ -3,18 +3,21 @@ apply plugin: 'com.android.application'
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
 
-    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
-    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+    compileSdkVersion 26
+    buildToolsVersion '26.0.0'
+
 
     defaultConfig {
-        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
-        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        minSdkVersion 17
+        targetSdkVersion 26
 
         applicationId globalConfiguration.getAt("androidApplicationId")
-        versionCode globalConfiguration.getAt("androidVersionCode")
         versionName globalConfiguration.getAt("androidVersionName")
         testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
         testApplicationId globalConfiguration.getAt("testApplicationId")
+        vectorDrawables.useSupportLibrary = true
+
+
     }
 
     compileOptions {
@@ -56,62 +59,66 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-    buildToolsVersion '25.0.3'
 
-    flavorDimensions "free","paid"
+    flavorDimensions "free", "paid"
 
     productFlavors {
         freeFlavour {
             applicationId "com.adnanbal.fxdedektifi.sample.presentation.free"
             dimension "free"
+            minSdkVersion 17
         }
-
         paidFlavor {
             applicationId "com.adnanbal.fxdedektifi.sample.presentation.paid"
             dimension "paid"
-
+            minSdkVersion 17
         }
     }
-
-
 }
+
 
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
     def developmentDependencies = rootProject.ext.developmentDependencies
-
     compile project(':domain')
     compile project(':data')
-
     annotationProcessor presentationDependencies.daggerCompiler
     annotationProcessor presentationDependencies.butterKnifeCompiler
-
     compile presentationDependencies.dagger
     compile presentationDependencies.butterKnife
-    compile presentationDependencies.recyclerView
     compile presentationDependencies.rxJava
     compile presentationDependencies.rxAndroid
     provided presentationDependencies.javaxAnnotation
 
     //added by Adnan
+    compile presentationDependencies.androidDesign
     compile presentationDependencies.appCompat
+    compile presentationDependencies.appCompatV4
+    compile presentationDependencies.recyclerView
+
     compile presentationDependencies.percentRelativeLayout
     compile presentationDependencies.auth0Lock
     compile presentationDependencies.constraintLayout
     compile presentationDependencies.navigationView
     compile presentationDependencies.recyclerViewAnimator
+    compile presentationDependencies.mpAndroidChart
+    compile presentationDependencies.materialDesignDialog
+    compile presentationDependencies.materialDialog
 
-
+    compile presentationDependencies.checkout
 
     androidTestCompile presentationTestDependencies.mockito
     androidTestCompile presentationTestDependencies.dexmaker
     androidTestCompile presentationTestDependencies.dexmakerMockito
-    androidTestCompile presentationTestDependencies.espresso
+//    androidTestCompile presentationTestDependencies.espresso
     androidTestCompile presentationTestDependencies.testingSupportLib
-
     //Development
     compile developmentDependencies.leakCanary
 
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.0', {
+        // use version of jsr305 provided by Checkout
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    })
 
 }

@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2014 android10.org. All rights reserved.
+ *
  * @author Fernando Cejas (the android10 coder)
  */
 package com.adnanbal.fxdedektifi.sample.presentation.view.adapter;
@@ -24,6 +25,7 @@ import javax.inject.Inject;
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
 
   public interface OnItemClickListener {
+
     void onUserItemClicked(UserModel userModel);
   }
 
@@ -39,20 +41,25 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     this.usersCollection = Collections.emptyList();
   }
 
-  @Override public int getItemCount() {
+  @Override
+  public int getItemCount() {
     return (this.usersCollection != null) ? this.usersCollection.size() : 0;
   }
 
-  @Override public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    final View view = this.layoutInflater.inflate(com.adnanbal.fxdedektifi.sample.presentation.R.layout.row_user, parent, false);
+  @Override
+  public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    final View view = this.layoutInflater
+        .inflate(com.adnanbal.fxdedektifi.sample.presentation.R.layout.row_user, parent, false);
     return new UserViewHolder(view);
   }
 
-  @Override public void onBindViewHolder(UserViewHolder holder, final int position) {
+  @Override
+  public void onBindViewHolder(UserViewHolder holder, final int position) {
     final UserModel userModel = this.usersCollection.get(position);
     holder.textViewTitle.setText(userModel.getFullName());
     holder.itemView.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         if (UsersAdapter.this.onItemClickListener != null) {
           UsersAdapter.this.onItemClickListener.onUserItemClicked(userModel);
         }
@@ -60,7 +67,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     });
   }
 
-  @Override public long getItemId(int position) {
+  @Override
+  public long getItemId(int position) {
     return position;
   }
 
@@ -70,7 +78,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     this.notifyDataSetChanged();
   }
 
-  public void setOnItemClickListener (OnItemClickListener onItemClickListener) {
+  public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
     this.onItemClickListener = onItemClickListener;
   }
 
@@ -81,7 +89,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
   }
 
   static class UserViewHolder extends RecyclerView.ViewHolder {
-    @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.title) TextView textViewTitle;
+
+    @BindView(com.adnanbal.fxdedektifi.sample.presentation.R.id.title)
+    TextView textViewTitle;
 
     UserViewHolder(View itemView) {
       super(itemView);

@@ -20,4 +20,17 @@ public interface PositionRepository {
    * @param positionId The position id used to retrieve position data.
    */
   Observable<Position> getOnePosition(final int positionId);
+
+
+  /**
+   * Get an {@link Observable} which will emit a closed {@link Position}.
+   */
+  Observable<Boolean> closeOpenPosition(final int positionId);
+
+  /**
+   * Get an {@link Observable} which will emit a closed {@link Position}.
+   */
+  Observable<Boolean> openPosition(int positionId, String pair, double volume, boolean buy_sell,
+      double openingPrice, boolean open, String status, String comment);
+
 }

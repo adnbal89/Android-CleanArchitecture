@@ -35,6 +35,10 @@ public class PositionModelDataMapper {
     positionModel.setBuy_sell(position.isBuy_sell());
     positionModel.setVolume(position.getVolume());
     positionModel.setProfit(position.getProfit());
+    positionModel.setClosingPrice(position.getClosingPrice());
+    positionModel.setOpeningPrice(position.getOpeningPrice());
+    positionModel.setOpen(position.isOpen());
+    positionModel.setComment(position.getComment());
 
     return positionModel;
   }

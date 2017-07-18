@@ -5,20 +5,41 @@ package com.adnanbal.fxdedektifi.sample.presentation.model;
  */
 public class PositionModel {
 
-  private final int positionId;
+  private int positionId;
 
   private String pair;
   // buy : 1 , sell : 0
   private boolean buy_sell;
   private double volume;
   private double profit;
+  private double openingPrice;
+  private double closingPrice;
+  private boolean open;
+  private String status;
+  private String comment;
 
 
-  public PositionModel(int positionId, String pair, double volume, boolean buy_sell) {
+  public PositionModel(int positionId, String pair, double volume, boolean buy_sell,
+      double openingPrice, boolean open, String status, String comment) {
     this.positionId = positionId;
     this.pair = pair;
     this.volume = volume;
     this.buy_sell = buy_sell;
+    this.openingPrice = openingPrice;
+    this.open = open;
+    this.status = status;
+    this.comment = comment;
+  }
+
+  public PositionModel(String pair, double volume, boolean buy_sell,
+      double openingPrice, boolean open, String status, String comment) {
+    this.pair = pair;
+    this.volume = volume;
+    this.buy_sell = buy_sell;
+    this.openingPrice = openingPrice;
+    this.open = open;
+    this.status = status;
+    this.comment = comment;
   }
 
   public PositionModel(int positionId) {
@@ -61,6 +82,45 @@ public class PositionModel {
     this.profit = profit;
   }
 
+  public double getOpeningPrice() {
+    return openingPrice;
+  }
+
+  public void setOpeningPrice(double openingPrice) {
+    this.openingPrice = openingPrice;
+  }
+
+  public double getClosingPrice() {
+    return closingPrice;
+  }
+
+  public void setClosingPrice(double closingPrice) {
+    this.closingPrice = closingPrice;
+  }
+
+  public boolean isOpen() {
+    return open;
+  }
+
+  public void setOpen(boolean open) {
+    this.open = open;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 
   @Override
   public String toString() {
@@ -70,6 +130,11 @@ public class PositionModel {
         ", buy_sell=" + buy_sell +
         ", volume=" + volume +
         ", profit=" + profit +
+        ", openingPrice=" + openingPrice +
+        ", closingPrice=" + closingPrice +
+        ", open=" + open +
+        ", status='" + status + '\'' +
+        ", comment='" + comment + '\'' +
         '}';
   }
 }

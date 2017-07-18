@@ -50,7 +50,8 @@ public class UserCacheImpl implements UserCache {
    * @param serializer {@link Serializer} for object serialization.
    * @param fileManager {@link FileManager} for saving serialized objects to the file system.
    */
-  @Inject UserCacheImpl(Context context, Serializer serializer,
+  @Inject
+  UserCacheImpl(Context context, Serializer serializer,
       FileManager fileManager, ThreadExecutor executor) {
     if (context == null || serializer == null || fileManager == null || executor == null) {
       throw new IllegalArgumentException("Invalid null parameter");
@@ -62,7 +63,8 @@ public class UserCacheImpl implements UserCache {
     this.threadExecutor = executor;
   }
 
-  @Override public Observable<UserEntity> get(final int userId) {
+  @Override
+  public Observable<UserEntity> get(final int userId) {
     return Observable.create(emitter -> {
       final File userEntityFile = UserCacheImpl.this.buildFile(userId);
       final String fileContent = UserCacheImpl.this.fileManager.readFileContent(userEntityFile);
@@ -78,7 +80,8 @@ public class UserCacheImpl implements UserCache {
     });
   }
 
-  @Override public void put(UserEntity userEntity) {
+  @Override
+  public void put(UserEntity userEntity) {
     if (userEntity != null) {
       final File userEntityFile = this.buildFile(userEntity.getUserId());
       if (!isCached(userEntity.getUserId())) {
@@ -89,12 +92,14 @@ public class UserCacheImpl implements UserCache {
     }
   }
 
-  @Override public boolean isCached(int userId) {
+  @Override
+  public boolean isCached(int userId) {
     final File userEntityFile = this.buildFile(userId);
     return this.fileManager.exists(userEntityFile);
   }
 
-  @Override public boolean isExpired() {
+  @Override
+  public boolean isExpired() {
     long currentTime = System.currentTimeMillis();
     long lastUpdateTime = this.getLastCacheUpdateTimeMillis();
 
@@ -107,7 +112,8 @@ public class UserCacheImpl implements UserCache {
     return expired;
   }
 
-  @Override public void evictAll() {
+  @Override
+  public void evictAll() {
     this.executeAsynchronously(new CacheEvictor(this.fileManager, this.cacheDir));
   }
 
@@ -157,6 +163,7 @@ public class UserCacheImpl implements UserCache {
    * {@link Runnable} class for writing to disk.
    */
   private static class CacheWriter implements Runnable {
+
     private final FileManager fileManager;
     private final File fileToWrite;
     private final String fileContent;
@@ -167,7 +174,8 @@ public class UserCacheImpl implements UserCache {
       this.fileContent = fileContent;
     }
 
-    @Override public void run() {
+    @Override
+    public void run() {
       this.fileManager.writeToFile(fileToWrite, fileContent);
     }
   }
@@ -176,6 +184,7 @@ public class UserCacheImpl implements UserCache {
    * {@link Runnable} class for evicting all the cached files
    */
   private static class CacheEvictor implements Runnable {
+
     private final FileManager fileManager;
     private final File cacheDir;
 
@@ -184,7 +193,8 @@ public class UserCacheImpl implements UserCache {
       this.cacheDir = cacheDir;
     }
 
-    @Override public void run() {
+    @Override
+    public void run() {
       this.fileManager.clearDirectory(this.cacheDir);
     }
   }

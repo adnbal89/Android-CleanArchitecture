@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -53,11 +53,16 @@ public class UserListPresenter implements Presenter {
     this.viewListView = view;
   }
 
-  @Override public void resume() {}
+  @Override
+  public void resume() {
+  }
 
-  @Override public void pause() {}
+  @Override
+  public void pause() {
+  }
 
-  @Override public void destroy() {
+  @Override
+  public void destroy() {
     this.getUserListUseCase.dispose();
     this.viewListView = null;
   }
@@ -116,17 +121,20 @@ public class UserListPresenter implements Presenter {
 
   private final class UserListObserver extends DefaultObserver<List<User>> {
 
-    @Override public void onComplete() {
+    @Override
+    public void onComplete() {
       UserListPresenter.this.hideViewLoading();
     }
 
-    @Override public void onError(Throwable e) {
+    @Override
+    public void onError(Throwable e) {
       UserListPresenter.this.hideViewLoading();
       UserListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
       UserListPresenter.this.showViewRetry();
     }
 
-    @Override public void onNext(List<User> users) {
+    @Override
+    public void onNext(List<User> users) {
       UserListPresenter.this.showUsersCollectionInView(users);
     }
   }

@@ -1,12 +1,11 @@
 package com.adnanbal.fxdedektifi.sample.presentation.view.activity;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import com.adnanbal.fxdedektifi.sample.presentation.AndroidApplication;
-import com.adnanbal.fxdedektifi.sample.presentation.R;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.components.ApplicationComponent;
 import com.adnanbal.fxdedektifi.sample.presentation.internal.di.modules.ActivityModule;
 import com.adnanbal.fxdedektifi.sample.presentation.navigation.Navigator;
@@ -17,14 +16,19 @@ import javax.inject.Inject;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+  /*
+ * Butterknife unbinder, will be executed to clear callbacks
+  */
+
   @Inject
   Navigator navigator;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     this.getApplicationComponent().inject(this);
+
   }
 
   /**
@@ -33,9 +37,11 @@ public abstract class BaseActivity extends AppCompatActivity {
    * @param containerViewId The container view to where add the fragment.
    * @param fragment The fragment to be added.
    */
-  protected void addFragment(int containerViewId, Fragment fragment) {
-    final FragmentTransaction fragmentTransaction = this.getFragmentManager().beginTransaction();
-    fragmentTransaction.add(containerViewId, fragment);
+  protected void addFragment(int containerViewId, DialogFragment fragment) {
+    final FragmentTransaction fragmentTransaction = this
+        .getFragmentManager().beginTransaction();
+
+    fragmentTransaction.replace(containerViewId, fragment);
     fragmentTransaction.commit();
   }
 
@@ -59,16 +65,21 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   protected void setUpToolbar() {
     // Find the toolbar view inside the activity layout
-    Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
-
-    // Sets the Toolbar to act as the ActionBar for this Activity window.
-    // Make sure the toolbar exists in the activity and is not null
-    setSupportActionBar(toolbar);
-    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-  }
-
-  protected  void setUpBottombar(){
 
   }
+
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+  }
+
+
 }
+
+//else if (itemId == R.id.action_profit) {
+//    startActivity(new Intent(this, NotificationsActivity.class));
+//    }else if (itemId == R.id.action_history) {
+//    startActivity(new Intent(this, NotificationsActivity.class));
+//    }
+

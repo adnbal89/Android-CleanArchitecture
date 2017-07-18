@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,12 +36,15 @@ public class ErrorMessageFactory {
    * @return {@link String} an error message.
    */
   public static String create(Context context, Exception exception) {
-    String message = context.getString(com.adnanbal.fxdedektifi.sample.presentation.R.string.exception_message_generic);
+    String message = context
+        .getString(com.adnanbal.fxdedektifi.sample.presentation.R.string.exception_message_generic);
 
     if (exception instanceof NetworkConnectionException) {
-      message = context.getString(com.adnanbal.fxdedektifi.sample.presentation.R.string.exception_message_no_connection);
+      message = context.getString(
+          com.adnanbal.fxdedektifi.sample.presentation.R.string.exception_message_no_connection);
     } else if (exception instanceof UserNotFoundException) {
-      message = context.getString(com.adnanbal.fxdedektifi.sample.presentation.R.string.exception_message_user_not_found);
+      message = context.getString(
+          com.adnanbal.fxdedektifi.sample.presentation.R.string.exception_message_user_not_found);
     }
 
     return message;

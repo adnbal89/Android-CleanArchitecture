@@ -15,3 +15,17 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep class cn.pedant.SweetAlert.** { *; }
+-keep class !android.support.v7.internal.view.menu.**,android.support.v7.** {*;}
+-keep class com.android.vending.billing.**
+
+-assumenosideeffects class org.solovyev.android.checkout.Billing {
+    public static void debug(...);
+    public static void warning(...);
+    public static void error(...);
+}
+
+-assumenosideeffects class org.solovyev.android.checkout.Check {
+    static *;
+}
+

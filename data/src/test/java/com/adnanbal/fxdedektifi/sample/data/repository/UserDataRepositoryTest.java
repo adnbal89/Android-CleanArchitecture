@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,8 +21,8 @@ import static org.mockito.Mockito.verify;
 
 import com.adnanbal.fxdedektifi.sample.data.entity.UserEntity;
 import com.adnanbal.fxdedektifi.sample.data.entity.mapper.UserEntityDataMapper;
-import com.adnanbal.fxdedektifi.sample.data.repository.datasource.UserDataStore;
-import com.adnanbal.fxdedektifi.sample.data.repository.datasource.UserDataStoreFactory;
+import com.adnanbal.fxdedektifi.sample.data.repository.datasource.Datastore.UserDataStore;
+import com.adnanbal.fxdedektifi.sample.data.repository.datasource.DatastoreFactory.UserDataStoreFactory;
 import com.adnanbal.fxdedektifi.sample.domain.model.User;
 import io.reactivex.Observable;
 import java.util.ArrayList;
@@ -40,11 +40,16 @@ public class UserDataRepositoryTest {
 
   private UserDataRepository userDataRepository;
 
-  @Mock private UserDataStoreFactory mockUserDataStoreFactory;
-  @Mock private UserEntityDataMapper mockUserEntityDataMapper;
-  @Mock private UserDataStore mockUserDataStore;
-  @Mock private UserEntity mockUserEntity;
-  @Mock private User mockUser;
+  @Mock
+  private UserDataStoreFactory mockUserDataStoreFactory;
+  @Mock
+  private UserEntityDataMapper mockUserEntityDataMapper;
+  @Mock
+  private UserDataStore mockUserDataStore;
+  @Mock
+  private UserEntity mockUserEntity;
+  @Mock
+  private User mockUser;
 
   @Before
   public void setUp() {
@@ -68,7 +73,8 @@ public class UserDataRepositoryTest {
   @Test
   public void testGetUserHappyCase() {
     UserEntity userEntity = new UserEntity();
-    given(mockUserDataStore.userEntityDetails(FAKE_USER_ID)).willReturn(Observable.just(userEntity));
+    given(mockUserDataStore.userEntityDetails(FAKE_USER_ID))
+        .willReturn(Observable.just(userEntity));
     userDataRepository.user(FAKE_USER_ID);
 
     verify(mockUserDataStoreFactory).create(FAKE_USER_ID);

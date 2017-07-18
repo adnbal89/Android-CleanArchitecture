@@ -22,4 +22,18 @@ public interface PositionListView extends LoadDataView {
    * @param positionModel The position that will be shown.
    */
   void viewPosition(PositionModel positionModel);
+
+  /**
+   * Close a {@link PositionModel} and remove it from the list.
+   *
+   * @param positionModel The position that will be closed.
+   */
+  void closePositionConfirmedOnline(PositionModel positionModel);
+
+  /**
+   * Confirmed to open a {@link PositionModel}.
+   *
+   * @param positionModel The position that will be opened.
+   */
+  void openPositionConfirmedOnline(PositionModel positionModel);
 }

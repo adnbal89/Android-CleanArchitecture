@@ -30,7 +30,7 @@
   <item name="color_appbar_background_Primary" type="color">#FF007CF9</item>
   <item name="color_appbar_item_text_color_Primary" type="color">#FFFFFF</item>
   //bottombar colors
-  <item name="color_bottombar_background_Primary" type="color">#FF007CF9</item>
+  <item name="color_bottombar_background_Primary" type="color">#4D007CF9</item>
   <item name="color_bottombar_item_text_color_Primary" type="color">#FFFFFF</item>
 
   //Textview text colors
@@ -42,8 +42,20 @@
   <item name="color_textview_personal_positions_row_background" type="color">#FFFFFF</item>
 
 
+
+
   //Separatorline color
   <item name="color_separator_line" type="color">#cfc8c8</item>
+
+
+  //Signals fragment
+  <item name="color_textview_opening_price" type="color">#000000</item>
+  <item name="color_textview_signal_status" type="color">#000000</item>
+  <item name="color_textview_personal_signals_buy" type="color">#FF007CF9</item>
+  <item name="color_textview_personal_signals_sell" type="color">#f90036</item>
+
+  //material title color
+  <item name="color_material_dialog_signal_fragment" type="color">#FF007CF9</item>
 
 
 </resources>

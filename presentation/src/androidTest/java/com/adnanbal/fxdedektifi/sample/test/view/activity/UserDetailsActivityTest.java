@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,13 +40,15 @@ public class UserDetailsActivityTest extends ActivityInstrumentationTestCase2<Us
     super(UserDetailsActivity.class);
   }
 
-  @Override protected void setUp() throws Exception {
+  @Override
+  protected void setUp() throws Exception {
     super.setUp();
     this.setActivityIntent(createTargetIntent());
     this.userDetailsActivity = getActivity();
   }
 
-  @Override protected void tearDown() throws Exception {
+  @Override
+  protected void tearDown() throws Exception {
     super.tearDown();
   }
 
@@ -64,18 +66,26 @@ public class UserDetailsActivityTest extends ActivityInstrumentationTestCase2<Us
   }
 
   public void testLoadUserHappyCaseViews() {
-    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.rl_retry)).check(matches(not(isDisplayed())));
-    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.rl_progress)).check(matches(not(isDisplayed())));
+    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.rl_retry))
+        .check(matches(not(isDisplayed())));
+    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.rl_progress))
+        .check(matches(not(isDisplayed())));
 
-    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_fullname)).check(matches(isDisplayed()));
-    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_email)).check(matches(isDisplayed()));
-    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_description)).check(matches(isDisplayed()));
+    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_fullname))
+        .check(matches(isDisplayed()));
+    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_email))
+        .check(matches(isDisplayed()));
+    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_description))
+        .check(matches(isDisplayed()));
   }
 
   public void testLoadUserHappyCaseData() {
-    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_fullname)).check(matches(withText("John Sanchez")));
-    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_email)).check(matches(withText("dmedina@katz.edu")));
-    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_followers)).check(matches(withText("4523")));
+    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_fullname))
+        .check(matches(withText("John Sanchez")));
+    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_email))
+        .check(matches(withText("dmedina@katz.edu")));
+    onView(ViewMatchers.withId(com.adnanbal.fxdedektifi.sample.presentation.R.id.tv_followers))
+        .check(matches(withText("4523")));
   }
 
   private Intent createTargetIntent() {

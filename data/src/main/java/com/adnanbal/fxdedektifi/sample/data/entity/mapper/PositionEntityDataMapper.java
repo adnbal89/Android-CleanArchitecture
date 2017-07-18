@@ -15,6 +15,11 @@ import javax.inject.Singleton;
 @Singleton
 public class PositionEntityDataMapper {
 
+  /**
+   * initial price value
+   */
+  public static final double INITIAL_DOUBLE_VALUE = 0.0;
+
   @Inject
   PositionEntityDataMapper() {
   }
@@ -28,14 +33,48 @@ public class PositionEntityDataMapper {
 
   public Position transform(PositionEntity positionEntity) {
     Position position = null;
+
     if (positionEntity != null) {
       position = new Position(positionEntity.getPositionId());
       position.setPair(positionEntity.getPair());
       position.setBuy_sell(positionEntity.isBuy_sell());
       position.setVolume(positionEntity.getVolume());
       position.setProfit(positionEntity.getProfit());
+      position.setOpeningPrice(positionEntity.getOpeningPrice());
+      position.setClosingPrice(positionEntity.getClosingPrice());
+      position.setOpen(positionEntity.isOpen());
+      position.setStatus(positionEntity.getStatus());
+      position.setComment(positionEntity.getComment());
     }
     return position;
+  }
+
+
+
+
+  public PositionEntity createPositionEntityObject(int positionId, String pair, double volume,
+      boolean buy_sell,
+      double openingPrice, boolean open, String status, String comment) {
+
+    PositionEntity positionEntity;
+    positionEntity = new PositionEntity();
+
+    positionEntity.setPositionId(positionId);
+    positionEntity.setPair(pair);
+    positionEntity.setVolume(volume);
+    positionEntity.setBuy_sell(buy_sell);
+    positionEntity.setProfit(INITIAL_DOUBLE_VALUE);
+    positionEntity.setOpeningPrice(openingPrice);
+    positionEntity.setClosingPrice(INITIAL_DOUBLE_VALUE);
+    positionEntity.setOpen(open);
+    positionEntity.setStatus(status);
+    positionEntity.setComment(comment);
+
+    return positionEntity;
+  }
+
+  public Boolean forResult(int positionId) {
+    return true;
   }
 
   /**

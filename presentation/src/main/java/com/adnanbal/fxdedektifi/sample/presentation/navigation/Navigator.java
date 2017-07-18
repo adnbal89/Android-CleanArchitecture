@@ -17,12 +17,12 @@ package com.adnanbal.fxdedektifi.sample.presentation.navigation;
 
 import android.content.Context;
 import android.content.Intent;
-import com.adnanbal.fxdedektifi.sample.presentation.view.activity.LoginActivity;
+import com.adnanbal.fxdedektifi.sample.presentation.view.activity.PersonalPositionsActivity;
+import com.adnanbal.fxdedektifi.sample.presentation.view.activity.SignalsActivity;
 import com.adnanbal.fxdedektifi.sample.presentation.view.activity.UserDetailsActivity;
 import com.adnanbal.fxdedektifi.sample.presentation.view.activity.UserListActivity;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import com.adnanbal.fxdedektifi.sample.presentation.view.activity.PersonalPositionsActivity;
 
 /**
  * Class used to navigate through the application.
@@ -59,7 +59,6 @@ public class Navigator {
     }
   }
 
-
 //  /**
 //   * Goes to the login screen.
 //   *
@@ -81,6 +80,31 @@ public class Navigator {
   public void navigateToPersonalPositions(Context context) {
     if (context != null) {
       Intent intentToLaunch = PersonalPositionsActivity.getCallingIntent(context);
+      context.startActivity(intentToLaunch);
+    }
+  }
+
+//  /**
+//   * Goes to the {@link PersonalPositionsActivity} screen.
+//   *
+//   * @param context A Context needed to open the destiny activity.
+//   */
+//  public void navigateToPositionsHistory(Context context) {
+//    if (context != null) {
+//      Intent intentToLaunch = PersonalPositionsActivity.getCallingIntent(context);
+//      context.startActivity(intentToLaunch);
+//    }
+//  }
+
+
+  /**
+   * Goes to the given signals screen.
+   *
+   * @param context A Context needed to open the destiny activity.
+   */
+  public void navigateToSignals(Context context) {
+    if (context != null) {
+      Intent intentToLaunch = SignalsActivity.getCallingIntent(context);
       context.startActivity(intentToLaunch);
     }
   }

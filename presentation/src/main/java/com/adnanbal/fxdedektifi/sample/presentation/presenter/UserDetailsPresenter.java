@@ -52,11 +52,16 @@ public class UserDetailsPresenter implements Presenter {
     this.viewDetailsView = view;
   }
 
-  @Override public void resume() {}
+  @Override
+  public void resume() {
+  }
 
-  @Override public void pause() {}
+  @Override
+  public void pause() {
+  }
 
-  @Override public void destroy() {
+  @Override
+  public void destroy() {
     this.getUserDetailsUseCase.dispose();
     this.viewDetailsView = null;
   }
@@ -104,17 +109,20 @@ public class UserDetailsPresenter implements Presenter {
 
   private final class UserDetailsObserver extends DefaultObserver<User> {
 
-    @Override public void onComplete() {
+    @Override
+    public void onComplete() {
       UserDetailsPresenter.this.hideViewLoading();
     }
 
-    @Override public void onError(Throwable e) {
+    @Override
+    public void onError(Throwable e) {
       UserDetailsPresenter.this.hideViewLoading();
       UserDetailsPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
       UserDetailsPresenter.this.showViewRetry();
     }
 
-    @Override public void onNext(User user) {
+    @Override
+    public void onNext(User user) {
       UserDetailsPresenter.this.showUserDetailsInView(user);
     }
   }

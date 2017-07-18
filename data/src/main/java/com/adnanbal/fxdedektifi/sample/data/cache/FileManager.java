@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,8 @@ import javax.inject.Singleton;
 public class FileManager {
 
   @Inject
-  FileManager() {}
+  FileManager() {
+  }
 
   /**
    * Writes a file to Disk.
@@ -52,6 +53,23 @@ public class FileManager {
       }
     }
   }
+
+  /**
+   * Deletes a file from Disk.
+   * This is an I/O operation and this method executes in the main thread, so it is recommended to
+   * perform this operation using another thread.
+   *
+   * @param file The file to write to Disk.
+   */
+  boolean deleteFromFile(File file) {
+    if (file.exists()) {
+      return file.delete();
+    } else {
+      return true;
+    }
+
+  }
+
 
   /**
    * Reads a content from a file.

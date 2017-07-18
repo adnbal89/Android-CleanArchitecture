@@ -7,6 +7,7 @@ import io.reactivex.Observable;
  * An interface representing a position Cache.
  */
 public interface PositionCache {
+
   /**
    * Gets an {@link Observable} which will emit a {@link PositionEntity}.
    *
@@ -19,7 +20,14 @@ public interface PositionCache {
    *
    * @param positionEntity Element to insert in the cache.
    */
-  void put(PositionEntity positionEntity);
+  Observable<Boolean> put(PositionEntity positionEntity);
+
+  /**
+   * Puts and element into the cache.
+   *
+   * @param positionId Element to remove from the cache.
+   */
+  Observable<Boolean> delete(final int positionId);
 
   /**
    * Checks if an element (Position) exists in the cache.
@@ -40,4 +48,5 @@ public interface PositionCache {
    * Evict all elements of the cache.
    */
   void evictAll();
+
 }
