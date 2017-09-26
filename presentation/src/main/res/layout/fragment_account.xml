@@ -43,6 +43,7 @@
     android:layout_gravity="center"
     android:background="@android:drawable/dialog_holo_light_frame"
     android:clickable="true"
+    android:focusable="true"
     android:text="@string/text_extend_membership"/>
 
   <include

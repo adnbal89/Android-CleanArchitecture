@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "786299252555",
+    "firebase_url": "https://fxingsign.firebaseio.com",
+    "project_id": "fxingsign",
+    "storage_bucket": "fxingsign.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786299252555:android:779051d24ca5c82c",
+        "android_client_info": {
+          "package_name": "com.adnanbal.fxdedektifi.sample.data"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786299252555-ies4v40e0clufubkjbnvd3as8silt9do.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.adnanbal.fxdedektifi.sample.data",
+            "certificate_hash": "e4100bdd09b2f27aa9c85c9cea294492bee75623"
+          }
+        },
+        {
+          "client_id": "786299252555-48fh0f9r4rof4r8745qtb4m6ddu1n568.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYfyLcDWe5qNXpwmEc1p0S21ePk3xwJbQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786299252555-48fh0f9r4rof4r8745qtb4m6ddu1n568.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

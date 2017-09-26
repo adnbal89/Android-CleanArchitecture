@@ -4,7 +4,7 @@ android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
 
     compileSdkVersion 26
-    buildToolsVersion '26.0.0'
+    buildToolsVersion '26.0.1'
 
 
     defaultConfig {
@@ -12,17 +12,34 @@ android {
         targetSdkVersion 26
 
         applicationId globalConfiguration.getAt("androidApplicationId")
+        versionCode globalConfiguration.getAt("androidVersionCode")
         versionName globalConfiguration.getAt("androidVersionName")
         testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
         testApplicationId globalConfiguration.getAt("testApplicationId")
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
 
+        resConfigs "auto"
 
+    }
+
+    aaptOptions {
+        cruncherEnabled = false
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    dexOptions {
+        preDexLibraries true
+        maxProcessCount 8
+        javaMaxHeapSize "2g"
+
+        // Instead of setting the heap size for the DEX process, increase Gradle's
+        // heap size to enable dex-in-process. To learm more, read the next section.
+        // javaMaxHeapSize "2048m"
     }
 
     packagingOptions {
@@ -47,29 +64,43 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('../buildsystem/debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file('../buildsystem/fxingSign_3.jks')
+            storePassword 'ummugul89'
+            keyAlias 'key1'
+            keyPassword 'ummugul89'
+        }
+
+        release {
+            storeFile file('../buildsystem/fxingSign_2.jks')
+            storePassword 'ummugul89'
+            keyAlias 'key1'
+            keyPassword 'ummugul89'
         }
     }
+
 
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            ext.enableCrashlytics = false
+        }
+
+        release {
+            signingConfig signingConfigs.release
         }
     }
+
 
     flavorDimensions "free", "paid"
 
     productFlavors {
         freeFlavour {
-            applicationId "com.adnanbal.fxdedektifi.sample.presentation.free"
+//            applicationId "com.adnanbal.fxdedektifi.forex.presentation.free"
             dimension "free"
             minSdkVersion 17
         }
         paidFlavor {
-            applicationId "com.adnanbal.fxdedektifi.sample.presentation.paid"
+//            applicationId "com.adnanbal.fxdedektifi.forex.presentation.paid"
             dimension "paid"
             minSdkVersion 17
         }
@@ -93,20 +124,38 @@ dependencies {
 
     //added by Adnan
     compile presentationDependencies.androidDesign
-    compile presentationDependencies.appCompat
-    compile presentationDependencies.appCompatV4
+//    compile presentationDependencies.appCompat
+//    compile presentationDependencies.appCompatV4
     compile presentationDependencies.recyclerView
-
     compile presentationDependencies.percentRelativeLayout
-    compile presentationDependencies.auth0Lock
-    compile presentationDependencies.constraintLayout
+//    compile presentationDependencies.auth0Lock
+//    compile presentationDependencies.constraintLayout
     compile presentationDependencies.navigationView
-    compile presentationDependencies.recyclerViewAnimator
-    compile presentationDependencies.mpAndroidChart
-    compile presentationDependencies.materialDesignDialog
-    compile presentationDependencies.materialDialog
+//    compile presentationDependencies.recyclerViewAnimator
 
-    compile presentationDependencies.checkout
+    compile presentationDependencies.mpAndroidChart
+//    compile presentationDependencies.materialDesignDialog
+    compile presentationDependencies.materialDialog
+//    compile presentationDependencies.checkout
+//    compile presentationDependencies.firebaseCrash
+//    compile presentationDependencies.firebaseDatabase
+//    compile presentationDependencies.firebaseMessaging
+//    compile presentationDependencies.firebaseStorage
+
+//    compile 'com.android.billingclient:billing:dp-1'
+    compile 'org.solovyev.android:checkout:1.0.1'
+    compile 'com.android.support:multidex:1.0.1'
+    compile presentationDependencies.firebaseUIAuth
+//    compile presentationDependencies.firebaseAuth
+
+//    compile "com.google.android.gms:play-services-auth:2.3.0"
+
+    // Required only if Facebook login support is required
+    compile 'com.facebook.android:facebook-android-sdk:4.26.0'
+    // Required only if Twitter login support is required
+    compile("com.twitter.sdk.android:twitter-core:3.0.0@aar") { transitive = true }
+
+
 
     androidTestCompile presentationTestDependencies.mockito
     androidTestCompile presentationTestDependencies.dexmaker
@@ -121,4 +170,10 @@ dependencies {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
 
+
 }
+apply plugin: 'com.google.gms.google-services'
+
+
+
+

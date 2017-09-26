@@ -8,9 +8,12 @@ buildscript {
         mavenCentral()
         maven { url 'https://maven.google.com' }
         maven { url "https://jitpack.io" }
+        maven { url 'https://maven.fabric.io/public' }
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.google.gms:google-services:3.1.0'
 
 //    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
@@ -19,11 +22,11 @@ buildscript {
 allprojects {
     ext {
 
-        androidApplicationId = 'com.adnanbal.fxdedektifi.sample.presentation'
+        androidApplicationId = 'com.adnanbal.fxdedektifi.forex.presentation'
         androidVersionCode = 1
-        androidVersionName = "1.0"
+        androidVersionName = "1"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
-        testApplicationId = 'com.adnanbal.fxdedektifi.sample.presentation.test'
+        testApplicationId = 'com.adnanbal.fxdedektifi.forex.presentation.test'
     }
 }
 

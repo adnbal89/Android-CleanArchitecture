@@ -10,6 +10,8 @@ buildscript {
     }
 }
 
+//apply plugin: 'com.android.application'
+
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -68,9 +70,14 @@ dependencies {
     compile dataDependencies.rxJava
     compile dataDependencies.rxAndroid
     compile dataDependencies.androidAnnotations
-    compile dataDependencies.jacksonCore
-    compile dataDependencies.jacksonAnnotation
-    compile dataDependencies.jacksonDatabind
+//    compile dataDependencies.jacksonCore
+//    compile dataDependencies.jacksonAnnotation
+//    compile dataDependencies.jacksonDatabind
+    compile dataDependencies.firebaseDatabase
+    compile dataDependencies.firebaseCore
+    compile 'com.firebase:firebase-client-android:2.5.2'
+
+
 
 
     testCompile testDependencies.junit
@@ -78,3 +85,5 @@ dependencies {
     testCompile testDependencies.mockito
     testCompile testDependencies.robolectric
 }
+
+//apply plugin: 'com.google.gms.google-services'

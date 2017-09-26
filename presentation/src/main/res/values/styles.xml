@@ -39,12 +39,59 @@
   </style>
 
   <!--<style name="MyCustomLogInTheme" parent="Lock.Theme">-->
-    <!--<item name="Auth0.HeaderLogo">@drawable/com_auth0_lock_header_logo</item>-->
-    <!--<item name="Auth0.HeaderTitle">@string/com_auth0_lock_header_title</item>-->
-    <!--<item name="Auth0.HeaderTitleColor">@color/com_auth0_lock_text</item>-->
-    <!--<item name="Auth0.HeaderBackground">@color/com_auth0_lock_header_background</item>-->
-    <!--<item name="Auth0.PrimaryColor">@color/com_auth0_lock_social_github</item>-->
-    <!--<item name="Auth0.DarkPrimaryColor">@color/com_auth0_lock_social_github</item>-->
+  <!--<item name="Auth0.HeaderLogo">@drawable/com_auth0_lock_header_logo</item>-->
+  <!--<item name="Auth0.HeaderTitle">@string/com_auth0_lock_header_title</item>-->
+  <!--<item name="Auth0.HeaderTitleColor">@color/com_auth0_lock_text</item>-->
+  <!--<item name="Auth0.HeaderBackground">@color/com_auth0_lock_header_background</item>-->
+  <!--<item name="Auth0.PrimaryColor">@color/com_auth0_lock_social_github</item>-->
+  <!--<item name="Auth0.DarkPrimaryColor">@color/com_auth0_lock_social_github</item>-->
   <!--</style>-->
+
+  <style name="Title">
+    <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+    <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    <item name="android:textColor">?attr/colorAccent</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+
+
+  //Google Auth Styles
+  <!-- Dark Buttons -->
+  <style name="ThemeOverlay.MyDarkButton" parent="ThemeOverlay.AppCompat.Dark">
+    <item name="colorButtonNormal">@color/colorAccent</item>
+    <item name="android:layout_marginRight">4dp</item>
+    <item name="android:layout_marginLeft">4dp</item>
+    <item name="android:textColor">@android:color/white</item>
+  </style>
+
+  <style name="ThemeOverlay.FirebaseIcon" parent="AppTheme">
+    <item name="android:layout_marginTop">@dimen/icon_top_margin</item>
+    <item name="android:layout_marginBottom">@dimen/icon_bottom_margin</item>
+  </style>
+
+  <style name="ThemeOverlay.MyTitleText" parent="AppTheme">
+    <item name="android:gravity">center</item>
+    <item name="android:textSize">36sp</item>
+  </style>
+
+  <!-- Light EditTexts -->
+  <style name="ThemeOverlay.MyLightEditText" parent="ThemeOverlay.AppCompat.Dark"/>
+
+  <style name="ThemeOverlay.MyTextDetail" parent="AppTheme">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:fadeScrollbars">true</item>
+    <item name="android:gravity">center</item>
+    <item name="android:maxLines">5</item>
+    <item name="android:padding">4dp</item>
+    <item name="android:scrollbars">vertical</item>
+    <item name="android:textSize">14sp</item>
+  </style>
+
+  <declare-styleable name="AHBottomNavigationBehavior_Params"><attr format="reference" name="tabLayoutId"/><attr format="boolean" name="selectedBackgroundVisible"/><attr format="boolean" name="translucentNavigationEnabled"/></declare-styleable>
+
+
+  //////////////
 
 </resources>

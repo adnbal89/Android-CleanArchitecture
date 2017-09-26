@@ -5,23 +5,25 @@ allprojects {
         mavenCentral()
         maven { url 'https://maven.google.com' }
         maven { url "https://jitpack.io" }
+        maven { url 'https://maven.fabric.io/public' }
+
     }
 }
 
 ext {
     //Android
-    androidBuildToolsVersion = "26.0.0"
+    androidBuildToolsVersion = "26.0.1"
     androidMinSdkVersion = 17
     androidTargetSdkVersion = 26
     androidCompileSdkVersion = 26
-    androidAppCompatVersion = "26.0.0-beta2"
-    androidDesignVersion = "26.0.0-beta2"
-    appCompatV4Version = "26.0.0-beta2"
+    androidAppCompatVersion = "26.0.1"
+    androidDesignVersion = "26.0.1"
+    appCompatV4Version = "26.0.1"
 
     //Libraries
     daggerVersion = '2.11'
     butterKnifeVersion = '8.6.0'
-    recyclerViewVersion = '26.0.0-beta2'
+    recyclerViewVersion = '26.0.1'
     recyclerViewAnimatorsVersion = '2.2.6'
     rxJavaVersion = '2.1.0'
     rxAndroidVersion = '2.0.1'
@@ -33,7 +35,7 @@ ext {
     arrowVersion = '1.0.0'
     // Adnan BAL Added Libraries
     auth0LockVersion = '2.4.0'
-    percentRelativeLayoutVersion = '26.0.0-beta2'
+    percentRelativeLayoutVersion = '26.0.1'
     constraintLayoutVersion = '1.0.2'
     navigationViewVersion = '2.0.6'
     bottomBarVersion = '2.3.1'
@@ -42,6 +44,10 @@ ext {
     materialDesignDialog = '1.3.1'
     materialDialog = '0.9.4.5'
     sweetAlertDialogVersion = '1.3'
+    firebaseVersion = '11.0.4'
+    googlePlayServicesVersion = '3.1.0'
+    firebaseAuthUIVersion = '2.3.0'
+
 
     //Billing
     checkoutVersion = '1.0.1'
@@ -70,18 +76,22 @@ ext {
             appCompat            : "com.android.support:appcompat-v7:${androidAppCompatVersion}",
             percentRelativeLayout: "com.android.support:percent:${percentRelativeLayoutVersion}",
             auth0Lock            : "com.auth0.android:lock:${auth0LockVersion}",
-            constraintLayout     : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
+//            constraintLayout     : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
             navigationView       : "com.aurelhubert:ahbottomnavigation:${navigationViewVersion}",
             bottomBar            : "com.roughike:bottom-bar:${bottomBarVersion}",
             androidDesign        : "com.android.support:design:${androidDesignVersion}",
-            appCompatV4          : "com.android.support:support-v4:${appCompatV4Version}",
+//            appCompatV4          : "com.android.support:support-v4:${appCompatV4Version}",
             butterKnifeCompiler  : "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
-            recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:${recyclerViewAnimatorsVersion}",
+//            recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:${recyclerViewAnimatorsVersion}",
             mpAndroidChart       : "com.github.PhilJay:MPAndroidChart:${mpAndroidChartVersion}",
             materialDesignDialog : "me.drakeet.materialdialog:library:${materialDesignDialog}",
             materialDialog       : "com.afollestad.material-dialogs:core:${materialDialog}",
             sweetAlertDialog     : "cn.pedant.sweetalert:library:${sweetAlertDialogVersion}",
-            checkout             : "org.solovyev.android:checkout:${checkoutVersion}"
+            checkout             : "org.solovyev.android:checkout:${checkoutVersion}",
+            firebaseCrash        : "com.google.firebase:firebase-crash:${firebaseVersion}",
+            firebaseAuth         : "com.google.firebase:firebase-auth:${firebaseVersion}",
+            firebaseUIAuth        : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}"
+
     ]
 
     presentationTestDependencies = [
@@ -119,7 +129,13 @@ ext {
             androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
             jacksonCore       : "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}",
             jacksonAnnotation : "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
-            jacksonDatabind   : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+            jacksonDatabind   : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+            firebaseDatabase  : "com.google.firebase:firebase-database:${firebaseVersion}",
+            firebaseCore      : "com.google.firebase:firebase-core:${firebaseVersion}",
+            firebaseMessaging : "com.google.firebase:firebase-messaging:${firebaseVersion}",
+            firebaseStorage   : "com.google.firebase:firebase-storage:${firebaseVersion}",
+            firebaseUIAuth        : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}"
+//            firebaseAuth      : "com.google.firebase:firebase-auth:${firebaseVersion}"
     ]
 
     dataTestDependencies = [

@@ -29,15 +29,35 @@
     <item>http://archive.org/download/Tears-of-Steel/tears_of_steel_720p.mp4</item>
   </string-array>
 
-  <string-array name="array_signal_click_menu_2">
-    <item>Open Position</item>
-    <item>Close Position</item>
-    <item>Show Comment</item>
-  </string-array>
 
   <string-array name="array_signal_click_menu_1">
     <item>Open Position</item>
+
+  </string-array>
+
+  <string-array name="array_signal_click_menu_2">
+    <item>Open Position</item>
+    <item>Show Comment</item>
+  </string-array>
+
+  <string-array name="array_signal_click_menu_3">
     <item>Close Position</item>
+
+  </string-array>
+
+  <string-array name="array_signal_click_menu_4">
+    <item>Close Position</item>
+    <item>Show Comment</item>
+
+  </string-array>
+
+
+
+
+  <string-array name="array_fragment_titles">
+    <item>My Account</item>
+    <item>Signals</item>
+    <item>History</item>
 
   </string-array>
 

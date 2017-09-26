@@ -40,7 +40,7 @@
   <item name="color_textview_personal_positions_volume" type="color">#000000</item>
   <item name="color_textview_personal_positions_profit" type="color">#000000</item>
   <item name="color_textview_personal_positions_row_background" type="color">#FFFFFF</item>
-
+  <item name="color_textview_profit_grey" type="color">#BFBFBF</item>
 
 
 
@@ -57,5 +57,21 @@
   //material title color
   <item name="color_material_dialog_signal_fragment" type="color">#FF007CF9</item>
 
+  //Google Auth colors
+  <color name="colorPrimary">#039BE5</color>
+  <color name="colorPrimaryDark">#0288D1</color>
+  <color name="colorAccent">#FFA000</color>
+
+  <color name="grey_100">#F5F5F5</color>
+  <color name="grey_300">#E0E0E0</color>
+
+  <color name="colorBottomNavigationAccent">#FF4081</color>
+  <color name="colorBottomNavigationActiveColored">#FFFFFF</color>
+  <color name="colorBottomNavigationInactive">#747474</color>
+  <color name="colorBottomNavigationInactiveColored">#50FFFFFF</color>
+  <color name="colorBottomNavigationNotification">#F63D2B</color>
+  <color name="colorBottomNavigationPrimary">#3F51B5</color>
+  <color name="colorBottomNavigationPrimaryDark">#303F9F</color>
+  <color name="colorBottomNavigationSelectedBackground">#17000000</color>
 
 </resources>
