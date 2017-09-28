@@ -259,7 +259,9 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
     } else {
       this.showToastMessage(getResources().getString(R.string.text_signal_closed));
     }
+
     this.signalsAdapter.notifyDataSetChanged();
+
   }
 
   @Override

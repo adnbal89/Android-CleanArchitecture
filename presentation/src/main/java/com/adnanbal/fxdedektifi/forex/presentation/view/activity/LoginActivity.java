@@ -80,7 +80,6 @@ public class LoginActivity extends BaseActivity {
       IdpResponse response = IdpResponse.fromResultIntent(data);
       if (resultCode == ResultCodes.OK) {
         //Navigate to Signals Activity
-        this.navigator.navigateToSignals(this);
         // Successfully signed in
         updateViews();
         return;
@@ -106,12 +105,13 @@ public class LoginActivity extends BaseActivity {
   }
 
   private void updateViews() {
+
     if (isLoggedIn()) {
-      Intent intentToLaunch = SignalsActivity.getCallingIntent(this);
-      startActivity(intentToLaunch);
       showMessage(R.string.signed_in);
       button.setText(R.string.sign_out);
       FirebaseUser user = auth.getCurrentUser();
+
+      this.navigator.navigateToSignals(this);
 
       AndroidApplication.userUid = user.getUid();
 
@@ -139,7 +139,6 @@ public class LoginActivity extends BaseActivity {
   @Override
   public void onDestroy() {
     super.onDestroy();
-
   }
 
 }

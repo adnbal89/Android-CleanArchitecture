@@ -52,7 +52,6 @@ public class RestApiSignalImpl extends BaseFirebaseDataSource implements RestApi
   private Map<String, List<String>> listChangedField = new HashMap<>();
   List<String> changedFieldsList;
 
-
   private final Context context;
   private final SignalEntityJsonMapper signalEntityJsonMapper;
   Firebase myFirebaseRef;
@@ -98,8 +97,8 @@ public class RestApiSignalImpl extends BaseFirebaseDataSource implements RestApi
   public Observable<List<SignalEntity>> signalEntityList() {
 
     return Observable.create(emitter -> {
-      Firebase myFirebaseRef = new Firebase("https://fxingsign.firebaseio.com/");
 
+      Firebase myFirebaseRef = new Firebase("https://fxingsign.firebaseio.com/");
       if (isThereInternetConnection()) {
         ////////////////////
 //        myFirebaseRef.child("signal").addChildEventListener(new ChildEventListener() {
@@ -299,7 +298,7 @@ public class RestApiSignalImpl extends BaseFirebaseDataSource implements RestApi
             //positionEntityJsonMapper.transformPositionEntity(responseRemoveEntity)
             emitter
                 .onNext(true);
-            emitter.onComplete();
+//            emitter.onComplete();
           } else {
             emitter.onError(new NetworkConnectionException());
           }

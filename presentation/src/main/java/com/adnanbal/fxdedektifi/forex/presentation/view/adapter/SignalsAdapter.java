@@ -35,9 +35,7 @@ import com.adnanbal.fxdedektifi.forex.presentation.util.DateFormatter;
 import com.adnanbal.fxdedektifi.forex.presentation.util.DoubleToString;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
 
 /**
@@ -129,7 +127,11 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
 
   private boolean userHasOpenedSignal(SignalModel signalModel) {
 
-    for (UserSignalModel userSignalModel: AndroidApplication.listUserSignalModel) {
+
+    for (UserSignalModel userSignalModel : AndroidApplication.listUserSignalModel) {
+
+      System.out.println(
+          "AndroidApplication.listUserSignalModel.userSignalModel.getSignals().size() SIZE : " + userSignalModel.getSignals().size());
 
       for (String signalId : userSignalModel.getSignals().keySet()) {
         System.out.println(signalId + " : " + signalId);

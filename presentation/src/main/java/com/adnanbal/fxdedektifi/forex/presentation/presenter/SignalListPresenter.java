@@ -18,6 +18,7 @@ import com.adnanbal.fxdedektifi.forex.presentation.mapper.UserSignalModelDataMap
 import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.view.SignalListView;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -169,8 +170,26 @@ public class SignalListPresenter implements Presenter {
 //                signalModel.getComment(), signalModel.getStatusChangePrice(), signalModel.getTerm(),
 //                signalModel.getDate(), signalModel.getUsers(), signalModel.getChangedFields()
 //
+
     Map<String, Boolean> userSignalMap = new HashMap<>();
+
     userSignalMap.put(signalId, true);
+
+    UserSignalModel uSignalModel = new UserSignalModel(userSignalMap);
+    //if operation is close
+    if (!openOrClose) {
+      AndroidApplication.listUserSignalModel.iterator().next().getSignals().remove(signalId);
+    } else {
+      if (AndroidApplication.listUserSignalModel.size() != 0) {
+
+        AndroidApplication.listUserSignalModel.iterator().next().getSignals().put(signalId, true);
+      } else {
+        AndroidApplication.listUserSignalModel = new ArrayList<>();
+        AndroidApplication.listUserSignalModel.add(uSignalModel);
+      }
+
+    }
+
     String authenticatedUserUid = AndroidApplication.userUid;
 
     this.openSignalUseCase
@@ -243,6 +262,7 @@ public class SignalListPresenter implements Presenter {
     public void onNext(List<UserSignal> userSignals) {
 //      SignalListPresenter.this.showSignalsCollectionInView(userSignals);
       AndroidApplication.listUserSignalModel = transformUserSignalToUserSignalModel(userSignals);
+//      confirmAddOperationComplete(true);
 //        SignalListPresenter.this.hideViewLoading();
     }
   }
