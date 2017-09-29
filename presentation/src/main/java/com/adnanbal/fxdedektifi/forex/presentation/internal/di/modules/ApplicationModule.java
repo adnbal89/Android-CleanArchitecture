@@ -28,12 +28,14 @@ import com.adnanbal.fxdedektifi.forex.data.executor.JobExecutor;
 import com.adnanbal.fxdedektifi.forex.data.repository.PositionDataRepository;
 import com.adnanbal.fxdedektifi.forex.data.repository.PositionHistoryDataRepository;
 import com.adnanbal.fxdedektifi.forex.data.repository.SignalDataRepository;
+import com.adnanbal.fxdedektifi.forex.data.repository.SubscriptionDataRepository;
 import com.adnanbal.fxdedektifi.forex.data.repository.UserDataRepository;
 import com.adnanbal.fxdedektifi.forex.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.forex.domain.executor.ThreadExecutor;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionHistoryRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.SignalRepository;
+import com.adnanbal.fxdedektifi.forex.domain.repository.SubscriptionRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.UserRepository;
 import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.UIThread;
@@ -58,7 +60,6 @@ public class ApplicationModule {
     this.application = application;
   }
 
-
 //  @Provides
 //  @ApplicationScope
 //  public FirebaseAuth provideFirebaseAuth() {
@@ -77,7 +78,8 @@ public class ApplicationModule {
   @Provides
   @Singleton
   public AnalyticsInterface provideAnalyticsHelper(Context context) {
-    AnalyticsInterface AnalyticsInterface = new FirebaseAnalyticsHelper(FirebaseAnalytics.getInstance(context));
+    AnalyticsInterface AnalyticsInterface = new FirebaseAnalyticsHelper(
+        FirebaseAnalytics.getInstance(context));
     return AnalyticsInterface;
   }
 
@@ -141,6 +143,13 @@ public class ApplicationModule {
   @Singleton
   SignalRepository provideSignalRepository(SignalDataRepository signalDataRepository) {
     return signalDataRepository;
+  }
+
+  @Provides
+  @Singleton
+  SubscriptionRepository provideSubscriptionRepository(
+      SubscriptionDataRepository subscriptionDataRepository) {
+    return subscriptionDataRepository;
   }
 
   @Provides

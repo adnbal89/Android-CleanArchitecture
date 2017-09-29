@@ -5,9 +5,10 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:layout_alignParentBottom="true"
-  android:background="@color/color_bottombar_background_Primary"
+  android:background="@color/color_appbar_background_Primary"
   android:minHeight="@dimen/bottom_navigation_height"
-  app:itemBackground="@color/color_bottombar_background_Primary"
+
+  app:itemBackground="@color/color_appbar_background_Primary"
   app:itemIconTint="@drawable/nav_item_color_state"
   app:itemTextColor="@drawable/nav_item_color_state"
   app:layout_widthPercent="100%"

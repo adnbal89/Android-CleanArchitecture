@@ -83,7 +83,6 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
    * Interface for listening signal list events.
    */
   public interface SignalListListener {
-
     void onSignalClicked(final SignalModel positionModel, ConfirmSignalDialogView view);
   }
 
@@ -165,8 +164,6 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
       this.loadUserSignalsList(AndroidApplication.userUid);
       this.loadSignalList();
     }
-
-
   }
 
   @Override
@@ -274,7 +271,6 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
 
 //    SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
 //    this.rv_signals.setItemAnimator(animator);
-
     this.rv_signals.setLayoutManager(new PositionsLayoutManager(context()));
     this.rv_signals.setAdapter(signalsAdapter);
   }

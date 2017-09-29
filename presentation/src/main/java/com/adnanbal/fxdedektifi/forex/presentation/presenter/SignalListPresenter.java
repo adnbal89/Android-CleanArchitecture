@@ -32,7 +32,6 @@ import javax.inject.Inject;
 public class SignalListPresenter implements Presenter {
 
   private SignalModel signalToAdd;
-
   private SignalListView signalListView;
 
   private final static String TAG = SignalListPresenter.class.getName();

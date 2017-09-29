@@ -23,6 +23,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,7 +44,7 @@ import com.adnanbal.fxdedektifi.forex.presentation.model.PositionModel;
 import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.view.ConfirmDialogView;
-import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.AccountFragment;
+import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.AccountAndSubscriptionsFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.ConfirmSignalDialogView;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalHistoryFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalHistoryFragment.PositionHistoryListListener;
@@ -67,6 +70,11 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
   @BindView(R.id.appbar)
   Toolbar toolbar;
+  @BindView(R.id.drawer_layout)
+  DrawerLayout mDrawer;
+  @BindView(R.id.navigationView)
+  NavigationView navigationViewDrawer;
+
 
   Builder mMaterialDialog;
 
@@ -99,12 +107,15 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     setContentView(com.adnanbal.fxdedektifi.forex.presentation.R.layout.activity_layout);
+    unbinder = ButterKnife.bind(this);
+
     BottomNavigationView bottomNavigationView = findViewById(R.id.idBottomBar);
 
     System.out.println("epoch : " + System.currentTimeMillis());
 
     setUpToolbar_();
     setUpMaterialDialog();
+    setupDrawerContent(navigationViewDrawer);
 
     this.initializeInjector();
 
@@ -159,10 +170,59 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
   }
 
+  private void setupDrawerContent(NavigationView navigationView) {
+    navigationView.setNavigationItemSelectedListener(
+        new NavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(MenuItem menuItem) {
+            selectDrawerItem(menuItem);
+            return true;
+          }
+        });
+  }
+
+
+  public void selectDrawerItem(MenuItem menuItem) {
+    // Create a new fragment and specify the fragment to show based on nav item clicked
+
+    switch (menuItem.getItemId()) {
+      case R.id.nav_item_signals_fragment:
+        getSupportActionBar().setTitle(R.string.signals);
+        addFragment(
+            com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
+            new SignalsFragment());
+        break;
+      case R.id.nav_item_profit_fragment:
+        getSupportActionBar().setTitle(R.string.profit);
+        addFragment(
+            com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
+            new PersonalHistoryFragment());
+        break;
+
+      case R.id.nav_item_my_account_fragment:
+        getSupportActionBar().setTitle(R.string.my_account);
+        addFragment(
+            com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
+            new AccountAndSubscriptionsFragment());
+        break;
+
+      default:
+        getSupportActionBar().setTitle(R.string.signals);
+        addFragment(
+            com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
+            new SignalsFragment());
+    }
+
+    // Highlight the selected item has been done by NavigationView
+    menuItem.setChecked(true);
+
+    // Close the navigation drawer
+    mDrawer.closeDrawers();
+  }
+
 
   private void setUpToolbar_() {
 
-    unbinder = ButterKnife.bind(this);
     // Sets the Toolbar to act as the ActionBar for this Activity window.
     // Make sure the toolbar exists in the activity and is not null
     //Inflate the Toolbar with a menu
@@ -180,7 +240,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
             getSupportActionBar().setTitle(R.string.my_account);
             addFragment(
                 com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
-                new AccountFragment());
+                new AccountAndSubscriptionsFragment());
             return true;
 
 
@@ -197,14 +257,15 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
         .applicationComponent(getApplicationComponent())
         .activityModule(getActivityModule())
         .build();
+
   }
 
-//  @Override
-//  public boolean onOptionsItemSelected(MenuItem item) {
-//    switch (item.getItemId()) {
-//      case android.R.id.home:
-//        System.out.println("Drawer Clicked");
-//
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        System.out.println("Drawer Clicked");
+        mDrawer.openDrawer((GravityCompat.START));
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(
 //            this, drawer, toolbar, R.string.navigation_drawer_open,
@@ -212,17 +273,19 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 //        drawer.setDrawerListener(mActionBarDrawerToggle);
 //        mActionBarDrawerToggle.syncState();
 //        drawer.openDrawer(Gravity.LEFT);
-//        drawer.setVisibility(View.VISIBLE);
-//        return true;
-//    }
-//    return super.onOptionsItemSelected(item);
-//  }
+////        drawer.setVisibility(View.VISIBLE);
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
 
 
   @Override
   public PositionComponent getComponent() {
     return positionComponent;
   }
+
+
 
   @Override
   protected void onDestroy() {

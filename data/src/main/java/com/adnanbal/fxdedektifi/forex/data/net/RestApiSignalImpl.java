@@ -100,105 +100,11 @@ public class RestApiSignalImpl extends BaseFirebaseDataSource implements RestApi
 
       Firebase myFirebaseRef = new Firebase("https://fxingsign.firebaseio.com/");
       if (isThereInternetConnection()) {
-        ////////////////////
-//        myFirebaseRef.child("signal").addChildEventListener(new ChildEventListener() {
-//          @Override
-//          public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-//            SignalEntity newPost = dataSnapshot.getValue(SignalEntity.class);
-//            System.out.println(newPost.toString());
-//            System.out.println("Previous Post ID: " + prevChildKey);
-//          }
-//
-//          @Override
-//          public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
-//
-//          @Override
-//          public void onChildRemoved(DataSnapshot dataSnapshot) {}
-//
-//          @Override
-//          public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-//
-//          @Override
-//          public void onCancelled(FirebaseError firebaseError) {
-//
-//          }
-//
-//        });
-
-//        ////////////////////
-//
-//        myFirebaseRef.child("signal").addChildEventListener(new ChildEventListener() {
-//          public void onChildAdded(DataSnapshot dataSnapshot, String previousKey) {
-//            System.out.println("Add " + dataSnapshot.getKey() + " to UI after " + previousKey);
-//            String entryId = dataSnapshot.getKey();
-//            List<String> changedFieldsList = new ArrayList<>();
-//            listChangedField.put(entryId, changedFieldsList);
-//
-//            myFirebaseRef.child("signal").child(dataSnapshot.getKey()).addChildEventListener(
-//                new ChildEventListener() {
-//
-//
-//                  @Override
-//                  public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//
-//                  }
-//
-//                  @Override
-//                  public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                    System.out
-//                        .println(dataSnapshot.getKey() + " changed to " + dataSnapshot.getValue());
-//                    changedFieldsList.add(dataSnapshot.getKey());
-//                    listChangedField.put(entryId, changedFieldsList);
-//                  }
-//
-//                  @Override
-//                  public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                  }
-//
-//                  @Override
-//                  public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                  }
-//
-//                  @Override
-//                  public void onCancelled(FirebaseError firebaseError) {
-//
-//                  }
-//                });
-//
-//
-//          }
-//
-//          public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//          }
-//
-//          public void onChildRemoved(DataSnapshot dataSnapshot) {
-//          }
-//
-//          public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//          }
-//
-//          public void onCancelled(FirebaseError firebaseError) {
-//          }
-//        });
-//////////////////////////////////////////////////////////////////
 
         myFirebaseRef.child("signal").addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(DataSnapshot snapshot) {
             List<SignalEntity> list = new ArrayList<>();
-
-//            System.out
-//                .println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
-//
-//            Iterable<DataSnapshot> snapshotIterable = snapshot.getChildren();
-//            Iterator<DataSnapshot> iterator = snapshotIterable.iterator();
-//
-//            while (iterator.hasNext()) {
-//              SignalEntity signalEntity = iterator.next().getValue(SignalEntity.class);
-//              list.add(signalEntity);
-//            }
 
             for (DataSnapshot child : snapshot.getChildren()) {
 //              child.getValue(SignalEntity.class).setId(child.getKey());

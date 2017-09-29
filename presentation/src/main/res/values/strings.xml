@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Android Clean Architecture</string>
-  <string name="url">http://www.android10.org/</string>
+  <string name="app_name">FXingSign</string>
+  <string name="url">http://www.fxingsign.com/</string>
 
   <string name="activity_title_user_list">Users List</string>
   <string name="activity_title_user_details">User Details</string>
@@ -69,7 +69,7 @@
   <string name="title_personal_positions">Personal Positions</string>
   <string name="my_account">My Account</string>
   <string name="title_account">My Account</string>
-
+  <string name="settings">Settings</string>
   //Position
   <string name="position_buy">Buy</string>
   <string name="position_sell">Sell</string>
@@ -121,8 +121,8 @@
   <string name="text_signal_closed">Position Closed</string>
 
   //TextView texts
-  <string name="text_membership_deadline">Your membership ends : </string>
-
+  <string name="text_membership_deadline">Your subscription period ends in : </string>
+  <string name="subscriptions">Subscriptions</string>
 
   //subscriptions
 

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Interface that represents a data store from where data is retrieved.
+ * Interface that represents a data store from where signal data is retrieved.
  */
 public interface SignalDataStore {
 

@@ -21,6 +21,7 @@ import com.adnanbal.fxdedektifi.forex.domain.executor.ThreadExecutor;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionHistoryRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.SignalRepository;
+import com.adnanbal.fxdedektifi.forex.domain.repository.SubscriptionRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.UserRepository;
 import com.adnanbal.fxdedektifi.forex.presentation.external.AnalyticsInterface;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.modules.ApplicationModule;
@@ -28,6 +29,7 @@ import com.adnanbal.fxdedektifi.forex.presentation.view.activity.BaseActivity;
 import com.google.firebase.database.FirebaseDatabase;
 import dagger.Component;
 import javax.inject.Singleton;
+import org.reactivestreams.Subscription;
 
 /**
  * A component whose lifetime is the life of the application.
@@ -56,4 +58,6 @@ public interface ApplicationComponent {
   FirebaseDatabase firebaseDatabase();
 
   AnalyticsInterface analyticsHelper();
+
+  SubscriptionRepository subscriptionRepository();
 }

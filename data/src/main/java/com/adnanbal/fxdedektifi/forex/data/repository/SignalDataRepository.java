@@ -96,7 +96,8 @@ public class SignalDataRepository implements SignalRepository {
 
 
   @Override
-  public Observable<Boolean> patchUserSignal(Map<String, Boolean> userSignalMap,String authenticatedUserUid, boolean openOrClose) {
+  public Observable<Boolean> patchUserSignal(Map<String, Boolean> userSignalMap,
+      String authenticatedUserUid, boolean openOrClose) {
     //we always get all signals from the cloud
     final SignalDataStore signalDataStore = this.signalDataStoreFactory
         .createCloudDataStore();
