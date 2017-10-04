@@ -39,7 +39,7 @@ public class SubscriptionDataStoreFactory {
   SubscriptionDataStoreFactory(@NonNull Context context) {
     this.context = context.getApplicationContext();
   }
-  
+
 
   /**
    * Create {@link SubscriptionDataStore} to retrieve data from the Cloud.
@@ -53,5 +53,5 @@ public class SubscriptionDataStoreFactory {
 
     return new CloudSubscriptionDataStore(restApi);
   }
-  
+
 }

@@ -247,7 +247,6 @@ public class SignalCacheImpl implements SignalCache {
   }
 
 
-
   /**
    * {@link Runnable} class for writing to disk.
    */

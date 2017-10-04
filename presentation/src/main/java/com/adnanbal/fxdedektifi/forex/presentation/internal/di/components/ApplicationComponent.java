@@ -29,7 +29,6 @@ import com.adnanbal.fxdedektifi.forex.presentation.view.activity.BaseActivity;
 import com.google.firebase.database.FirebaseDatabase;
 import dagger.Component;
 import javax.inject.Singleton;
-import org.reactivestreams.Subscription;
 
 /**
  * A component whose lifetime is the life of the application.

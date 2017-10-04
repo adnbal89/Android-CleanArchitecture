@@ -19,25 +19,42 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@drawable/layout_border"
+  android:layout_height="wrap_content"
   android:orientation="vertical"
+
+
   >
-  <LinearLayout
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
     android:orientation="horizontal"
-    android:weightSum="5">
+    android:background="@drawable/custom_bg"
+    >
+
+    <ImageView
+      android:id="@+id/iv_paid"
+      android:layout_width="40dp"
+      android:layout_height="match_parent"
+      android:paddingStart="5dp"
+      android:paddingEnd="5dp"
+      android:gravity="center"
+      android:src="@drawable/ic_paid"
+      android:visibility="invisible"
+      />
 
     <LinearLayout
-      android:layout_width="0dp"
+      android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_weight="4"
       android:orientation="vertical"
+
+
       android:weightSum="2">
       <TextView
         android:id="@+id/textViewSubscription_name"
@@ -47,6 +64,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:gravity="center"
+        android:textColor="@color/color_textview_subscription_text"
         android:text="Weekly Subscription"
         />
       <TextView
@@ -55,19 +73,20 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingTop="5dp"
+        android:textColor="@color/color_textview_subscription_text"
         android:paddingBottom="5dp"
         android:gravity="center"
         android:text="49.99 USD"
         />
     </LinearLayout>
 
-    <Button
-      android:id="@+id/button_subscription_buy"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:text="@string/buy"/>
 
   </LinearLayout>
-
+  <LinearLayout
+    android:id="@+id/line_separator_signal"
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="@color/color_separator_line"
+    android:orientation="vertical">
+  </LinearLayout>
 </LinearLayout>

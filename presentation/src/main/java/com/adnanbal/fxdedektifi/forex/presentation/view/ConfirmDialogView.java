@@ -22,9 +22,10 @@ package com.adnanbal.fxdedektifi.forex.presentation.view;
 import com.adnanbal.fxdedektifi.forex.presentation.model.PositionModel;
 
 /**
- *  Interface for notifying the fragments when dialog view is confirmed.
+ * Interface for notifying the fragments when dialog view is confirmed.
  */
 public interface ConfirmDialogView {
+
   /**
    * fired when dialog view OK is clicked.
    */

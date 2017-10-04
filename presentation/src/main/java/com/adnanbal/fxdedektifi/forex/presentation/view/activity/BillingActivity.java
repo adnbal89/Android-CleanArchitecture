@@ -20,9 +20,15 @@ package com.adnanbal.fxdedektifi.forex.presentation.view.activity;
 
 import static org.solovyev.android.checkout.ProductTypes.SUBSCRIPTION;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
+import com.adnanbal.fxdedektifi.forex.presentation.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +44,13 @@ import org.solovyev.android.checkout.Sku;
 
 public class BillingActivity extends BaseActivity {
 
+  Unbinder unbinder;
+
   static final String TAG = "BillingActivity";
+
+  public static Intent getCallingIntent(Context context) {
+    return new Intent(context, SignalsActivity.class);
+  }
 
   private static final List<String> SKUS = Arrays
       .asList("test_purchase", "test_subscription", "weekly_subscription");
@@ -49,32 +61,57 @@ public class BillingActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+    setContentView(R.layout.activity_subscriptions);
+    unbinder = ButterKnife.bind(this);
     //BILLING START
     final Billing billing = AndroidApplication.get(this).getBilling();
     mCheckout = Checkout.forActivity(this, billing);
     mCheckout.start();
 
     final Inventory.Request request = Inventory.Request.create();
-    request.loadPurchases(SUBSCRIPTION);
+    request.loadPurchases(ProductTypes.IN_APP);
+    request.loadPurchases(ProductTypes.SUBSCRIPTION);
+
     request.loadSkus(SUBSCRIPTION, SKUS);
     request.loadSkus(ProductTypes.IN_APP, SKUS);
 
-    mCheckout.loadInventory(request, new Inventory.Callback()
+    mCheckout.loadInventory(request, new Inventory.Callback() {
 
-    {
       @Override
       public void onLoaded(@Nonnull Inventory.Products products) {
-        List<Sku> skuList = products.get("subs").getSkus();
-        purchase(skuList.get(0));
+
+        purchase(products.get(ProductTypes.IN_APP).getSkus().get(0));
 
       }
+
+
     });
+
+//    mCheckout.loadInventory(request, new Inventory.Callback()
+//
+//    {
+//      @Override
+//      public void onLoaded(@Nonnull Inventory.Products products) {
+//
+//
+//        List<Sku> skuList = products.get("subs").getSkus();
+//
+//        List<Purchase> pdskuList = products.get(ProductTypes.IN_APP).getPurchases();
+//        List<Purchase> pdsubsList = products.get(ProductTypes.SUBSCRIPTION).getPurchases();
+//
+//
+//        purchase(skuList.get(0));
+//
+//      }
+//    });
 
     //BILLING END
   }
 
   private void purchase(Sku sku) {
     mCheckout.startPurchaseFlow(sku, null, new PurchaseListener());
+
   }
 
   private class PurchaseListener implements RequestListener<Purchase> {
@@ -89,6 +126,7 @@ public class BillingActivity extends BaseActivity {
       Log.d(TAG, "PURCHASE RESULT : " + e.toString());
 
     }
+
   }
 
   @Override

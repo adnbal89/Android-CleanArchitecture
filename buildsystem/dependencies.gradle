@@ -48,7 +48,6 @@ ext {
     googlePlayServicesVersion = '3.1.0'
     firebaseAuthUIVersion = '2.3.0'
 
-
     //Billing
     checkoutVersion = '1.0.1'
 
@@ -90,7 +89,7 @@ ext {
             checkout             : "org.solovyev.android:checkout:${checkoutVersion}",
             firebaseCrash        : "com.google.firebase:firebase-crash:${firebaseVersion}",
             firebaseAuth         : "com.google.firebase:firebase-auth:${firebaseVersion}",
-            firebaseUIAuth        : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}"
+            firebaseUIAuth       : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}"
 
     ]
 
@@ -134,7 +133,7 @@ ext {
             firebaseCore      : "com.google.firebase:firebase-core:${firebaseVersion}",
             firebaseMessaging : "com.google.firebase:firebase-messaging:${firebaseVersion}",
             firebaseStorage   : "com.google.firebase:firebase-storage:${firebaseVersion}",
-            firebaseUIAuth        : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}"
+            firebaseUIAuth    : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}"
 //            firebaseAuth      : "com.google.firebase:firebase-auth:${firebaseVersion}"
     ]
 

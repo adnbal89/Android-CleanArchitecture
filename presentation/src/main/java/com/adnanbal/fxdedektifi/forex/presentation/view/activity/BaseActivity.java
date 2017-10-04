@@ -1,27 +1,14 @@
 package com.adnanbal.fxdedektifi.forex.presentation.view.activity;
 
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
-import com.adnanbal.fxdedektifi.forex.presentation.R;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.ApplicationComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.modules.ActivityModule;
 import com.adnanbal.fxdedektifi.forex.presentation.navigation.Navigator;
-import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.SignalsFragment;
 import javax.inject.Inject;
 
 /**
@@ -53,6 +40,13 @@ public abstract class BaseActivity extends AppCompatActivity {
   @Inject
   Navigator navigator;
 
+  public Navigator getNavigator() {
+    return navigator;
+  }
+
+  public void setNavigator(Navigator navigator) {
+    this.navigator = navigator;
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 //    // Set the list's click listener
 //    mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-
-
   }
 
   /**
@@ -83,7 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity {
    */
   protected void addFragment(int containerViewId, DialogFragment fragment) {
     final FragmentTransaction fragmentTransaction = this
-        .getFragmentManager().beginTransaction();
+        .getSupportFragmentManager().beginTransaction();
 
     fragmentTransaction.replace(containerViewId, fragment);
     fragmentTransaction.commit();
@@ -184,7 +176,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 //    mTitle = title;
 //    getActionBar().setTitle(mTitle);
 //  }
-
 
 
 }

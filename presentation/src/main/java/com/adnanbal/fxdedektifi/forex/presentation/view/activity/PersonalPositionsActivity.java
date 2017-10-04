@@ -64,7 +64,6 @@ public class PersonalPositionsActivity extends BaseActivity implements
   }
 
 
-
   // Menu icons are inflated just as they were with actionbar
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {

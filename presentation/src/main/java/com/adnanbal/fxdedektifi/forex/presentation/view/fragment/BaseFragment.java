@@ -5,12 +5,13 @@
  */
 package com.adnanbal.fxdedektifi.forex.presentation.view.fragment;
 
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.HasComponent;
 
 /**
- * Base {@link android.app.Fragment} class for every fragment in this application.
+ * Base {@link Fragment} class for every fragment in this application.
  */
 public abstract class BaseFragment extends DialogFragment {
 

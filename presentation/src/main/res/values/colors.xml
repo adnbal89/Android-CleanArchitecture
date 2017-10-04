@@ -41,7 +41,7 @@
   <item name="color_textview_personal_positions_profit" type="color">#000000</item>
   <item name="color_textview_personal_positions_row_background" type="color">#FFFFFF</item>
   <item name="color_textview_profit_grey" type="color">#BFBFBF</item>
-
+  <item name="color_textview_subscription_text" type="color">#f1000000</item>
 
 
   //Separatorline color

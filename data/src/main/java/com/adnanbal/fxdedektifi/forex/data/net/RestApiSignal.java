@@ -39,20 +39,19 @@ public interface RestApiSignal {
   /**
    * Api url for getting all signals
    */
-  String API_URL_GET_SIGNAL_LIST = API_BASE_URL + "signal"+".json";
+  String API_URL_GET_SIGNAL_LIST = API_BASE_URL + "signal" + ".json";
 //      +"?_sort=id&_order=desc";
   /**
    * Api url for getting a signal profile: Remember to concatenate id + 'json'
    */
   String API_URL_GET_SIGNAL_DETAILS = API_BASE_URL + "signal" + "/";
 
-  String API_URL_POST_SIGNAL = API_BASE_URL + "user_signal" ;
+  String API_URL_POST_SIGNAL = API_BASE_URL + "user_signal";
 
-  String API_URL_PATCH_USER_SIGNAL = API_BASE_URL + "user_signal" ;
+  String API_URL_PATCH_USER_SIGNAL = API_BASE_URL + "user_signal";
 
 
   String API_URL_POST_SIGNAL_POSITION = API_POSITION_BASE_URL + "position" + JSON_EXTENSION;
-
 
 
   /**
@@ -94,7 +93,8 @@ public interface RestApiSignal {
    *
    * @param userSignalMap The map entity used to patch userSignal data to cloud.
    */
-  Observable<Boolean> patchUserSignalMapToCloud(Map<String,Boolean> userSignalMap, String authenticatedUserUid, boolean openOrClose);
+  Observable<Boolean> patchUserSignalMapToCloud(Map<String, Boolean> userSignalMap,
+      String authenticatedUserUid, boolean openOrClose);
 
 
 }

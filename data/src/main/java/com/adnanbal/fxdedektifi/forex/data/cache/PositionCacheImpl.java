@@ -100,7 +100,7 @@ public class PositionCacheImpl implements PositionCache {
     });
   }
 
-//TODO : correct
+  //TODO : correct
   @Override
   public Observable<Boolean> delete(String positionId) {
     return Observable.create(emitter -> {

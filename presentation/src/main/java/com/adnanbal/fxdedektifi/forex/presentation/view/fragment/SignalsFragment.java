@@ -83,6 +83,7 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
    * Interface for listening signal list events.
    */
   public interface SignalListListener {
+
     void onSignalClicked(final SignalModel positionModel, ConfirmSignalDialogView view);
   }
 

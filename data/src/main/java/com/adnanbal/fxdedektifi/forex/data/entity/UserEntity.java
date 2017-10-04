@@ -16,13 +16,13 @@
 package com.adnanbal.fxdedektifi.forex.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * User Entity used in the data layer.
  */
 
 public class UserEntity {
+
   private String username;
 
   @JsonIgnore

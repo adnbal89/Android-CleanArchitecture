@@ -59,22 +59,22 @@
 
 
     <!--<activity-->
-      <!--android:label="@string/login"-->
-      <!--android:name=".view.activity.LoginActivity">-->
+    <!--android:label="@string/login"-->
+    <!--android:name=".view.activity.LoginActivity">-->
 
-      <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
-        <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<action android:name="android.intent.action.VIEW"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
+    <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<action android:name="android.intent.action.VIEW"/>&ndash;&gt;-->
 
-      <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
+    <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
 
-      <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER"/>&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;<category android:name="android.intent.category.BROWSABLE"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<category android:name="android.intent.category.DEFAULT"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER"/>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<category android:name="android.intent.category.BROWSABLE"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<category android:name="android.intent.category.DEFAULT"/>&ndash;&gt;-->
 
-        <!--&lt;!&ndash;<data android:scheme="@string/fb_login_protocol_scheme"/>&ndash;&gt;-->
-      <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
+    <!--&lt;!&ndash;<data android:scheme="@string/fb_login_protocol_scheme"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
 
     <!--</activity>-->
 
@@ -100,11 +100,11 @@
       android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.LoginActivity">
 
       <intent-filter>
-      <action android:name="android.intent.action.MAIN"/>
-      <action android:name="android.intent.action.VIEW"/>
+        <action android:name="android.intent.action.MAIN"/>
+        <action android:name="android.intent.action.VIEW"/>
 
-      <category android:name="android.intent.category.LAUNCHER"/>
-      <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+        <category android:name="android.intent.category.DEFAULT"/>
 
       </intent-filter>
     </activity>
@@ -135,15 +135,14 @@
     <!--</activity>-->
 
 
-
     <!--<activity-->
-      <!--android:label="@string/use_case_title_subscriptions"-->
-      <!--android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.SubscriptionsActivity"-->
-      <!--android:parentActivityName="com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainActivity"-->
-      <!--tools:ignore="UnusedAttribute">-->
-      <!--<meta-data-->
-        <!--android:name="android.support.PARENT_ACTIVITY"-->
-        <!--android:value="com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainActivity"/>-->
+    <!--android:label="@string/use_case_title_subscriptions"-->
+    <!--android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.SubscriptionsActivity"-->
+    <!--android:parentActivityName="com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainActivity"-->
+    <!--tools:ignore="UnusedAttribute">-->
+    <!--<meta-data-->
+    <!--android:name="android.support.PARENT_ACTIVITY"-->
+    <!--android:value="com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainActivity"/>-->
     <!--</activity>-->
 
 

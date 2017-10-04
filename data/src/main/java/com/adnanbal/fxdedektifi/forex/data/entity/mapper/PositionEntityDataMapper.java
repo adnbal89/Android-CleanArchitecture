@@ -52,8 +52,6 @@ public class PositionEntityDataMapper {
   }
 
 
-
-
   public PositionEntity createPositionEntityObject(String positionId, String pair, double volume,
       boolean buy_sell,
       double openingPrice, boolean open, String status, String comment, Date date) {
@@ -72,8 +70,6 @@ public class PositionEntityDataMapper {
     positionEntity.setStatus(status);
     positionEntity.setComment(comment);
     positionEntity.setDate(date);
-
-
 
     return positionEntity;
   }

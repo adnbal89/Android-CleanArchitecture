@@ -45,7 +45,6 @@ public class UserDetailsActivity extends BaseActivity implements HasComponent<Us
   }
 
 
-
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     if (outState != null) {

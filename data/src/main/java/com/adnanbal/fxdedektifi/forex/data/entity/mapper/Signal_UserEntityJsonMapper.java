@@ -19,20 +19,20 @@
 package com.adnanbal.fxdedektifi.forex.data.entity.mapper;
 
 import com.adnanbal.fxdedektifi.forex.data.entity.UserSignalEntity;
-import com.adnanbal.fxdedektifi.forex.data.entity.UserSignalEntity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
-import com.google.gson.JsonSyntaxException;
 
 public class Signal_UserEntityJsonMapper {
+
   private final Gson gson;
 
   @Inject
@@ -69,7 +69,8 @@ public class Signal_UserEntityJsonMapper {
    * @return List of {@link UserSignalEntity}.
    * @throws JsonSyntaxException if the json string is not a valid json structure.
    */
-  public List<UserSignalEntity> transformUserSignalEntityCollection(String userSignalListJsonResponse)
+  public List<UserSignalEntity> transformUserSignalEntityCollection(
+      String userSignalListJsonResponse)
       throws JsonSyntaxException {
     final Type listOfUserSignalEntityType = new TypeToken<List<UserSignalEntity>>() {
     }.getType();

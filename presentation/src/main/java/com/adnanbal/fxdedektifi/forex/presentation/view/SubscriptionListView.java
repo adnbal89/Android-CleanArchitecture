@@ -26,11 +26,12 @@ import java.util.Collection;
  * view representing a list of {@link SubscriptionModel}.
  */
 public interface SubscriptionListView extends LoadDataView {
-  
+
   /**
    * Render a subscription list in the UI.
    *
-   * @param subscriptionModelCollection The collection of {@link SubscriptionModel} that will be shown.
+   * @param subscriptionModelCollection The collection of {@link SubscriptionModel} that will be
+   * shown.
    */
   void renderSubscriptionList(Collection<SubscriptionModel> subscriptionModelCollection);
 

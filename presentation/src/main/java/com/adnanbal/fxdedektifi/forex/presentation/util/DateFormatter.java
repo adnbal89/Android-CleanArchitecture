@@ -24,8 +24,6 @@ import java.util.Locale;
 
 /**
  * DateFormatter class, "dd.MM.yyyy hh:mm:ss" format with default {@link Locale}.getDefault();
- *
- *
  */
 public class DateFormatter {
 

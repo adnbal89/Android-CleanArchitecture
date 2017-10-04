@@ -85,8 +85,7 @@
 
 
   <string name="text_total_profit">Total Profit</string>
-  .positiveText(R.string.longer_positive)
-  .negativeText(R.string.negative)
+
 
   //Dialog strings
   <string name="text_dialog_view_title">Close Position ?</string>
@@ -97,9 +96,9 @@
   <string name="text_dialog_view_signal_title">Signal Comment</string>
 
 
-  <string name="text_dialog_view_comment_content">Position Content</string>
+  <string name="text_dialog_view_comment_content">Position Comment</string>
 
-  <string name="text_dialog_no_content_title">No content</string>
+  <string name="text_dialog_no_content_title">No comment</string>
   <string name="text_dialog_view_no_comment_content">No comment found</string>
 
 
@@ -122,7 +121,7 @@
 
   //TextView texts
   <string name="text_membership_deadline">Your subscription period ends in : </string>
-  <string name="subscriptions">Subscriptions</string>
+  <string name="subscriptions">Available Subscriptions</string>
 
   //subscriptions
 
@@ -228,5 +227,6 @@
   <string name="close_pos">Close Position</string>
   <string name="comment_pos">Show Comment</string>
 
-
+  <string name="alreadyownpurchase">You already own a subscription</string>
+  <string name="purchasedSubscription">You are already subscribed to </string>
 </resources>

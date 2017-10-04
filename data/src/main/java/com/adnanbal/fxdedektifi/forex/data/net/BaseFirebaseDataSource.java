@@ -23,6 +23,6 @@ public class BaseFirebaseDataSource {
 
   protected final static String FIREBASE_CHILD_KEY_SIGNAL = "signal";
   protected final static String FIREBASE_CHILD_KEY_POSITION_HISTORY = "positionHistory";
-  protected final static String FIREBASE_CHILD_KEY_USER= "users";
+  protected final static String FIREBASE_CHILD_KEY_USER = "users";
 
 }

@@ -32,6 +32,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class SubscriptionEntityJsonMapper {
+
   private final Gson gson;
 
   @Inject
@@ -68,7 +69,8 @@ public class SubscriptionEntityJsonMapper {
    * @return List of {@link SubscriptionEntity}.
    * @throws JsonSyntaxException if the json string is not a valid json structure.
    */
-  public List<SubscriptionEntity> transformSubscriptionEntityCollection(String subscriptionListJsonResponse)
+  public List<SubscriptionEntity> transformSubscriptionEntityCollection(
+      String subscriptionListJsonResponse)
       throws JsonSyntaxException {
     final Type listOfSubscriptionEntityType = new TypeToken<List<SubscriptionEntity>>() {
     }.getType();
@@ -77,6 +79,6 @@ public class SubscriptionEntityJsonMapper {
         .fromJson(subscriptionListJsonResponse, listOfSubscriptionEntityType);
     return this.gson.fromJson(subscriptionListJsonResponse, listOfSubscriptionEntityType);
   }
-  
+
 
 }

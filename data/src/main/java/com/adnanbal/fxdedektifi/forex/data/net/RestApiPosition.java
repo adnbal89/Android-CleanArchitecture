@@ -19,7 +19,8 @@ public interface RestApiPosition {
   /**
    * Api url for getting all positions
    */
-  String API_URL_GET_POSITION_LIST = API_BASE_URL_POSITION + "position" + "?open=true" + "&_sort=id&_order=desc";
+  String API_URL_GET_POSITION_LIST =
+      API_BASE_URL_POSITION + "position" + "?open=true" + "&_sort=id&_order=desc";
   /**
    * Api url for getting a position profile: Remember to concatenate id + 'json'
    */

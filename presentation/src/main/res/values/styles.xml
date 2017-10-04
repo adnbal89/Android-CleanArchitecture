@@ -89,7 +89,11 @@
     <item name="android:textSize">14sp</item>
   </style>
 
-  <declare-styleable name="AHBottomNavigationBehavior_Params"><attr format="reference" name="tabLayoutId"/><attr format="boolean" name="selectedBackgroundVisible"/><attr format="boolean" name="translucentNavigationEnabled"/></declare-styleable>
+  <declare-styleable name="AHBottomNavigationBehavior_Params">
+    <attr format="reference" name="tabLayoutId"/>
+    <attr format="boolean" name="selectedBackgroundVisible"/>
+    <attr format="boolean" name="translucentNavigationEnabled"/>
+  </declare-styleable>
 
 
   //////////////

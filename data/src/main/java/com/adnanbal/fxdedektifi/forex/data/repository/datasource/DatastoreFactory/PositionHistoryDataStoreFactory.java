@@ -66,7 +66,8 @@ public class PositionHistoryDataStoreFactory {
     final PositionEntityJsonMapper positionEntityJsonMapper = new PositionEntityJsonMapper();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-    final RestApiPositionHistory restApi = new RestApiPositionHistoryImpl(firebaseDatabase,this.context, positionEntityJsonMapper);
+    final RestApiPositionHistory restApi = new RestApiPositionHistoryImpl(firebaseDatabase,
+        this.context, positionEntityJsonMapper);
 
     return new CloudPositionHistoryDataStore(restApi, this.positionCache);
   }

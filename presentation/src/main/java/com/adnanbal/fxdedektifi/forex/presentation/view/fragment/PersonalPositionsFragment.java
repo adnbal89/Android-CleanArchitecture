@@ -6,12 +6,8 @@
 package com.adnanbal.fxdedektifi.forex.presentation.view.fragment;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +24,6 @@ import com.adnanbal.fxdedektifi.forex.presentation.model.PositionModel;
 import com.adnanbal.fxdedektifi.forex.presentation.presenter.PositionListPresenter;
 import com.adnanbal.fxdedektifi.forex.presentation.view.ConfirmDialogView;
 import com.adnanbal.fxdedektifi.forex.presentation.view.PositionListView;
-import com.adnanbal.fxdedektifi.forex.presentation.view.activity.SignalsActivity;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.PositionsAdapter;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.PositionsLayoutManager;
 import java.util.Collection;
@@ -49,7 +44,6 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
   private PositionListListener positionListListener;
 
 
-
   /**
    * When Position open dialog is confirmed
    */
@@ -67,7 +61,6 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
 
     void onPositionClicked(final PositionModel positionModel, ConfirmDialogView view);
   }
-
 
 
   @Inject
@@ -191,7 +184,6 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
     }
 
   }
-
 
 
   @Override

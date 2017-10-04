@@ -1,5 +1,3 @@
-
-
 /*
  * *
  *  * Copyright (C) 2017 Adnan BAL Open Source Project

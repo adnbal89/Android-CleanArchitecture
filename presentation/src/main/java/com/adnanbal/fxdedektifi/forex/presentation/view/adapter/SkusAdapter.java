@@ -23,76 +23,90 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.R;
-import com.adnanbal.fxdedektifi.forex.presentation.model.SubscriptionModel;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
+import org.solovyev.android.checkout.Purchase;
+import org.solovyev.android.checkout.Purchase.State;
+import org.solovyev.android.checkout.Sku;
 
-public class SubscriptionsAdapter extends
-    RecyclerView.Adapter<SubscriptionsAdapter.SubscriptionViewHolder> {
+public class SkusAdapter extends
+    RecyclerView.Adapter<SkusAdapter.SkuViewHolder> {
 
   Context context;
-  private List<SubscriptionModel> subscriptionModelsCollection;
+  private List<Sku> skusCollection;
   private final LayoutInflater layoutInflater;
-  private SubscriptionsAdapter.OnItemClickListener onItemClickListener;
+  private SkusAdapter.OnItemClickListener onItemClickListener;
+  private int counter = 0;
 
   @Inject
-  SubscriptionsAdapter(Context context) {
+  public SkusAdapter(Context context) {
     this.context = context;
     this.layoutInflater =
         (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    this.subscriptionModelsCollection = Collections.emptyList();
+    this.skusCollection = Collections.emptyList();
   }
 
   public interface OnItemClickListener {
 
-    void onSubscriptionItemClicked(SubscriptionModel subscriptionModel);
+    void onSkuItemClicked(Sku sku);
   }
 
   public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
     this.onItemClickListener = onItemClickListener;
   }
 
-  public void setSubscriptionsCollection(
-      Collection<SubscriptionModel> subscriptionModelsCollection) {
-    this.validateSubscriptionsCollection(subscriptionModelsCollection);
-    this.subscriptionModelsCollection = (List<SubscriptionModel>) subscriptionModelsCollection;
+  public void setSkusCollection(
+      Collection<Sku> skusCollection) {
+    this.validateSkusCollection(skusCollection);
+    this.skusCollection = (List<Sku>) skusCollection;
     this.notifyDataSetChanged();
   }
 
-  private void validateSubscriptionsCollection(
-      Collection<SubscriptionModel> subscriptionModelsCollection) {
-    if (subscriptionModelsCollection == null) {
+  private void validateSkusCollection(
+      Collection<Sku> skusCollection) {
+    if (skusCollection == null) {
       throw new IllegalArgumentException("The list cannot be null");
     }
   }
 
   @Override
-  public SubscriptionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public SkuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     final View view = this.layoutInflater
         .inflate(R.layout.row_available_subscriptions, parent, false);
-    return new SubscriptionViewHolder(view);
+    return new SkuViewHolder(view);
   }
 
   @Override
-  public void onBindViewHolder(SubscriptionViewHolder holder, int subscription) {
-    final SubscriptionModel subscriptionModel = this.subscriptionModelsCollection.get(subscription);
-    holder.textViewSubscription_name.setText(subscriptionModel.getName());
-    holder.textViewSubscription_price.setText(subscriptionModel.getPrice());
+  public void onBindViewHolder(SkuViewHolder holder, int subscription) {
+    final Sku sku = this.skusCollection.get(subscription);
+    holder.textViewSubscription_name.setText(sku.getDisplayTitle());
+    holder.textViewSubscription_price.setText(sku.price);
+
+    for (Purchase purchase : AndroidApplication.purchasedList) {
+      if (purchase.sku.equals(sku.id.code) && purchase.state == State.PURCHASED) {
+        holder.itemView.setEnabled(false);
+        holder.iv_paid.setVisibility(View.VISIBLE);
+      }
+
+    }
 
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (SubscriptionsAdapter.this.onItemClickListener != null) {
-          SubscriptionsAdapter.this.onItemClickListener
-              .onSubscriptionItemClicked(subscriptionModel);
+        if (SkusAdapter.this.onItemClickListener != null) {
+          SkusAdapter.this.onItemClickListener
+              .onSkuItemClicked(sku);
         }
+
+        System.out.println("SKU Clicked " + sku.getDisplayTitle());
       }
     });
 
@@ -106,21 +120,21 @@ public class SubscriptionsAdapter extends
 
   @Override
   public int getItemCount() {
-    return (this.subscriptionModelsCollection != null) ? this.subscriptionModelsCollection.size()
+    return (this.skusCollection != null) ? this.skusCollection.size()
         : 0;
   }
 
-  static class SubscriptionViewHolder extends RecyclerView.ViewHolder {
+  static class SkuViewHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.iv_paid)
+    ImageView iv_paid;
     @BindView(R.id.textViewSubscription_name)
     TextView textViewSubscription_name;
     @BindView(R.id.textViewSubscription_price)
     TextView textViewSubscription_price;
-    @BindView(R.id.button_subscription_buy)
-    Button button_subscription_buy;
 
 
-    SubscriptionViewHolder(View itemView) {
+    SkuViewHolder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
     }

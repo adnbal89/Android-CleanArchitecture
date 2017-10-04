@@ -41,7 +41,6 @@ public class PositionModelDataMapper {
     positionModel.setComment(position.getComment());
     positionModel.setDate(position.getDate());
 
-
     return positionModel;
   }
 

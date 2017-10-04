@@ -15,7 +15,7 @@
     android:id="@+id/use_case_title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="?textAppearanceListItem" />
+    android:textAppearance="?textAppearanceListItem"/>
 
   <TextView
     android:id="@+id/use_case_description"
@@ -23,6 +23,6 @@
     android:layout_height="wrap_content"
     android:textAppearance="?textAppearanceListItem"
     android:textColor="@android:color/tertiary_text_light"
-    android:textSize="14sp" />
+    android:textSize="14sp"/>
 
 </LinearLayout>

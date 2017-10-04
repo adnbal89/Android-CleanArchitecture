@@ -21,5 +21,4 @@ package com.adnanbal.fxdedektifi.forex.presentation.view.fragment;
 public class SignalHistoryFragment extends BaseFragment {
 
 
-
 }

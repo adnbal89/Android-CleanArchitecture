@@ -54,7 +54,7 @@ public class DiskPositionDataStore implements PositionDataStore {
   //TODO : correct the method
   @Override
   public Observable<Boolean> removePositionEntity(final String positionId) {
-      return this.positionCache.delete(positionId);
+    return this.positionCache.delete(positionId);
   }
 
   @Override

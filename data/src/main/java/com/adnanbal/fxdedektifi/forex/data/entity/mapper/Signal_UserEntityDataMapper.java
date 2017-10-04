@@ -63,5 +63,4 @@ public class Signal_UserEntityDataMapper {
   }
 
 
-
 }

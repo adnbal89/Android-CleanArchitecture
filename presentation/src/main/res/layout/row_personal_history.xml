@@ -1,0 +1,138 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:minHeight="50dp"
+  android:orientation="vertical"
+
+  >
+
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_bg"
+    android:minHeight="50dp"
+    android:orientation="horizontal"
+    android:weightSum="4">
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1.5"
+      android:paddingLeft="5dp"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:weightSum="2">
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:weightSum="2"
+        >
+
+        <TextView
+          android:id="@+id/tv_personal_history_pair"
+          android:textStyle="bold"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:paddingStart="5dp"
+          android:paddingEnd="5dp"
+          android:gravity="start|center_vertical"
+
+          android:textColor="@color/color_textview_personal_positions_pair"
+          android:textSize="10sp"
+          />
+        <TextView
+          android:id="@+id/tv_open_to_close"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:paddingStart="5dp"
+          android:paddingEnd="5dp"
+          android:gravity="start|center_vertical"
+          android:textColor="@color/color_textview_profit_grey"
+          android:textSize="10sp"
+          />
+      </LinearLayout>
+
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="start|center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        >
+
+        <TextView
+          android:id="@+id/tv_personal_history_buy_sell"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1.5"
+          android:paddingStart="5dp"
+          android:paddingEnd="5dp"
+          android:gravity="start|center_vertical"
+          android:textColor="@color/color_textview_personal_positions_buy"
+          android:textSize="10sp"
+          />
+
+        <TextView
+          android:id="@+id/tv_personal_history_volume"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1.5"
+          android:paddingStart="5dp"
+          android:paddingEnd="5dp"
+          android:gravity="start|center_vertical"
+          android:textColor="@color/color_textview_personal_positions_pair"
+          android:textSize="10sp"
+          />
+      </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="2.5"
+      android:orientation="vertical"
+      android:weightSum="2"
+      >
+      <TextView
+        android:id="@+id/tv_personal_history_close_date"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingRight="20dp"
+        android:gravity="end|center_vertical"
+        android:textColor="@color/color_textview_profit_grey"
+        android:textSize="12sp"/>
+      <TextView
+        android:id="@+id/tv_personal_history_profit"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingRight="20dp"
+        android:gravity="end|center_vertical"
+
+        android:textColor="@color/color_textview_personal_positions_profit"
+        android:textSize="12sp"/>
+
+    </LinearLayout>
+  </LinearLayout>
+  <LinearLayout
+    android:id="@+id/linear123"
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="@color/color_separator_line"
+    android:orientation="vertical">
+  </LinearLayout>
+
+</LinearLayout>

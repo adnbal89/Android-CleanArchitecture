@@ -19,8 +19,8 @@
 package com.adnanbal.fxdedektifi.forex.data.net;
 
 import com.adnanbal.fxdedektifi.forex.data.entity.SubscriptionEntity;
-import java.util.List;
 import io.reactivex.Observable;
+import java.util.List;
 
 
 public interface RestApiSubscription {
@@ -32,7 +32,7 @@ public interface RestApiSubscription {
   /**
    * Api url for getting all signals
    */
-  String API_URL_GET_SIGNAL_LIST = API_BASE_URL + "subscriptions"+".json";
+  String API_URL_GET_SIGNAL_LIST = API_BASE_URL + "subscriptions" + ".json";
 
   /**
    * Retrieves an {@link Observable} which will emit a List of {@link SubscriptionEntity}.

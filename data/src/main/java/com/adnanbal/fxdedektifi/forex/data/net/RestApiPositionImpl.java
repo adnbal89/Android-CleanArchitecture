@@ -131,7 +131,6 @@ public class RestApiPositionImpl implements RestApiPosition {
   }
 
 
-
   private String removeEntityFromApi(String positionId) throws MalformedURLException {
     String apiUrl = API_URL_DELETE_POSITION + positionId;
 
@@ -151,7 +150,7 @@ public class RestApiPositionImpl implements RestApiPosition {
 
   //Todo : correct sync call
   private String postEntitytoApi(PositionEntity positionEntity) throws MalformedURLException {
-    String apiUrl = API_URL_POST_POSITION_HISTORY ;
+    String apiUrl = API_URL_POST_POSITION_HISTORY;
     return ApiConnection.createPost(apiUrl).request_postSyncCall(positionEntity);
   }
 

@@ -22,7 +22,7 @@ package com.adnanbal.fxdedektifi.forex.presentation.view.fragment;
 import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
 
 /**
- *  Interface for notifying the fragments when dialog view is confirmed.
+ * Interface for notifying the fragments when dialog view is confirmed.
  */
 public interface ConfirmSignalDialogView {
 

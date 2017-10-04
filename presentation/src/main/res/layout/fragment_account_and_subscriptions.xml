@@ -6,7 +6,7 @@
   android:padding="@dimen/lv_row_padding"
   android:background="@drawable/selector_item_user"
   android:orientation="vertical"
-  android:weightSum="6"
+  android:weightSum="11"
   tools:ignore="UseCompoundDrawables"
 
   >
@@ -15,36 +15,34 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical"
-    android:weightSum="2"
 
     >
     <ImageView
       android:id="@+id/avatar"
       android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
+      android:layout_height="match_parent"
       android:layout_gravity="center"
-      android:paddingLeft="@dimen/lv_row_icon_padding"
-      android:paddingRight="@dimen/lv_row_icon_padding"
       android:contentDescription="@string/string_content_description"
-      android:src="@drawable/ic_launcher"
+      android:src="@drawable/ic_subscription_icon"
       />
 
-    <TextView
-      android:id="@+id/title"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:paddingStart="10dp"
-      android:paddingEnd="10dp"
-      android:ellipsize="end"
-      android:gravity="center_vertical"
-      android:singleLine="true"
-      android:text="@string/text_membership_deadline"
-      android:textColor="@color/color_textview_profit_grey"
-      android:textSize="@dimen/tw__login_btn_text_size"
-      />
+    <!--<TextView-->
+    <!--android:id="@+id/textview_subscription_expire"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:paddingStart="10dp"-->
+    <!--android:paddingEnd="10dp"-->
+    <!--android:ellipsize="end"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:singleLine="false"-->
+    <!--android:text="@string/text_membership_deadline"-->
+    <!--android:textColor="@color/color_textview_profit_grey"-->
+    <!--android:textSize="@dimen/tw__login_btn_text_size"-->
+    <!--/>-->
 
   </LinearLayout>
 
@@ -52,8 +50,7 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="5"
-
+    android:layout_weight="10"
     android:background="@drawable/layout_border"
     android:orientation="vertical"
     android:weightSum="10"
@@ -63,27 +60,23 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
-
       android:background="@drawable/layout_border"
       android:ellipsize="end"
       android:gravity="center"
       android:maxLines="5"
       android:singleLine="true"
-      android:paddingStart="10dp"
-      android:paddingEnd="10dp"
       android:text="@string/subscriptions"
-      android:textColor="@color/color_textview_profit_grey"
+      android:textColor="@color/color_textview_subscription_text"
       android:textSize="@dimen/tw__login_btn_text_size"
       />
 
     <android.support.v7.widget.RecyclerView
       android:id="@+id/rv_subscriptions"
       android:layout_width="match_parent"
-      android:paddingStart="10dp"
-      android:paddingTop="10dp"
-      android:paddingEnd="10dp"
       android:layout_height="0dp"
       android:layout_weight="9"
+      android:paddingStart="10dp"
+      android:paddingEnd="10dp"
       android:scrollbars="vertical"
       />
 

@@ -98,7 +98,7 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsAdapter.Posi
 
   public void addPositionToCurrentCollection(final PositionModel positionModel) {
     this.validatePositionsCollection(positionsCollection);
-    this.positionsCollection.add(0,positionModel);
+    this.positionsCollection.add(0, positionModel);
     this.notifyDataSetChanged();
   }
 

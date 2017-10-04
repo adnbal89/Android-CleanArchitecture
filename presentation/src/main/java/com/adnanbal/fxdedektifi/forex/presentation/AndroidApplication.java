@@ -17,19 +17,19 @@ package com.adnanbal.fxdedektifi.forex.presentation;
 
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatActivity;
-import com.adnanbal.fxdedektifi.forex.domain.model.User;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.ApplicationComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.DaggerApplicationComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.modules.ApplicationModule;
 import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalModel;
-import com.adnanbal.fxdedektifi.forex.presentation.util.Encryption;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.squareup.leakcanary.LeakCanary;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.annotation.Nonnull;
 import org.solovyev.android.checkout.Billing;
+import org.solovyev.android.checkout.Purchase;
 
 /**
  * Android Main Application
@@ -39,6 +39,7 @@ public class AndroidApplication extends MultiDexApplication {
   private ApplicationComponent applicationComponent;
   public static String userUid;
   public static Collection<UserSignalModel> listUserSignalModel;
+  public static List<Purchase> purchasedList;
 
   @Override
   public void onCreate() {
@@ -49,6 +50,7 @@ public class AndroidApplication extends MultiDexApplication {
     this.initializeInjector();
     this.initializeLeakDetection();
     listUserSignalModel = new ArrayList<>();
+    purchasedList = new ArrayList<>();
   }
 
   private void initializeInjector() {
@@ -76,8 +78,8 @@ public class AndroidApplication extends MultiDexApplication {
       // Console in Service & APIs section under "YOUR LICENSE KEY FOR THIS APPLICATION" title.
       // A naive encryption algorithm is used to "protect" the key. See more about key protection
       // here: https://developer.android.com/google/play/billing/billing_best_practices.html#key
-      final String s = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAisM/KtPGjOYmQ/eVNLKW/6I/x3W9AccU/0SzeQX+gKYWoj1KbRC4rQ64u3/J2hI/vUAmqE5BleFqjmAaZpzK3V2sHc5ze8A01lA1+UUoORctSQ5mby6M7d+/C239dKxThAUCdcDtsw9sONYxGVY9KLqeXzzLiJoBEQVJWTChEG0e5rLxEM51UBEz6DVJVpl+pjhe8jlFMPIrgxrbwqbkTQfOwgAIEhSSLzS53tFWuwZdGxWTPOs8E+YTrOcQMDMzWnwIARNqevASWfAMV538G4betX0uL9uBDFCtBYqG/GzOGKe9DFFZ6jmIalq9e5uyGLefcqFf0MIREzJJBS6zowIDAQAB";
-      return Encryption.decrypt(s, "fxdedektifi@gmail.com");
+      final String s = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqZLbZB+g/R1grHdeIj5fZMAlp9qUweCOapEDyBisoiGYQz2ZHyhmFcEns9UAcgBBhI7h8KZ8nCTB+lyNUf3pPC9+VbmE9Dko2zvwq6nHI0wonj78BmK8b793sB+PdnKXDl+LcsSCG8zGydtUBQOHgwFu/SEGyabHwqtRNER4DeDg4X3zLI5TCVlFhnRAF+QprgKy6Eo3P8EZ7J27OHOUbIT+ny10OZ75stjdgyCCwVz7PUy2cCZu0FAVP4nMNinPr89vXvGOda47ywbG5ugmV6KBXXqyWYhY7nxq8IVv6xlvDGsSR7cDtCP3eSxtfuIpg4P7ddh+RbZps7/ioetxRQIDAQAB";
+      return s;
     }
   });
 

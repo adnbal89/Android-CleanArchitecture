@@ -20,15 +20,15 @@ package com.adnanbal.fxdedektifi.forex.data.exception;
 
 public class NetworkConnectionException extends Exception {
 
-    public NetworkConnectionException() {
-        super();
-    }
+  public NetworkConnectionException() {
+    super();
+  }
 
-    public NetworkConnectionException(String message) {
-        super(message);
-    }
+  public NetworkConnectionException(String message) {
+    super(message);
+  }
 
-    public NetworkConnectionException(final Throwable cause) {
-        super(cause);
-    }
+  public NetworkConnectionException(final Throwable cause) {
+    super(cause);
+  }
 }

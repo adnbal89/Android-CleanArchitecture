@@ -18,7 +18,8 @@ package com.adnanbal.fxdedektifi.forex.domain.interactor;
 import io.reactivex.observers.DisposableObserver;
 
 /**
- * Default {@link DisposableObserver} base class to be used whenever you want default error handling.
+ * Default {@link DisposableObserver} base class to be used whenever you want default error
+ * handling.
  */
 public class DefaultObserver<T> extends DisposableObserver<T> {
 

@@ -65,7 +65,8 @@ public class DiskSignalDataStore implements SignalDataStore {
   }
 
   @Override
-  public Observable<Boolean> patchUserSignalEntity(Map<String, Boolean> userSignalMap, String authenticatedUserUid, boolean openOrClose) {
+  public Observable<Boolean> patchUserSignalEntity(Map<String, Boolean> userSignalMap,
+      String authenticatedUserUid, boolean openOrClose) {
     //ToDo : complete cache
     return null;
   }

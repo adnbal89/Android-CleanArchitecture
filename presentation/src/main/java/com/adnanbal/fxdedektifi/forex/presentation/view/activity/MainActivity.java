@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private enum UseCase {
-    SUBSCRIPTIONS(SubscriptionsActivity.class, R.string.use_case_title_subscriptions, R.string.use_case_desc_subscriptions);
+    SUBSCRIPTIONS(SubscriptionsActivity.class, R.string.use_case_title_subscriptions,
+        R.string.use_case_desc_subscriptions);
 
     // activity to be started on click
     final Class<? extends Activity> activity;

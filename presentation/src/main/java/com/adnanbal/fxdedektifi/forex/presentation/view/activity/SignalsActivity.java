@@ -45,6 +45,7 @@ import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.view.ConfirmDialogView;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.AccountAndSubscriptionsFragment;
+import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.AccountAndSubscriptionsFragment.PurchaseListListener;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.ConfirmSignalDialogView;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalHistoryFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalHistoryFragment.PositionHistoryListListener;
@@ -57,15 +58,24 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+import org.solovyev.android.checkout.ActivityCheckout;
+import org.solovyev.android.checkout.Billing;
+import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.Inventory;
+import org.solovyev.android.checkout.ProductTypes;
+import org.solovyev.android.checkout.Purchase;
 
 /**
  * Activity that shows a list of Signals.
  */
 public class SignalsActivity extends BaseActivity implements HasComponent<PositionComponent>,
-    SignalListListener, PositionListListener, PositionHistoryListListener {
+    SignalListListener, PositionListListener, PositionHistoryListListener, PurchaseListListener {
 
   private static final Boolean OPEN = true;
   private static final Boolean CLOSED = false;
+
+  private ActivityCheckout mCheckout;
 
 
   @BindView(R.id.appbar)
@@ -74,6 +84,8 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   DrawerLayout mDrawer;
   @BindView(R.id.navigationView)
   NavigationView navigationViewDrawer;
+  @BindView(R.id.idBottomBar)
+  BottomNavigationView bottomNavigationView;
 
 
   Builder mMaterialDialog;
@@ -86,6 +98,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   PositionModel positionModel;
   private Toast toast;
 
+  static final String TAG = "SignalsActivity";
 
   public static Intent getCallingIntent(Context context) {
     return new Intent(context, SignalsActivity.class);
@@ -102,28 +115,46 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
   private PositionComponent positionComponent;
 
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+//    final Inventory.Request request = Inventory.Request.create();
+//    request.loadPurchases(ProductTypes.IN_APP);
+//    request.loadPurchases(ProductTypes.SUBSCRIPTION);
+//
+//    request.loadSkus(SUBSCRIPTION, SKUS);
+//    request.loadSkus(ProductTypes.IN_APP, SKUS);
+
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     setContentView(com.adnanbal.fxdedektifi.forex.presentation.R.layout.activity_layout);
     unbinder = ButterKnife.bind(this);
-
-    BottomNavigationView bottomNavigationView = findViewById(R.id.idBottomBar);
-
-    System.out.println("epoch : " + System.currentTimeMillis());
 
     setUpToolbar_();
     setUpMaterialDialog();
     setupDrawerContent(navigationViewDrawer);
 
     this.initializeInjector();
+    initializeApp(savedInstanceState);
 
-    if (savedInstanceState == null) {
-      addFragment(
-          com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
-          new SignalsFragment());
-    }
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    mCheckout.onActivityResult(requestCode, resultCode, data);
+    super.onActivityResult(requestCode, resultCode, data);
+  }
+
+  private void normalStart() {
+    bottomNavigationView.setVisibility(View.VISIBLE);
+    navigationViewDrawer.getMenu().findItem(R.id.nav_item_signals_fragment).setVisible(true);
+
+    addFragment(
+        com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
+        new SignalsFragment());
+    navigationViewDrawer.setCheckedItem(R.id.nav_item_signals_fragment);
+
     bottomNavigationView.setOnNavigationItemSelectedListener(
         new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
@@ -132,6 +163,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
               case R.id.action_signals:
                 getSupportActionBar().setTitle(R.string.signals);
+                navigationViewDrawer.setCheckedItem(R.id.nav_item_signals_fragment);
                 addFragment(
                     com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
                     new SignalsFragment());
@@ -139,6 +171,8 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
               case R.id.action_profit:
                 getSupportActionBar().setTitle(R.string.profit);
+                navigationViewDrawer.setCheckedItem(R.id.nav_item_profit_fragment);
+
                 addFragment(
                     com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
                     new PersonalHistoryFragment());
@@ -161,10 +195,54 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
             return true;
           }
         });
+  }
 
+  private void initializeApp(Bundle savedInstanceState) {
+
+    final Inventory.Request request = Inventory.Request.create();
+
+    //BILLING START
+    final Billing billing = AndroidApplication.get(this).getBilling();
+    mCheckout = Checkout.forActivity(this, billing);
+    mCheckout.start();
+
+    request.loadAllPurchases();
+
+    mCheckout.loadInventory(request, new Inventory.Callback() {
+
+      @Override
+      public void onLoaded(@Nonnull Inventory.Products products) {
+        List<Purchase> purchaseList = products.get(ProductTypes.SUBSCRIPTION).getPurchases();
+        List<Purchase> purchaseInapList = products.get(ProductTypes.IN_APP).getPurchases();
+
+        AndroidApplication.purchasedList = purchaseList;
+
+        if (purchaseList.size() == 0) {
+          limitedStart();
+        } else {
+          normalStart();
+        }
+        mCheckout.stop();
+      }
+    });
 
   }
 
+  private void limitedStart() {
+
+    bottomNavigationView.setVisibility(View.GONE);
+    navigationViewDrawer.getMenu().findItem(R.id.nav_item_signals_fragment).setVisible(false);
+    getSupportActionBar().setTitle(R.string.my_account);
+    addFragment(
+        com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
+        new AccountAndSubscriptionsFragment());
+  }
+
+//  @Override
+//  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//    mCheckout.onActivityResult(requestCode, resultCode, data);
+//    super.onActivityResult(requestCode, resultCode, data);
+//  }
 
   private void setUpMaterialDialog() {
 
@@ -187,12 +265,14 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
     switch (menuItem.getItemId()) {
       case R.id.nav_item_signals_fragment:
+        bottomNavigationView.setVisibility(View.VISIBLE);
         getSupportActionBar().setTitle(R.string.signals);
         addFragment(
             com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
             new SignalsFragment());
         break;
       case R.id.nav_item_profit_fragment:
+//        bottomNavigationView.setVisibility(View.VISIBLE);
         getSupportActionBar().setTitle(R.string.profit);
         addFragment(
             com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
@@ -200,6 +280,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
         break;
 
       case R.id.nav_item_my_account_fragment:
+        bottomNavigationView.setVisibility(View.GONE);
         getSupportActionBar().setTitle(R.string.my_account);
         addFragment(
             com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
@@ -286,10 +367,10 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   }
 
 
-
   @Override
   protected void onDestroy() {
     unbinder.unbind();
+    mCheckout.stop();
     super.onDestroy();
   }
 
@@ -472,5 +553,34 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 //    }
 
   }
+
+  @Override
+  public void onPurchaseSuccess(Purchase purchase) {
+
+    navigationViewDrawer.setCheckedItem(R.id.nav_item_signals_fragment);
+    normalStart();
+  }
+
+//  private void purchase(Sku sku) {
+//    mCheckout.startPurchaseFlow(sku, null, new SignalsActivity.PurchaseListener());
+//
+//  }
+//
+//  public class PurchaseListener implements RequestListener<Purchase> {
+//
+//    @Override
+//    public void onSuccess(@Nonnull Purchase result) {
+//      Log.d(TAG, "PURCHASE RESULT : " + result.toString());
+//
+//
+//    }
+//
+//    @Override
+//    public void onError(int response, @Nonnull Exception e) {
+//      Log.d(TAG, "PURCHASE RESULT : " + e.toString());
+//      showToast(e.toString() + "response code : " + ResponseCodes.toString(response) );
+//    }
+//  }
+
 
 }

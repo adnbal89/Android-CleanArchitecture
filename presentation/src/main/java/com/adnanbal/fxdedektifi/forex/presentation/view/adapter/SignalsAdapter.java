@@ -127,11 +127,11 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
 
   private boolean userHasOpenedSignal(SignalModel signalModel) {
 
-
     for (UserSignalModel userSignalModel : AndroidApplication.listUserSignalModel) {
 
       System.out.println(
-          "AndroidApplication.listUserSignalModel.userSignalModel.getSignals().size() SIZE : " + userSignalModel.getSignals().size());
+          "AndroidApplication.listUserSignalModel.userSignalModel.getSignals().size() SIZE : "
+              + userSignalModel.getSignals().size());
 
       for (String signalId : userSignalModel.getSignals().keySet()) {
         System.out.println(signalId + " : " + signalId);

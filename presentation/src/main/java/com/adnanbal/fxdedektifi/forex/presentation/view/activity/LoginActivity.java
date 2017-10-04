@@ -70,7 +70,6 @@ public class LoginActivity extends BaseActivity {
   }
 
 
-
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -114,7 +113,6 @@ public class LoginActivity extends BaseActivity {
       this.navigator.navigateToSignals(this);
 
       AndroidApplication.userUid = user.getUid();
-
 
       // Show user info
       text.setText("UID: " + user.getUid() + "\n" +

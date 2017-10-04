@@ -31,7 +31,6 @@ public class EmailAuthActivity extends BaseActivity {
   private static final String TAG = "EmailAuthActivity";
 
 
-
   private TextView mStatusTextView;
   private TextView mDetailTextView;
   private EditText mEmailField;
@@ -53,7 +52,6 @@ public class EmailAuthActivity extends BaseActivity {
 //      finish();
 //      return;
 //    }
-
 
   }
 
