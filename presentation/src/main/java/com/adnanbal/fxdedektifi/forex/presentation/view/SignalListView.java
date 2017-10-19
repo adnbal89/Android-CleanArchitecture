@@ -48,6 +48,6 @@ public interface SignalListView extends LoadDataView {
    *
    * @param signalModel The position that will be opened.
    */
-  void openSignalConfirmedOnline(SignalModel signalModel);
+  void openSignalConfirmedOnline(SignalModel signalModel, Boolean openOrClose);
 
 }

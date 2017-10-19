@@ -23,6 +23,8 @@ import static org.solovyev.android.checkout.ProductTypes.SUBSCRIPTION;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -70,7 +73,7 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
 
   private static final List<String> SKUS = Arrays
       .asList("weekly_subscription", "monthly_subscription",
-          "three_month_subscription", "six_month_subscription",
+          "three_monthly_subscription", "six_month_subscription",
           "yearly_subscription");
   private final List<Inventory.Callback> mInventoryCallbacks = new ArrayList<>();
 
@@ -104,6 +107,8 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
   Button bt_retry;
   @BindView(R.id.rv_subscriptions)
   RecyclerView rv_subscriptions;
+  @BindView(R.id.txt_expiryTime)
+  TextView txt_expiryTime;
 
 
   static final String TAG = "SubscriptionsFragment";
@@ -134,6 +139,8 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
     this.purchaseListListener = (PurchaseListListener) activity;
     this.getComponent(PositionComponent.class).inject(this);
     mCheckout.start();
+
+
   }
 
   @Override
@@ -143,6 +150,21 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
         .inflate(R.layout.fragment_account_and_subscriptions, container, false);
     unbinder = ButterKnife.bind(this, fragmentView);
     setupRecyclerView();
+
+    if (AndroidApplication.purchasedList.size() != 0) {
+      txt_expiryTime
+          .setText(context().getResources().getString(R.string.seeActiveSubcriptions));
+    } else {
+      txt_expiryTime.setText(context().getResources().getString(R.string.expiryTimeComment) + " "
+          + AndroidApplication.accountExpiryTime + " " + getResources().getString(R.string.days));
+    }
+
+    //Show loading circle while waiting subs. lists to be loaded.
+    if (isThereInternetConnection()) {
+      showLoading();
+    } else {
+      showError(getResources().getString(R.string.no_internet_connection));
+    }
 
     return fragmentView;
   }
@@ -185,17 +207,18 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
         List<Sku> skuList = new ArrayList<>();
         skuList.addAll(products.get(ProductTypes.SUBSCRIPTION).getSkus());
 
-        skuList.toString();
         // Now sort by address instead of name (default).
         Collections.sort(skuList, new Comparator<Sku>() {
           public int compare(Sku one, Sku other) {
             return one.price.compareTo(other.price);
           }
         });
-        skuList.toString();
 
         List<Sku> skuInAppList = products.get(ProductTypes.IN_APP).getSkus();
         List<Purchase> purchaseInapList = products.get(ProductTypes.IN_APP).getPurchases();
+
+        //Hİde loading after subscriptionsList are ready.
+        hideLoading();
 
         skusAdapter.setSkusCollection(skuList);
         rv_subscriptions.setAdapter(skusAdapter);
@@ -266,8 +289,7 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
 
   @Override
   public void showError(String message) {
-
-//    this.showToastMessage(message);
+    this.showToastMessage(message);
   }
 
   @Override
@@ -298,7 +320,6 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
       new SkusAdapter.OnItemClickListener() {
         @Override
         public void onSkuItemClicked(Sku sku) {
-          System.out.println("Sku Clicked in Fragment");
 
 //          if (AndroidApplication.purchasedList.size() > 0) {
 //            showToastMessage(getResources().getString(R.string.alreadyownpurchase));
@@ -336,7 +357,6 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
     @Override
     public void onError(int response, @Nonnull Exception e) {
       Log.d(TAG, "PURCHASE RESULT : " + e.toString());
-      System.out.println(e.toString() + "response code : " + ResponseCodes.toString(response));
     }
   }
 
@@ -357,6 +377,22 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
         @Nonnull Intent intent) throws IntentSender.SendIntentException {
       mFragment.startIntentSenderForResult(intentSender, requestCode, intent, 0, 0, 0, null);
     }
+  }
+
+  /**
+   * Checks if the device has any active internet connection.
+   *
+   * @return true device with internet connection, otherwise false.
+   */
+  private boolean isThereInternetConnection() {
+    boolean isConnected;
+
+    ConnectivityManager connectivityManager =
+        (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+    isConnected = (networkInfo != null && networkInfo.isConnectedOrConnecting());
+
+    return isConnected;
   }
 
 }

@@ -4,25 +4,80 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@drawable/app_bg"
+  android:background="@color/tw__solid_white"
   android:orientation="vertical"
   tools:context="com.adnanbal.fxdedektifi.forex.presentation.view.activity.LoginActivity">
-  <Button
-    android:id="@+id/button"
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_above="@+id/textView"
+    android:gravity="end"
+
+    >
+    <Button
+      android:id="@+id/button_return"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:background="@drawable/ic_right"
+      android:gravity="end"
+      android:visibility="invisible"/>
+
+  </LinearLayout>
+
+  <TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="50dp"
+    android:layout_above="@+id/ll_logo"
+    android:layout_centerHorizontal="true"
+    android:gravity="center"
+    android:text="Welcome to"
+    android:textColor="#dc63b3e4"
+    android:textSize="30sp"/>
+
+  <LinearLayout
+    android:id="@+id/ll_logo"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:background="@color/blue"
-    android:text="Login"
-    android:textColor="@color/tw__solid_white"
+    android:orientation="vertical">
 
-    tools:text="@string/login"/>
+    <ImageView
+      android:id="@+id/login_logo"
+      android:layout_width="130dp"
+      android:layout_height="130dp"
+      android:layout_gravity="center"
+      android:src="@drawable/logo"
+      />
 
-  <TextView
-    android:id="@+id/text"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    />
+
+    <TextView
+      android:id="@+id/textView2"
+      android:textStyle="bold"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:gravity="center"
+      android:text="FXingSign"
+      android:textColor="#dc63b3e4"
+      android:textSize="50sp"/>
+
+    <Button
+      android:id="@+id/button_sign_out"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:layout_below="@+id/textView2"
+      android:layout_centerHorizontal="true"
+      android:background="#dc63b3e4"
+      android:text="@string/sign_out"
+      android:textColor="@color/tw__solid_white"
+      android:visibility="gone"/>
+
+  </LinearLayout>
+
+
 </RelativeLayout>

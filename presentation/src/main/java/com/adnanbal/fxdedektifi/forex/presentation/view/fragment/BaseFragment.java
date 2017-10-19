@@ -31,4 +31,6 @@ public abstract class BaseFragment extends DialogFragment {
   protected <C> C getComponent(Class<C> componentType) {
     return componentType.cast(((HasComponent<C>) getActivity()).getComponent());
   }
+
+
 }

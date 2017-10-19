@@ -106,4 +106,13 @@ public class SignalDataRepository implements SignalRepository {
   }
 
 
+  @Override
+  public Observable<Signal> getUpdatedSignal() {
+    //we always get all signals from the cloud
+    final SignalDataStore signalDataStore = this.signalDataStoreFactory
+        .createCloudDataStore();
+    return signalDataStore.getUpdatedSignal().map(this.signalEntityDataMapper::transform);
+  }
+
+
 }

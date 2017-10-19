@@ -24,7 +24,7 @@
   android:width="10dp">
 
   <path
-    android:fillColor="#d50000"
+    android:fillColor="#cc0202"
     android:pathData="M11,16
         A5,5 0 1,1 21,16
         A5,5 0 1,1 11,16 Z"/>

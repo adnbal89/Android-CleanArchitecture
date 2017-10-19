@@ -19,10 +19,14 @@
 package com.adnanbal.fxdedektifi.forex.presentation.view.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -54,7 +58,7 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
 
   private List<SignalModel> signalsCollection;
   private final LayoutInflater layoutInflater;
-
+  Animation anim;
   private OnItemClickListener onItemClickListener;
 
   @Inject
@@ -75,21 +79,46 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
   @Override
   public SignalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     final View view = this.layoutInflater.inflate(R.layout.row_signals, parent, false);
+
+    anim = new AlphaAnimation(0.0f, 1.0f);
+    anim.setDuration(250); //You can manage the blinking time with this parameter
+    anim.setStartOffset(20);
+    anim.setBackgroundColor(context.getResources().getColor(R.color.update_light_yellow));
+    anim.setRepeatMode(Animation.REVERSE);
+    anim.setRepeatCount(10);
+
     return new SignalViewHolder(view);
   }
 
+
   @Override
-  public void onBindViewHolder(SignalViewHolder holder, int signal) {
+  public void onBindViewHolder(final SignalViewHolder holder, int signal) {
     final SignalModel signalModel = this.signalsCollection.get(signal);
     holder.textViewPair.setText(signalModel.getPair());
-    if (signalModel.isBuy_sell()) {
-      holder.textViewBuySell.setText(context.getResources().getString(R.string.signal_buy));
-      holder.textViewBuySell.setTextColor(
-          context.getResources().getColor(R.color.color_textview_personal_signals_buy));
-    } else {
-      holder.textViewBuySell.setText(context.getResources().getString(R.string.signal_sell));
-      holder.textViewBuySell.setTextColor(
-          context.getResources().getColor(R.color.color_textview_personal_signals_sell));
+
+    if (AndroidApplication.listChangedSignalModel.contains(signalModel)) {
+
+      anim.setAnimationListener(new AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+          holder.itemView
+              .setBackgroundColor(context.getResources().getColor(R.color.update_light_yellow));
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+          holder.itemView
+              .setBackgroundColor(0x00000000);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+      });
+
+      holder.itemView.startAnimation(anim);
     }
 
     if (signalModel.getComment() != null && !signalModel.getComment().isEmpty()) {
@@ -101,13 +130,55 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
     holder.date.setText(dateFormatter.format(signalModel.getDate()));
 
     holder.textViewOpeningPrice.setText(DoubleToString.convertFrom(signalModel.getOpeningPrice()));
-    holder.imageViewSignalStatus.setImageResource(R.drawable.green_circle);
 
-    holder.textViewStatus.setText(signalModel.getStatus());
+    if (signalModel.getStatus().equals("working")) {
+
+      if (signalModel.isBuy_sell()) {
+        holder.textViewBuySell.setText(context.getResources().getString(R.string.signal_buy));
+        holder.textViewBuySell.setTextColor(
+            context.getResources().getColor(R.color.color_textview_personal_signals_buy));
+      } else {
+        holder.textViewBuySell.setText(context.getResources().getString(R.string.signal_sell));
+        holder.textViewBuySell.setTextColor(
+            context.getResources().getColor(R.color.color_textview_personal_signals_sell));
+      }
+
+      holder.imageViewSignalStatus.setImageResource(R.drawable.ic_working128);
+//      holder.textViewStatus.setText(signalModel.getStatus());
+
+    } else if (signalModel.getStatus().equals("closed")) {
+      holder.imageViewSignalStatus.setImageResource(R.drawable.ic_closed128);
+//      holder.textViewStatus.setText(signalModel.getStatus());
+
+      holder.textViewOpeningPrice
+          .setText(DoubleToString.convertFrom(signalModel.getOpeningPrice()) + " -> " + DoubleToString
+              .convertFrom(signalModel.getClosingPrice()));
+
+      holder.textViewBuySell.setText(context.getResources().getString(R.string.signal_closed));
+      holder.textViewBuySell
+          .setTypeface(holder.textViewBuySell.getTypeface(), Typeface.BOLD_ITALIC);
+      holder.textViewBuySell.setTextColor(
+          context.getResources().getColor(R.color.color_textview_personal_signals_sell));
+
+
+    } else if (signalModel.getStatus().equals("updated")) {
+
+      if (signalModel.isBuy_sell()) {
+        holder.textViewBuySell.setText(context.getResources().getString(R.string.signal_buy));
+        holder.textViewBuySell.setTextColor(
+            context.getResources().getColor(R.color.color_textview_personal_signals_buy));
+      } else {
+        holder.textViewBuySell.setText(context.getResources().getString(R.string.signal_sell));
+        holder.textViewBuySell.setTextColor(
+            context.getResources().getColor(R.color.color_textview_personal_signals_sell));
+      }
+
+      holder.imageViewSignalStatus.setImageResource(R.drawable.ic_updated128);
+//      holder.textViewStatus.setText(signalModel.getStatus());
+    }
 
     if (userHasOpenedSignal(signalModel)) {
       holder.iv_tick.setVisibility(View.VISIBLE);
-
 
     } else {
       holder.iv_tick.setVisibility(View.INVISIBLE);
@@ -124,24 +195,22 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
 
   }
 
-
   private boolean userHasOpenedSignal(SignalModel signalModel) {
 
     for (UserSignalModel userSignalModel : AndroidApplication.listUserSignalModel) {
 
-      System.out.println(
-          "AndroidApplication.listUserSignalModel.userSignalModel.getSignals().size() SIZE : "
-              + userSignalModel.getSignals().size());
-
       for (String signalId : userSignalModel.getSignals().keySet()) {
-        System.out.println(signalId + " : " + signalId);
-        if (signalId.contains(signalModel.getPositionId())) {
+
+        if (signalId.contains(signalModel.getId())) {
+
           return true;
         }
       }
     }
+
     return false;
   }
+
 
   @Override
   public long getItemId(int signal) {
@@ -176,8 +245,8 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
     TextView textViewBuySell;
     @BindView(R.id.tv_signal_opening_price)
     TextView textViewOpeningPrice;
-    @BindView(R.id.tv_signal_status)
-    TextView textViewStatus;
+//    @BindView(R.id.tv_signal_status)
+//    TextView textViewStatus;
     @BindView(R.id.signal_status)
     ImageView imageViewSignalStatus;
     @BindView(R.id.signal_comment)
@@ -190,4 +259,6 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
       ButterKnife.bind(this, itemView);
     }
   }
+
+
 }

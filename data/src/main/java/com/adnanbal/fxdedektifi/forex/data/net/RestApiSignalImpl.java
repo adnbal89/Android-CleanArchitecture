@@ -13,7 +13,7 @@
  *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  * See the License for the specific language governing permissions and
  *  * limitations under the License.
- *  
+ *
  */
 
 package com.adnanbal.fxdedektifi.forex.data.net;
@@ -25,6 +25,7 @@ import com.adnanbal.fxdedektifi.forex.data.entity.SignalEntity;
 import com.adnanbal.fxdedektifi.forex.data.entity.UserSignalEntity;
 import com.adnanbal.fxdedektifi.forex.data.entity.mapper.SignalEntityJsonMapper;
 import com.adnanbal.fxdedektifi.forex.data.exception.NetworkConnectionException;
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -47,6 +48,9 @@ public class RestApiSignalImpl extends BaseFirebaseDataSource implements RestApi
   /**
    * The target node for a given service
    */
+
+  int countFlag = 0;
+
   private DatabaseReference childReference = null;
   private FirebaseDatabase firebaseDatabase;
   private Map<String, List<String>> listChangedField = new HashMap<>();
@@ -107,8 +111,8 @@ public class RestApiSignalImpl extends BaseFirebaseDataSource implements RestApi
             List<SignalEntity> list = new ArrayList<>();
 
             for (DataSnapshot child : snapshot.getChildren()) {
-//              child.getValue(SignalEntity.class).setId(child.getKey());
               SignalEntity signalEntity = child.getValue(SignalEntity.class);
+              signalEntity.setId(child.getKey());
               if (listChangedField != null && listChangedField.size() != 0) {
                 signalEntity.setChangedFields(listChangedField);
               }
@@ -127,6 +131,81 @@ public class RestApiSignalImpl extends BaseFirebaseDataSource implements RestApi
       } else {
         emitter.onError(new NetworkConnectionException());
       }
+    });
+  }
+
+  //Todo :  Fix for notifications
+  @Override
+  public Observable<SignalEntity> getUpdatedSignal() {
+
+    return Observable.create(emitter -> {
+
+      Firebase myFirebaseRef = new Firebase("https://fxingsign.firebaseio.com/");
+      if (isThereInternetConnection()) {
+
+        myFirebaseRef.child("signal").addChildEventListener(new ChildEventListener() {
+
+          @Override
+          public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            if (countFlag > 0) {
+              SignalEntity signalEntity;
+
+              signalEntity = dataSnapshot.getValue(SignalEntity.class);
+              signalEntity.setId(dataSnapshot.getKey());
+
+              emitter.onNext(signalEntity);
+            } else {
+              //DataInitialization
+            }
+
+          }
+
+          @Override
+          public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            SignalEntity signalEntity;
+
+            signalEntity = dataSnapshot.getValue(SignalEntity.class);
+            signalEntity.setId(dataSnapshot.getKey());
+
+            emitter.onNext(signalEntity);
+
+          }
+
+          @Override
+          public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+          }
+
+          @Override
+          public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+          }
+
+          @Override
+          public void onCancelled(FirebaseError error) {
+            emitter.onError(new FirebaseException(error.getMessage()));
+          }
+
+        });
+
+        myFirebaseRef.child("signal").addListenerForSingleValueEvent(new ValueEventListener() {
+          @Override
+          public void onDataChange(DataSnapshot dataSnapshot) {
+            countFlag++;
+          }
+
+          @Override
+          public void onCancelled(FirebaseError firebaseError) {
+
+          }
+        });
+
+      } else {
+        emitter.onError(new NetworkConnectionException());
+      }
+
+
     });
   }
 

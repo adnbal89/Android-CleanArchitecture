@@ -18,15 +18,24 @@
 
 package com.adnanbal.fxdedektifi.forex.presentation.view.activity;
 
+import static io.trialy.library.Constants.STATUS_TRIAL_JUST_ENDED;
+import static io.trialy.library.Constants.STATUS_TRIAL_JUST_STARTED;
+import static io.trialy.library.Constants.STATUS_TRIAL_NOT_YET_STARTED;
+import static io.trialy.library.Constants.STATUS_TRIAL_OVER;
+import static io.trialy.library.Constants.STATUS_TRIAL_RUNNING;
+
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,22 +51,32 @@ import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.Dagger
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.PositionComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.model.PositionModel;
 import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
+import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalDB;
 import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalModel;
+import com.adnanbal.fxdedektifi.forex.presentation.services.NotificationService;
+import com.adnanbal.fxdedektifi.forex.presentation.sqlite.DatabaseHandler;
 import com.adnanbal.fxdedektifi.forex.presentation.view.ConfirmDialogView;
+import com.adnanbal.fxdedektifi.forex.presentation.view.SignalListView;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.AccountAndSubscriptionsFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.AccountAndSubscriptionsFragment.PurchaseListListener;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.ConfirmSignalDialogView;
-import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalHistoryFragment;
-import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalHistoryFragment.PositionHistoryListListener;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalPositionsFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalPositionsFragment.PositionListListener;
+import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.ProfitFragment;
+import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.ProfitFragment.PositionHistoryListListener;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.SignalsFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.SignalsFragment.SignalListListener;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
+import io.fabric.sdk.android.Fabric;
+import io.trialy.library.Trialy;
+import io.trialy.library.TrialyCallback;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Billing;
@@ -70,13 +89,16 @@ import org.solovyev.android.checkout.Purchase;
  * Activity that shows a list of Signals.
  */
 public class SignalsActivity extends BaseActivity implements HasComponent<PositionComponent>,
-    SignalListListener, PositionListListener, PositionHistoryListListener, PurchaseListListener {
+    SignalListListener, PositionListListener, PositionHistoryListListener, PurchaseListListener,
+    SignalListView {
 
+  private NotificationCompat.Builder builder;
+  private NotificationManager notificationManager;
+  int counter = 0;
   private static final Boolean OPEN = true;
   private static final Boolean CLOSED = false;
 
   private ActivityCheckout mCheckout;
-
 
   @BindView(R.id.appbar)
   Toolbar toolbar;
@@ -87,13 +109,16 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   @BindView(R.id.idBottomBar)
   BottomNavigationView bottomNavigationView;
 
+  DatabaseHandler db;
 
   Builder mMaterialDialog;
 
   ConfirmDialogView confirmDialogView;
   ConfirmSignalDialogView confirmSignalDialogView;
 
+  Trialy mTrialy;
   Unbinder unbinder;
+
 
   PositionModel positionModel;
   private Toast toast;
@@ -115,7 +140,6 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
   private PositionComponent positionComponent;
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -136,7 +160,13 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
     setupDrawerContent(navigationViewDrawer);
 
     this.initializeInjector();
-    initializeApp(savedInstanceState);
+
+    //Trial period Checker
+    mTrialy = new Trialy(this, "P5KQU2O7WCBYWBA340B");
+    mTrialy.checkTrial("default", mTrialyCallback);
+    mTrialy.enableLogging();
+
+    db = new DatabaseHandler(this);
 
   }
 
@@ -146,9 +176,21 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
     super.onActivityResult(requestCode, resultCode, data);
   }
 
+
   private void normalStart() {
     bottomNavigationView.setVisibility(View.VISIBLE);
     navigationViewDrawer.getMenu().findItem(R.id.nav_item_signals_fragment).setVisible(true);
+
+    /*
+     * START NOTIFICATION SERVICE
+     */
+    // use this to start and trigger a service
+    Intent notificationServiceStartIntent = new Intent(this, NotificationService.class);
+    notificationServiceStartIntent.putExtra("counter", counter);
+    startService(notificationServiceStartIntent);
+    /*
+     *
+     */
 
     addFragment(
         com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
@@ -175,7 +217,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
                 addFragment(
                     com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
-                    new PersonalHistoryFragment());
+                    new ProfitFragment());
                 break;
 
 //              case R.id.action_personal_positions:
@@ -197,10 +239,9 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
         });
   }
 
-  private void initializeApp(Bundle savedInstanceState) {
+  private void initializeApp(final boolean isTrialPeriodOver, final long timeRemaining) {
 
     final Inventory.Request request = Inventory.Request.create();
-
     //BILLING START
     final Billing billing = AndroidApplication.get(this).getBilling();
     mCheckout = Checkout.forActivity(this, billing);
@@ -213,11 +254,18 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
       @Override
       public void onLoaded(@Nonnull Inventory.Products products) {
         List<Purchase> purchaseList = products.get(ProductTypes.SUBSCRIPTION).getPurchases();
-        List<Purchase> purchaseInapList = products.get(ProductTypes.IN_APP).getPurchases();
+//        List<Purchase> purchaseInapList = products.get(ProductTypes.IN_APP).getPurchases();
+
+        if(timeRemaining<0)
+          AndroidApplication.accountExpiryTime = "0";
+        else{
+          int days = (int)(timeRemaining/(24*3600));
+          AndroidApplication.accountExpiryTime = Integer.toString(days);
+        }
 
         AndroidApplication.purchasedList = purchaseList;
 
-        if (purchaseList.size() == 0) {
+        if (isTrialPeriodOver && purchaseList.size() == 0) {
           limitedStart();
         } else {
           normalStart();
@@ -227,6 +275,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
     });
 
   }
+
 
   private void limitedStart() {
 
@@ -276,7 +325,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
         getSupportActionBar().setTitle(R.string.profit);
         addFragment(
             com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
-            new PersonalHistoryFragment());
+            new ProfitFragment());
         break;
 
       case R.id.nav_item_my_account_fragment:
@@ -311,7 +360,6 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
     setSupportActionBar(toolbar);
     getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override
       public boolean onMenuItemClick(MenuItem item) {
@@ -319,6 +367,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
           //Change the ImageView image source depends on menu item click
           case R.id.action_account:
             getSupportActionBar().setTitle(R.string.my_account);
+            navigationViewDrawer.setCheckedItem(R.id.nav_item_my_account_fragment);
             addFragment(
                 com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
                 new AccountAndSubscriptionsFragment());
@@ -338,14 +387,12 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
         .applicationComponent(getApplicationComponent())
         .activityModule(getActivityModule())
         .build();
-
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
-        System.out.println("Drawer Clicked");
         mDrawer.openDrawer((GravityCompat.START));
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(
@@ -371,6 +418,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   protected void onDestroy() {
     unbinder.unbind();
     mCheckout.stop();
+    counter = 0;
     super.onDestroy();
   }
 
@@ -413,7 +461,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
           .positiveText(R.string.text_dialog_view_OK)
           .negativeText(R.string.text_dialog_view_Cancel)
           .cancelable(true);
-    } else if (view instanceof PersonalHistoryFragment) {
+    } else if (view instanceof ProfitFragment) {
 
       if (positionModel.getComment() != null && !positionModel.getComment().isEmpty()) {
 
@@ -448,7 +496,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
     }
 
     //if position is already closed/not open/ No tick is present
-    if (!signalIdList.contains(signalModel.getPositionId())) {
+    if (!signalIdList.contains(signalModel.getId())) {
       //and comment is empty or null
       if (signalModel.getComment() == null || signalModel.getComment().isEmpty()) {
         dialog.items(R.array.array_signal_click_menu_1);
@@ -514,7 +562,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
                 .negativeText(R.string.text_dialog_view_Cancel)
                 .cancelable(true).show();
 
-          } else if (!signalIdList.contains(signalModel.getPositionId()) && which == 1) {
+          } else if (!signalIdList.contains(signalModel.getId()) && which == 1) {
             mMaterialDialog.title(R.string.text_dialog_view_signal_title)
                 .content(signalModel.getComment())
                 .negativeText(R.string.text_dialog_view_OK)
@@ -561,6 +609,51 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
     normalStart();
   }
 
+  @Override
+  public void showLoading() {
+
+  }
+
+  @Override
+  public void hideLoading() {
+
+  }
+
+  @Override
+  public void showRetry() {
+
+  }
+
+  @Override
+  public void hideRetry() {
+
+  }
+
+  @Override
+  public void showError(String message) {
+
+  }
+
+  @Override
+  public Context context() {
+    return null;
+  }
+
+  @Override
+  public void renderSignalList(Collection<SignalModel> signalModelCollection) {
+
+  }
+
+  @Override
+  public void viewSignal(SignalModel signalModel) {
+
+  }
+
+  @Override
+  public void openSignalConfirmedOnline(SignalModel signalModel, Boolean openOrClose) {
+
+  }
+
 //  private void purchase(Sku sku) {
 //    mCheckout.startPurchaseFlow(sku, null, new SignalsActivity.PurchaseListener());
 //
@@ -583,4 +676,74 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 //  }
 
 
+  @Override
+  protected void onResume() {
+    super.onResume();
+    UserSignalModel temp = new UserSignalModel();
+    Map<String, Boolean> tempMap = new HashMap<>();
+
+    AndroidApplication.listUserSignalModel = new ArrayList<>();
+
+    List<UserSignalDB> userSignalDBs = db.getAllUserSignalDBs();
+    for (UserSignalDB userSignalDB : userSignalDBs) {
+      tempMap.put(userSignalDB.getUid(), true);
+    }
+
+    temp.setSignals(tempMap);
+    AndroidApplication.listUserSignalModel.add(temp);
+
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    for (UserSignalModel userSignalmodel : AndroidApplication.listUserSignalModel) {
+
+      for (String uid : userSignalmodel.getSignals().keySet()) {
+
+        if (!db.Exists(uid)) {
+          db.addUserSignalDB(new UserSignalDB(uid));
+        }
+
+      }
+    }
+  }
+
+  private void checkLoggedInUserStatusInDatabase(String userUid) {
+  }
+
+  private TrialyCallback mTrialyCallback = new TrialyCallback() {
+    @Override
+    public void onResult(int status, long timeRemaining, String sku) {
+
+      switch (status) {
+        case STATUS_TRIAL_JUST_STARTED:
+          initializeApp(false, timeRemaining);
+
+          break;
+        case STATUS_TRIAL_RUNNING:
+          initializeApp(false, timeRemaining);
+
+          break;
+        case STATUS_TRIAL_JUST_ENDED:
+          initializeApp(true, timeRemaining);
+
+          break;
+        case STATUS_TRIAL_NOT_YET_STARTED:
+          mTrialy.startTrial("default", mTrialyCallback);
+
+          break;
+        case STATUS_TRIAL_OVER:
+          initializeApp(true, timeRemaining);
+          break;
+      }
+      Log.i("TRIALY", "Returned status: " + Trialy.getStatusMessage(status));
+    }
+
+  };
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+  }
 }

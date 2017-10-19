@@ -70,4 +70,11 @@ public class DiskSignalDataStore implements SignalDataStore {
     //ToDo : complete cache
     return null;
   }
+
+  @Override
+  public Observable<SignalEntity> getUpdatedSignal() {
+    //Todo : complete cache
+    return null;
+  }
+
 }

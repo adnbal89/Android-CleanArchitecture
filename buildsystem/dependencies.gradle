@@ -33,6 +33,7 @@ ext {
     okHttpVersion = '3.8.1'
     androidAnnotationsVersion = '21.0.3'
     arrowVersion = '1.0.0'
+    trialyVersion = '1.0.7'
     // Adnan BAL Added Libraries
     auth0LockVersion = '2.4.0'
     percentRelativeLayoutVersion = '26.0.1'
@@ -89,7 +90,9 @@ ext {
             checkout             : "org.solovyev.android:checkout:${checkoutVersion}",
             firebaseCrash        : "com.google.firebase:firebase-crash:${firebaseVersion}",
             firebaseAuth         : "com.google.firebase:firebase-auth:${firebaseVersion}",
-            firebaseUIAuth       : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}"
+            firebaseUIAuth       : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}",
+            trialy               : "io.trialy.library:trialy:${trialyVersion}",
+            firebaseCore         : "com.google.firebase:firebase-core:${firebaseVersion}"
 
     ]
 

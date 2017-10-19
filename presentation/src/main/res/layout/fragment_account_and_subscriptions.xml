@@ -17,17 +17,13 @@
     android:layout_weight="1"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
-    android:orientation="vertical"
+    android:orientation="horizontal"
+    android:weightSum="10"
+    android:background="@drawable/layout_border"
+
 
     >
-    <ImageView
-      android:id="@+id/avatar"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_gravity="center"
-      android:contentDescription="@string/string_content_description"
-      android:src="@drawable/ic_subscription_icon"
-      />
+
 
     <!--<TextView-->
     <!--android:id="@+id/textview_subscription_expire"-->
@@ -44,6 +40,27 @@
     <!--android:textSize="@dimen/tw__login_btn_text_size"-->
     <!--/>-->
 
+    <ImageView
+      android:id="@+id/accountLogo"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:layout_gravity="center"
+      android:contentDescription="@string/string_content_description"
+      android:src="@drawable/ic_account"
+      />
+    <TextView
+      android:id="@+id/txt_expiryTime"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="9"
+      android:paddingStart="30dp"
+      android:ellipsize="end"
+      android:gravity="left|center_vertical"
+      android:maxLines="5"
+      android:text="@string/expiryTimeComment"
+      android:textColor="@color/color_textview_subscription_text"
+      android:textSize="15sp"/>
   </LinearLayout>
 
 
@@ -56,25 +73,44 @@
     android:weightSum="10"
 
     >
-    <TextView
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
       android:background="@drawable/layout_border"
-      android:ellipsize="end"
-      android:gravity="center"
-      android:maxLines="5"
-      android:singleLine="true"
-      android:text="@string/subscriptions"
-      android:textColor="@color/color_textview_subscription_text"
-      android:textSize="@dimen/tw__login_btn_text_size"
-      />
+      android:orientation="horizontal"
+      android:weightSum="10">
+
+      <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_subscription_icon"
+        />
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="9"
+        android:paddingStart="10dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="5"
+        android:singleLine="true"
+        android:text="@string/subscriptions"
+        android:textColor="@color/color_textview_subscription_text"
+        android:textSize="@dimen/tw__login_btn_text_size"
+        />
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
       android:id="@+id/rv_subscriptions"
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="9"
+      android:layout_gravity="center"
       android:paddingStart="10dp"
       android:paddingEnd="10dp"
       android:scrollbars="vertical"

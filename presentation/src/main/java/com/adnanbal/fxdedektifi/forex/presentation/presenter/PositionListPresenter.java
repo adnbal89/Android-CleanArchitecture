@@ -135,13 +135,13 @@ public class PositionListPresenter implements Presenter {
 
   private void closeOpenPosition(PositionModel positionModel) {
     this.closeOpenPositionUseCase
-        .execute(new PositionCloseObserver(), Params.forPosition(positionModel.getPositionId()));
+        .execute(new PositionCloseObserver(), Params.forPosition(positionModel.getId()));
   }
 
   private void openPosition(PositionModel positionModel) {
     this.openPositionUseCase
         .execute(new PositionOpenObserver(),
-            OpenPosition.Params.forPosition(positionModel.getPositionId(), positionModel.getPair(),
+            OpenPosition.Params.forPosition(positionModel.getId(), positionModel.getPair(),
                 positionModel.getVolume(), positionModel.isBuy_sell(),
                 positionModel.getOpeningPrice(), positionModel.isOpen(), positionModel.getStatus(),
                 positionModel.getComment(), positionModel.getDate()
@@ -217,7 +217,6 @@ public class PositionListPresenter implements Presenter {
   //TODO : implement according to result
   private void confirmRemoveOperationComplete(Boolean result) {
 
-    System.out.println("RESULT : " + result.toString());
 //    final PositionModel positionModel =
 //        this.positionModelDataMapper.transform(position);
     this.positionListView.closePositionConfirmedOnline(positionModelToRemove);

@@ -63,4 +63,12 @@ public interface SignalDataStore {
    */
   Observable<Boolean> patchUserSignalEntity(Map<String, Boolean> userSignalMap,
       String authenticatedUserUid, boolean openOrClose);
+
+
+  /**
+   * Get an {@link Observable} which will emit a {@link SignalEntity} when a signal is updated in
+   * firebase DB.
+   */
+  Observable<SignalEntity> getUpdatedSignal();
+
 }

@@ -38,7 +38,7 @@ public class DateFormatter {
   }
 
   public String format(Date date) {
-    SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault());
+    SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
     return dt.format(date);
   }
 }

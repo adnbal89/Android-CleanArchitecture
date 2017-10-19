@@ -61,4 +61,11 @@ public interface SignalRepository {
   Observable<Boolean> patchUserSignal(Map<String, Boolean> userSignalMap,
       String authenticatedUserUid, boolean openOrClose);
 
+
+  /**
+   * Get an {@link Observable} which will emit a {@link Signal}.
+   */
+  Observable<Signal> getUpdatedSignal();
+
+
 }

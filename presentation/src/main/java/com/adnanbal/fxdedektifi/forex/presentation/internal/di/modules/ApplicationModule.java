@@ -30,17 +30,21 @@ import com.adnanbal.fxdedektifi.forex.data.repository.PositionHistoryDataReposit
 import com.adnanbal.fxdedektifi.forex.data.repository.SignalDataRepository;
 import com.adnanbal.fxdedektifi.forex.data.repository.SubscriptionDataRepository;
 import com.adnanbal.fxdedektifi.forex.data.repository.UserDataRepository;
+import com.adnanbal.fxdedektifi.forex.data.repository.UserLoginDetailsDataRepository;
 import com.adnanbal.fxdedektifi.forex.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.forex.domain.executor.ThreadExecutor;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionHistoryRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.SignalRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.SubscriptionRepository;
+import com.adnanbal.fxdedektifi.forex.domain.repository.UserLoginDetailsRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.UserRepository;
 import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.UIThread;
 import com.adnanbal.fxdedektifi.forex.presentation.external.AnalyticsInterface;
 import com.adnanbal.fxdedektifi.forex.presentation.firebase.FirebaseAnalyticsHelper;
+import com.adnanbal.fxdedektifi.forex.presentation.presenter.SignalListPresenter;
+import com.adnanbal.fxdedektifi.forex.presentation.presenter.UserLoginDetailsPresenter;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.FirebaseDatabase;
 import dagger.Module;
@@ -81,6 +85,19 @@ public class ApplicationModule {
     AnalyticsInterface AnalyticsInterface = new FirebaseAnalyticsHelper(
         FirebaseAnalytics.getInstance(context));
     return AnalyticsInterface;
+  }
+
+  @Provides
+  @Singleton
+  public SignalListPresenter provideSignalListPresenter(SignalListPresenter signalListPresenter) {
+    return signalListPresenter;
+  }
+
+  @Provides
+  @Singleton
+  public UserLoginDetailsPresenter provideUserLoginDetailsPresenter(
+      UserLoginDetailsPresenter userLoginDetailsPresenter) {
+    return userLoginDetailsPresenter;
   }
 
   @Provides
@@ -158,4 +175,13 @@ public class ApplicationModule {
       PositionHistoryDataRepository positionHistoryDataRepository) {
     return positionHistoryDataRepository;
   }
+
+  @Provides
+  @Singleton
+  UserLoginDetailsRepository provideUserLoginDetailsRepository(
+      UserLoginDetailsDataRepository userLoginDetailsDataRepository) {
+    return userLoginDetailsDataRepository;
+  }
+
+
 }

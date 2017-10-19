@@ -7,8 +7,7 @@ import java.util.Date;
  */
 public class PositionModel {
 
-  private String positionId;
-
+  private String id;
   private String pair;
   // buy : 1 , sell : 0
   private boolean buy_sell;
@@ -21,10 +20,13 @@ public class PositionModel {
   private String comment;
   private Date date;
 
+  public PositionModel() {
+    //empty constructor for Gson Mapper
+  }
 
-  public PositionModel(String positionId, String pair, double volume, boolean buy_sell,
+  public PositionModel(String id, String pair, double volume, boolean buy_sell,
       double openingPrice, boolean open, String status, String comment, Date date) {
-    this.positionId = positionId;
+    this.id = id;
     this.pair = pair;
     this.volume = volume;
     this.buy_sell = buy_sell;
@@ -47,12 +49,17 @@ public class PositionModel {
     this.date = date;
   }
 
-  public PositionModel(String positionId) {
-    this.positionId = positionId;
+
+  public PositionModel(String id) {
+    this.id = id;
   }
 
-  public String getPositionId() {
-    return positionId;
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getPair() {
@@ -139,7 +146,7 @@ public class PositionModel {
   @Override
   public String toString() {
     return "PositionModel{" +
-        "positionId=" + positionId +
+        "id=" + id +
         ", pair='" + pair + '\'' +
         ", buy_sell=" + buy_sell +
         ", volume=" + volume +
@@ -150,5 +157,24 @@ public class PositionModel {
         ", status='" + status + '\'' +
         ", comment='" + comment + '\'' +
         '}';
+  }
+
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    PositionModel that = (PositionModel) o;
+
+    return id.equals(that.id);
   }
 }

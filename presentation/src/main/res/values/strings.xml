@@ -32,7 +32,7 @@
 
   <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
-  <string name="title_activity_personal_positions">PersonalPositionsActivity</string>
+  <string name="title_activity_personal_positions">PersonalSignalsActivity</string>
 
   <string name="title_section1">Section 1</string>
   <string name="title_section2">Section 2</string>
@@ -52,7 +52,7 @@
   //Bottom Navigation Bar
 
   <string name="menu">Menu</string>
-  <string name="personal_positions">Positions</string>
+  <string name="personal_positions">Signals</string>
   <string name="signals">Signals</string>
   <string name="profit">Profit</string>
   <string name="authentication">Authentication</string>
@@ -60,17 +60,17 @@
   <!-- TODO: Remove or change this placeholder text -->
 
   //Fragment Names
-  <string name="personal_positions_fragment">Personal Positions Fragment</string>
+  <string name="personal_positions_fragment">Personal Signals Fragment</string>
   <string name="signals_fragment">Signals Fragment</string>
   <string name="profit_fragment">Profit Fragment</string>
   <string name="signal_history_fragment">History Fragment</string>
 
   //Toolbar
-  <string name="title_personal_positions">Personal Positions</string>
+  <string name="title_personal_positions">Personal Signals</string>
   <string name="my_account">My Account</string>
   <string name="title_account">My Account</string>
   <string name="settings">Settings</string>
-  //Position
+  //Signal
   <string name="position_buy">Buy</string>
   <string name="position_sell">Sell</string>
 
@@ -79,7 +79,7 @@
   <string name="signal_sell">Sell</string>
 
   //Button text
-  <string name="btn_text_personal_positions">Personal Positions</string>
+  <string name="btn_text_personal_positions">Personal Signals</string>
   <string name="btn_text_signals">Signals</string>
   <string name="text_extend_membership">Extend Membership</string>
 
@@ -88,24 +88,24 @@
 
 
   //Dialog strings
-  <string name="text_dialog_view_title">Close Position ?</string>
-  <string name="text_dialog_view_content">Do you want to close this position ?</string>
-  <string name="text_dialog_history_view_title">Closed Position Details</string>
+  <string name="text_dialog_view_title">Unfollow Signal ?</string>
+  <string name="text_dialog_view_content">Do you want to unfollow this position ?</string>
+  <string name="text_dialog_history_view_title">Closed Signal Details</string>
   <string name="text_dialog_history_view_content">Closed position details</string>
-  <string name="text_dialog_view_position_title">Position Comment</string>
+  <string name="text_dialog_view_position_title">Signal Comment</string>
   <string name="text_dialog_view_signal_title">Signal Comment</string>
 
 
-  <string name="text_dialog_view_comment_content">Position Comment</string>
+  <string name="text_dialog_view_comment_content">Signal Comment</string>
 
   <string name="text_dialog_no_content_title">No comment</string>
   <string name="text_dialog_view_no_comment_content">No comment found</string>
 
 
-  <string name="text_dialog_open_signal_view_title">Open Position</string>
-  <string name="text_dialog_open_signal_view_content">Are you sure to open this position ?</string>
-  <string name="text_dialog_close_signal_view_title">Close Position</string>
-  <string name="text_dialog_close_signal_view_content">Are you sure to close this position ?</string>
+  <string name="text_dialog_open_signal_view_title">Follow Signal</string>
+  <string name="text_dialog_open_signal_view_content">Are you sure to follow this signal ?</string>
+  <string name="text_dialog_close_signal_view_title">Unfollow Signal</string>
+  <string name="text_dialog_close_signal_view_content">Are you sure to unfollow this position ?</string>
 
 
   text_dialog_open_signal_view_title
@@ -115,9 +115,12 @@
 
 
   //Toast messages
-  <string name="toast_dialog_confirmed">Position closed</string>
-  <string name="text_signal_opened">Position Opened</string>
-  <string name="text_signal_closed">Position Closed</string>
+  <string name="toast_dialog_confirmed">Signal unfollowed</string>
+  <string name="text_signal_opened">Signal followed</string>
+  <string name="text_signal_closed">Signal unfollowed</string>
+
+  <string name="signal_closed">Closed</string>
+
 
   //TextView texts
   <string name="text_membership_deadline">Your subscription period ends in : </string>
@@ -163,9 +166,9 @@
 
   <string name="hint_user_id">User ID</string>
   <string name="get_custom_token">Get Token</string>
-  <string name="sign_in">Sign In</string>
+  <string name="sign_in">SIGN IN</string>
   <string name="create_account">Create Account</string>
-  <string name="sign_out">Sign Out</string>
+  <string name="sign_out">SIGN OUT</string>
   <string name="verify_email">Verify Email</string>
   <string name="disconnect">Disconnect</string>
   <string name="loading">Loading…</string>
@@ -223,10 +226,21 @@
 
   //open-close-comment popup menu options
 
-  <string name="open_pos">Open Position</string>
-  <string name="close_pos">Close Position</string>
+  <string name="open_pos">Follow Signal</string>
+  <string name="close_pos">Unfollow Signal</string>
   <string name="comment_pos">Show Comment</string>
 
   <string name="alreadyownpurchase">You already own a subscription</string>
   <string name="purchasedSubscription">You are already subscribed to </string>
+  <string name="revenuesQuarters">Revenue Quarters(pips)</string>
+  <string name="in_pips">(in pips)</string>
+
+  <string name="expiryTimeComment">Your free trial ends in : </string>
+  <string name="days"> days</string>
+  <string name="seeActiveSubcriptions">You can see your active subscription below.</string>
+
+
+  <string name="twitter_consumer_key" translatable="false">YOURCONSUMERKEY</string>
+  <string name="twitter_consumer_secret" translatable="false">YOURCONSUMERSECRET</string>
+
 </resources>

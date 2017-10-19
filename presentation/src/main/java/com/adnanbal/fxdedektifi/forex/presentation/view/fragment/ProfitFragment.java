@@ -27,7 +27,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -39,17 +41,29 @@ import butterknife.Unbinder;
 import com.adnanbal.fxdedektifi.forex.presentation.R;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.PositionComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.model.PositionModel;
-import com.adnanbal.fxdedektifi.forex.presentation.presenter.PositionHistoryListPresenter;
+import com.adnanbal.fxdedektifi.forex.presentation.presenter.ProfitListPresenter;
 import com.adnanbal.fxdedektifi.forex.presentation.view.ConfirmDialogView;
 import com.adnanbal.fxdedektifi.forex.presentation.view.PositionListView;
-import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.PositionHistoryAdapter;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.PositionsLayoutManager;
+import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.ProfitAdapter;
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.Legend.LegendHorizontalAlignment;
+import com.github.mikephil.charting.components.Legend.LegendOrientation;
+import com.github.mikephil.charting.components.Legend.LegendVerticalAlignment;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,7 +71,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import javax.inject.Inject;
 
-public class PersonalHistoryFragment extends BaseFragment implements PositionListView,
+public class ProfitFragment extends BaseFragment implements PositionListView,
+    OnChartGestureListener,
     ConfirmDialogView {
 
   /*
@@ -73,6 +88,7 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
   double second_quarter_profit = 0;
   double third_quarter_profit = 0;
   double fourth_quarter_profit = 0;
+  int current_year = Calendar.getInstance().get(Calendar.YEAR);
 
   private PositionHistoryListListener positionHistoryListListener;
 
@@ -91,9 +107,11 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
   }
 
   @Inject
-  PositionHistoryListPresenter positionHistoryListPresenter;
+  ProfitListPresenter profitListPresenter;
   @Inject
-  PositionHistoryAdapter positionHistoryAdapter;
+  ProfitAdapter profitAdapter;
+
+  Context context;
 
   @BindView(R.id.rv_personal_history)
   RecyclerView rv_personal_history;
@@ -105,17 +123,20 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
   Button bt_retry;
   @BindView(R.id.pieChart_position_history)
   PieChart pieChart;
+  @BindView(R.id.barChartProfit)
+  BarChart barChartProfit;
 
   private Typeface tf;
 
 
-  public PersonalHistoryFragment() {
+  public ProfitFragment() {
     setRetainInstance(true);
   }
 
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
+    context = activity;
     if (activity instanceof PositionHistoryListListener) {
       this.positionHistoryListListener = (PositionHistoryListListener) activity;
     }
@@ -142,23 +163,49 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
     double calculated_profit_model = 0;
 
     int month;
+    int year;
 
     cal.setTime(positionModel.getDate());
     month = cal.get(Calendar.MONTH);
+    year = cal.get(Calendar.YEAR);
 
-    if (month < 3) {
-      first_quarter_profit += (positionModel.getClosingPrice() - positionModel.getOpeningPrice());
-    } else if (month >= 3 && month < 6) {
-      second_quarter_profit += (positionModel.getClosingPrice() - positionModel.getOpeningPrice());
-    } else if (month >= 6 && month < 9) {
-      third_quarter_profit += (positionModel.getClosingPrice() - positionModel.getOpeningPrice());
-    } else if (month >= 9 && month < 12) {
-      fourth_quarter_profit +=
-          (positionModel.getClosingPrice() - positionModel.getOpeningPrice());
+    if (year == current_year) {
+      if (positionModel.getPair().contains("JPY")) {
+
+        if (month < 3) {
+          first_quarter_profit +=
+              (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 100;
+        } else if (month >= 3 && month < 6) {
+          second_quarter_profit += (positionModel.getClosingPrice() - positionModel
+              .getOpeningPrice()) / 100;
+        } else if (month >= 6 && month < 9) {
+          third_quarter_profit +=
+              (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 100;
+        } else if (month >= 9 && month < 12) {
+          fourth_quarter_profit +=
+              (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 100;
+        }
+
+      } else {
+
+        if (month < 3) {
+          first_quarter_profit += (positionModel.getClosingPrice() - positionModel
+              .getOpeningPrice());
+        } else if (month >= 3 && month < 6) {
+          second_quarter_profit += (positionModel.getClosingPrice() - positionModel
+              .getOpeningPrice());
+        } else if (month >= 6 && month < 9) {
+          third_quarter_profit += (positionModel.getClosingPrice() - positionModel
+              .getOpeningPrice());
+        } else if (month >= 9 && month < 12) {
+          fourth_quarter_profit +=
+              (positionModel.getClosingPrice() - positionModel.getOpeningPrice());
+        }
+      }
+
     }
-
-
   }
+
 
   private void setUpPieChart() {
 
@@ -172,25 +219,69 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
     pieChart.setCenterTextTypeface(tf);
 
     // radius of the center hole in percent of maximum radius
-    pieChart.setHoleRadius(30f);
-    pieChart.setTransparentCircleRadius(25f);
+    pieChart.setHoleRadius(32f);
+    pieChart.setTransparentCircleRadius(26f);
 
     Legend l = pieChart.getLegend();
-    l.setTextSize(6f);
-    l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-    l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-    l.setOrientation(Legend.LegendOrientation.VERTICAL);
+    l.setTextSize(5f);
+    l.setVerticalAlignment(LegendVerticalAlignment.TOP);
+    l.setHorizontalAlignment(LegendHorizontalAlignment.RIGHT);
+    l.setOrientation(LegendOrientation.VERTICAL);
     l.setDrawInside(false);
 
     pieChart.setData(generatePieData());
 
     pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
 
-    // mChart.spin(2000, 0, 360);}
+    // barChartProfit.spin(2000, 0, 360);}
   }
 
+
+  ////////////// BAR CHART START ///////////////////////
+  private void setUpBarChart() {
+    // create a new chart object
+    barChartProfit.getDescription().setEnabled(false);
+    barChartProfit.setOnChartGestureListener(this);
+
+    barChartProfit.setDrawGridBackground(false);
+    barChartProfit.setDrawBarShadow(false);
+
+    Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
+
+    barChartProfit.setData(generateBarData());
+
+    Legend l = barChartProfit.getLegend();
+    l.setEnabled(false);
+
+
+    YAxis leftAxis = barChartProfit.getAxisLeft();
+    leftAxis.setTypeface(tf);
+    leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+
+    barChartProfit.getAxisRight().setEnabled(false);
+
+    XAxis xAxis = barChartProfit.getXAxis();
+    xAxis.setEnabled(false);
+    barChartProfit.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+
+//    // programatically add the chart
+//    barChartFrameLayout.addView(barChartProfit);
+  }
+
+
+  private String[] mLabels = new String[]{""};
+//    private String[] mXVals = new String[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec" };
+
+  private String getLabel(int i) {
+    return mLabels[i];
+  }
+
+  ////////////// BAR CHART END ///////////////////////
+
+
   private SpannableString generateCenterText() {
-    SpannableString s = new SpannableString("Revenues\nQuarters 2015");
+    SpannableString s = new SpannableString(
+        getResources().getString(R.string.revenuesQuarters) + " " + current_year);
     s.setSpan(new RelativeSizeSpan(2f), 0, 8, 0);
     s.setSpan(new ForegroundColorSpan(Color.BLACK), 8, s.length(), 0);
     return s;
@@ -205,6 +296,7 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
 //    for (int i = 0; i < count; i++) {
 //      entries1.add(new PieEntry((float) (totalProfit / (Math.random() * 5)), "Quarter " + (i + 1)));
 //    }
+
     entries1.add(new PieEntry((float) (10000 * first_quarter_profit), "Quarter 1"));
     entries1.add(new PieEntry((float) (10000 * second_quarter_profit), "Quarter 2"));
     entries1.add(new PieEntry((float) (10000 * third_quarter_profit), "Quarter 3"));
@@ -212,7 +304,7 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
 
 //    entries1.add(new PieEntry((float) totalProfit, "Total Profit"));
 
-    PieDataSet ds1 = new PieDataSet(entries1, "Quarterly Revenues 2015");
+    PieDataSet ds1 = new PieDataSet(entries1, getResources().getString(R.string.in_pips));
 
     ds1.setColors(ColorTemplate.MATERIAL_COLORS);
     ds1.setSliceSpace(1f);
@@ -225,10 +317,38 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
     return d;
   }
 
+  protected BarData generateBarData() {
+
+    int count = 4;
+    ArrayList<IBarDataSet> sets = new ArrayList<IBarDataSet>();
+    ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
+
+//    for (int i = 0; i < count; i++) {
+//      entries1.add(new PieEntry((float) (totalProfit / (Math.random() * 5)), "Quarter " + (i + 1)));
+//    }
+    entries.add(new BarEntry(1, (float) (10000 * first_quarter_profit)));
+    entries.add(new BarEntry(2, (float) (10000 * second_quarter_profit)));
+    entries.add(new BarEntry(3, (float) (10000 * third_quarter_profit)));
+    entries.add(new BarEntry(4, (float) (10000 * fourth_quarter_profit)));
+
+//    entries1.add(new PieEntry((float) totalProfit, "Total Profit"));
+    BarDataSet ds = new BarDataSet(entries, null);
+
+    ds.setColors(ColorTemplate.MATERIAL_COLORS);
+    ds.setValueTextColor(Color.BLACK);
+    ds.setValueTextSize(8f);
+    sets.add(ds);
+
+    BarData d = new BarData(sets);
+    d.setValueTypeface(tf);
+
+    return d;
+  }
+
   @Override
   public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    this.positionHistoryListPresenter.setView(this);
+    this.profitListPresenter.setView(this);
 
     if (savedInstanceState == null) {
       this.loadPositionList();
@@ -238,13 +358,13 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
   @Override
   public void onResume() {
     super.onResume();
-    this.positionHistoryListPresenter.resume();
+    this.profitListPresenter.resume();
   }
 
   @Override
   public void onPause() {
     super.onPause();
-    this.positionHistoryListPresenter.pause();
+    this.profitListPresenter.pause();
 
   }
 
@@ -258,7 +378,7 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
   @Override
   public void onDestroy() {
     super.onDestroy();
-    this.positionHistoryListPresenter.destroy();
+    this.profitListPresenter.destroy();
 
   }
 
@@ -298,7 +418,7 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
   @Override
   public void renderPositionList(Collection<PositionModel> positionModelCollection) {
     if (positionModelCollection != null) {
-      this.positionHistoryAdapter.setPositionsCollection(positionModelCollection);
+      this.profitAdapter.setPositionsCollection(positionModelCollection);
     }
 
     double tempTotalProfit = 0;
@@ -311,6 +431,7 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
     }
     this.totalProfit = tempTotalProfit;
     setUpPieChart();
+    setUpBarChart();
   }
 
   @Override
@@ -323,22 +444,22 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
   //TODO : implement method
   @Override
   public void closePositionConfirmedOnline(PositionModel positionModel) {
-    //    positionHistoryAdapter.removePositionFromCurrentCollection(positionModel);
+    //    profitAdapter.removePositionFromCurrentCollection(positionModel);
   }
 
   @Override
   public void openPositionConfirmedOnline(PositionModel positionModel) {
-    //    positionHistoryAdapter.addPositionToCurrentCollection(positionModel);
+    //    profitAdapter.addPositionToCurrentCollection(positionModel);
   }
 
   private void setupRecyclerView() {
-    this.positionHistoryAdapter.setOnItemClickListener(onItemClickListener);
+    this.profitAdapter.setOnItemClickListener(onItemClickListener);
 
     //    SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
     //    this.rv_personal_history.setItemAnimator(animator);
 
     this.rv_personal_history.setLayoutManager(new PositionsLayoutManager(context()));
-    this.rv_personal_history.setAdapter(positionHistoryAdapter);
+    this.rv_personal_history.setAdapter(profitAdapter);
   }
 
   @Override
@@ -351,23 +472,68 @@ public class PersonalHistoryFragment extends BaseFragment implements PositionLis
    * Loads all positions.
    */
   private void loadPositionList() {
-    this.positionHistoryListPresenter.initialize();
+    this.profitListPresenter.initialize();
   }
 
   @OnClick(com.adnanbal.fxdedektifi.forex.presentation.R.id.bt_retry)
   void onButtonRetryClick() {
-    PersonalHistoryFragment.this.loadPositionList();
+    ProfitFragment.this.loadPositionList();
   }
 
-  private PositionHistoryAdapter.OnItemClickListener onItemClickListener =
-      new PositionHistoryAdapter.OnItemClickListener() {
+  private ProfitAdapter.OnItemClickListener onItemClickListener =
+      new ProfitAdapter.OnItemClickListener() {
         @Override
         public void onPositionItemClicked(PositionModel positionModel) {
-          if (PersonalHistoryFragment.this.positionHistoryListPresenter != null
+          if (ProfitFragment.this.profitListPresenter != null
               && positionModel != null) {
-            PersonalHistoryFragment.this.positionHistoryListPresenter
+            ProfitFragment.this.profitListPresenter
                 .onPositionClicked(positionModel);
           }
         }
       };
+
+
+  @Override
+  public void onChartGestureStart(MotionEvent me,
+      ChartTouchListener.ChartGesture lastPerformedGesture) {
+    Log.i("Gesture", "START");
+  }
+
+  @Override
+  public void onChartGestureEnd(MotionEvent me,
+      ChartTouchListener.ChartGesture lastPerformedGesture) {
+    Log.i("Gesture", "END");
+    barChartProfit.highlightValues(null);
+  }
+
+  @Override
+  public void onChartLongPressed(MotionEvent me) {
+    Log.i("LongPress", "Chart longpressed.");
+  }
+
+  @Override
+  public void onChartDoubleTapped(MotionEvent me) {
+    Log.i("DoubleTap", "Chart double-tapped.");
+  }
+
+  @Override
+  public void onChartSingleTapped(MotionEvent me) {
+    Log.i("SingleTap", "Chart single-tapped.");
+  }
+
+  @Override
+  public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+    Log.i("Fling", "Chart flinged. VeloX: " + velocityX + ", VeloY: " + velocityY);
+  }
+
+  @Override
+  public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+    Log.i("Scale / Zoom", "ScaleX: " + scaleX + ", ScaleY: " + scaleY);
+  }
+
+  @Override
+  public void onChartTranslate(MotionEvent me, float dX, float dY) {
+    Log.i("Translate / Move", "dX: " + dX + ", dY: " + dY);
+  }
+
 }

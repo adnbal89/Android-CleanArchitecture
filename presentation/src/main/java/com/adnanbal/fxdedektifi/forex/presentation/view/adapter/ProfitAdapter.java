@@ -39,8 +39,8 @@ import javax.inject.Inject;
  * ,
  * Adapter that manages a collection of {@link PositionModel`  SQA alModel}.
  */
-public class PositionHistoryAdapter extends
-    RecyclerView.Adapter<PositionHistoryAdapter.PositionViewHolder> {
+public class ProfitAdapter extends
+    RecyclerView.Adapter<ProfitAdapter.PositionViewHolder> {
 
   Context context;
 
@@ -58,7 +58,7 @@ public class PositionHistoryAdapter extends
   private OnItemClickListener onItemClickListener;
 
   @Inject
-  PositionHistoryAdapter(Context context) {
+  ProfitAdapter(Context context) {
     this.context = context;
     this.layoutInflater =
         (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -96,10 +96,17 @@ public class PositionHistoryAdapter extends
 
     holder.textViewPositionVolume.setText(DoubleToString.convertFrom(positionModel.getVolume()));
 
-    holder.textViewProfit.setText(String.valueOf(
-        Double
-            .valueOf(10000 * (positionModel.getClosingPrice() - positionModel.getOpeningPrice()))
-            .intValue()));
+    if (positionModel.getPair().contains("JPY")) {
+      holder.textViewProfit.setText(String.valueOf(
+          Double
+              .valueOf(100 * (positionModel.getClosingPrice() - positionModel.getOpeningPrice()))
+              .intValue()));
+    } else {
+      holder.textViewProfit.setText(String.valueOf(
+          Double
+              .valueOf(10000 * (positionModel.getClosingPrice() - positionModel.getOpeningPrice()))
+              .intValue()));
+    }
 
     if ((positionModel.getClosingPrice() - positionModel.getOpeningPrice()) > 0) {
 
@@ -113,8 +120,8 @@ public class PositionHistoryAdapter extends
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (PositionHistoryAdapter.this.onItemClickListener != null) {
-          PositionHistoryAdapter.this.onItemClickListener.onPositionItemClicked(positionModel);
+        if (ProfitAdapter.this.onItemClickListener != null) {
+          ProfitAdapter.this.onItemClickListener.onPositionItemClicked(positionModel);
         }
       }
     });

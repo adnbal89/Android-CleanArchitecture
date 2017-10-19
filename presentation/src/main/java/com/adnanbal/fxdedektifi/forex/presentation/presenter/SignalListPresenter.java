@@ -34,21 +34,24 @@ public class SignalListPresenter implements Presenter {
   private SignalModel signalToAdd;
   private SignalListView signalListView;
 
+  private Boolean openOrClose;
+
   private final static String TAG = SignalListPresenter.class.getName();
   private final AnalyticsInterface analyticsInterface;
 
   private final OpenSignal openSignalUseCase;
   private final GetSignalList getSignalListUseCase;
   private final GetUser_SignalList getUser_SignalListUseCase;
-
   private final SignalModelDataMapper signalModelDataMapper;
   private final UserSignalModelDataMapper userSignalModelDataMapper;
+
 
   @Inject
   public SignalListPresenter(AnalyticsInterface analyticsInterface, OpenSignal openSignalUseCase,
       GetSignalList getSignalListUseCase,
       SignalModelDataMapper signalModelDataMapper, GetUser_SignalList getUser_SignalListUseCase,
-      UserSignalModelDataMapper userSignalModelDataMapper) {
+      UserSignalModelDataMapper userSignalModelDataMapper
+  ) {
 
     this.analyticsInterface = analyticsInterface;
     this.getSignalListUseCase = getSignalListUseCase;
@@ -57,6 +60,7 @@ public class SignalListPresenter implements Presenter {
     this.userSignalModelDataMapper = userSignalModelDataMapper;
     this.openSignalUseCase = openSignalUseCase;
   }
+
 
   public void setView(@NonNull SignalListView view) {
     this.signalListView = view;
@@ -77,6 +81,7 @@ public class SignalListPresenter implements Presenter {
   public void destroy() {
     this.openSignalUseCase.dispose();
     this.getSignalListUseCase.dispose();
+    this.getUser_SignalListUseCase.dispose();
     this.signalListView = null;
   }
 
@@ -95,7 +100,7 @@ public class SignalListPresenter implements Presenter {
   public void open(SignalModel signalModel, boolean openOrClose) {
     this.signalToAdd = signalModel;
 
-    this.openSignal(signalModel.getPositionId(), openOrClose);
+    this.openSignal(signalModel.getId(), openOrClose);
   }
 
   private void loadSignalList() {
@@ -139,10 +144,9 @@ public class SignalListPresenter implements Presenter {
     final Collection<SignalModel> signalModelsCollection =
         this.signalModelDataMapper.transform(signalsCollection);
 
-    System.out.println("Date Month: " + signalsCollection.iterator().next().getDate().getMonth());
-
     this.signalListView.renderSignalList(signalModelsCollection);
   }
+
 
   private Collection<UserSignalModel> transformUserSignalToUserSignalModel(
       Collection<UserSignal> signalsCollection) {
@@ -163,7 +167,7 @@ public class SignalListPresenter implements Presenter {
   private void openSignal(String signalId, boolean openOrClose) {
 //    this.openSignalUseCase
 //        .execute(new SignalOpenObserver(),
-//            OpenSignal.Params.forSignal(signalModel.getPositionId(), signalModel.getPair(),
+//            OpenSignal.Params.forSignal(signalModel.getId(), signalModel.getPair(),
 //                signalModel.getVolume(), signalModel.isBuy_sell(),
 //                signalModel.getOpeningPrice(), signalModel.isOpen(), signalModel.getStatus(),
 //                signalModel.getComment(), signalModel.getStatusChangePrice(), signalModel.getTerm(),
@@ -190,6 +194,8 @@ public class SignalListPresenter implements Presenter {
     }
 
     String authenticatedUserUid = AndroidApplication.userUid;
+
+    this.openOrClose = openOrClose;
 
     this.openSignalUseCase
         .execute(new SignalOpenObserver(),
@@ -236,7 +242,7 @@ public class SignalListPresenter implements Presenter {
     public void onNext(Boolean result) {
       if (result) {
         //Todo: add to collection.
-        SignalListPresenter.this.confirmAddOperationComplete(result);
+        SignalListPresenter.this.confirmAddOperationComplete(result, openOrClose);
       }
     }
   }
@@ -260,16 +266,50 @@ public class SignalListPresenter implements Presenter {
     @Override
     public void onNext(List<UserSignal> userSignals) {
 //      SignalListPresenter.this.showSignalsCollectionInView(userSignals);
-      AndroidApplication.listUserSignalModel = transformUserSignalToUserSignalModel(userSignals);
+      AndroidApplication.listUserSignalModel =
+          transformUserSignalToUserSignalModel(userSignals);
 //      confirmAddOperationComplete(true);
 //        SignalListPresenter.this.hideViewLoading();
     }
   }
 
-  private void confirmAddOperationComplete(Boolean result) {
+  private <E> List<E> collectionToList(Collection<E> collection) {
+    List<E> list;
+    if (collection instanceof List) {
+      list = (List<E>) collection;
+    } else {
+      list = new ArrayList<>(collection);
+    }
+    return list;
+  }
+
+  private void confirmAddOperationComplete(Boolean result, Boolean openOrClose) {
 //    final SignalModel positionModel =
 //        this.positionModelDataMapper.transform(position);
-    this.signalListView.openSignalConfirmedOnline(signalToAdd);
+    this.signalListView.openSignalConfirmedOnline(signalToAdd, openOrClose);
+  }
+
+  //Deprecated. Delegated to a sticky service
+  //Updated Signal observer for getting currently updated signal
+  private final class UpdatedSignalObserver extends DefaultObserver<Signal> {
+
+    @Override
+    public void onComplete() {
+      SignalListPresenter.this.hideViewLoading();
+    }
+
+    @Override
+    public void onError(Throwable e) {
+      SignalListPresenter.this.hideViewLoading();
+      SignalListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+      SignalListPresenter.this.showViewRetry();
+    }
+
+    @Override
+    public void onNext(Signal signal) {
+      SignalListPresenter.this.hideViewLoading();
+//      SignalListPresenter.this.showUpdateNotification(signal);
+    }
   }
 
 }

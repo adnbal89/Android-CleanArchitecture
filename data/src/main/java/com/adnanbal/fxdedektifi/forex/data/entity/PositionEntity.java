@@ -8,26 +8,16 @@ import java.util.Date;
 public class PositionEntity {
 
   private String id;
-
   private String pair;
-
   // buy : 1 , sell : 0
   private boolean buy_sell;
-
   private double volume;
-
   private double profit;
-
   private double openingPrice;
-
   private double closingPrice;
-
   private boolean open;
-
   private String status;
-
   private String comment;
-
   private Date date;
 
   public PositionEntity() {

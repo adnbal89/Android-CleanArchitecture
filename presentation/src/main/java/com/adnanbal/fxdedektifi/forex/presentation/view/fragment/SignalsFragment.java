@@ -19,13 +19,8 @@
 package com.adnanbal.fxdedektifi.forex.presentation.view.fragment;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,9 +35,10 @@ import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.R;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.PositionComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
+import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalDB;
 import com.adnanbal.fxdedektifi.forex.presentation.presenter.SignalListPresenter;
+import com.adnanbal.fxdedektifi.forex.presentation.sqlite.DatabaseHandler;
 import com.adnanbal.fxdedektifi.forex.presentation.view.SignalListView;
-import com.adnanbal.fxdedektifi.forex.presentation.view.activity.SignalsActivity;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.PositionsLayoutManager;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.SignalsAdapter;
 import java.util.Collection;
@@ -56,9 +52,6 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
    */
   Unbinder unbinder;
 
-  NotificationCompat.Builder builder;
-  int counter = 0;
-  int repeat = 0;
 
   /**
    * When Signal open dialog is confirmed
@@ -87,8 +80,11 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
     void onSignalClicked(final SignalModel positionModel, ConfirmSignalDialogView view);
   }
 
+
   @Inject
   SignalListPresenter signalListPresenter;
+//  @Inject
+//  UserLoginDetailsPresenter userLoginDetailsPresenter;
   @Inject
   SignalsAdapter signalsAdapter;
 
@@ -121,6 +117,11 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     this.getComponent(PositionComponent.class).inject(this);
+
+//    UserLoginDetailsModel userLoginDetailsModel = new UserLoginDetailsModel();
+//    userLoginDetailsModel.setUserUid(AndroidApplication.userUid);
+//    userLoginDetailsPresenter.addUserLoginDetails(userLoginDetailsModel);
+
   }
 
   @Override
@@ -131,29 +132,6 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
     unbinder = ButterKnife.bind(this, fragmentView);
     setupRecyclerView();
     return fragmentView;
-  }
-
-
-  private void setUpNotificationBuilder() {
-    builder =
-        new NotificationCompat.Builder(getActivity())
-            .setSmallIcon(R.drawable.ic_launcher)
-            .setContentTitle("Fxing Sign Signal Update")
-            .setContentText("You have a updated content, please check")
-            .setAutoCancel(true);
-    Intent notificationIntent = new Intent(getActivity(), SignalsActivity.class);
-    PendingIntent contentIntent = PendingIntent.getActivity(getActivity(), 0, notificationIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT);
-    builder.setContentIntent(contentIntent);
-
-    // Add as notification
-    NotificationManager manager = (NotificationManager) getActivity().getSystemService(
-        Context.NOTIFICATION_SERVICE);
-
-    builder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
-
-    manager.notify(0, builder.build());
-
   }
 
 
@@ -170,6 +148,7 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
   @Override
   public void onResume() {
     super.onResume();
+    this.signalsAdapter.notifyDataSetChanged();
     this.signalListPresenter.resume();
   }
 
@@ -233,11 +212,7 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
     if (signalModelCollection != null) {
       this.signalsAdapter.setSignalsCollection(signalModelCollection);
     }
-
-    if (repeat > 0) {
-      setUpNotificationBuilder();
-    }
-    repeat++;
+    this.signalsAdapter.notifyDataSetChanged();
 
   }
 
@@ -247,20 +222,34 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
       this.signalListListener.onSignalClicked(signalModel, this);
     }
 
-
   }
 
   @Override
-  public void openSignalConfirmedOnline(SignalModel signalModel) {
+  public void openSignalConfirmedOnline(SignalModel signalModel, Boolean openOrClose) {
     if (openOrClose) {
       this.showToastMessage(getResources().getString(R.string.text_signal_opened));
     } else {
       this.showToastMessage(getResources().getString(R.string.text_signal_closed));
     }
 
+    DatabaseHandler db;
+    db = new DatabaseHandler(context());
+
+    UserSignalDB temp = new UserSignalDB(signalModel.getId());
+    if (!openOrClose) {
+      if (db.Exists(signalModel.getId())) {
+        db.deleteUserSignalDB(temp);
+      }
+    } else {
+      if (!db.Exists(signalModel.getId())) {
+        db.addUserSignalDB(temp);
+      }
+    }
+
     this.signalsAdapter.notifyDataSetChanged();
 
   }
+
 
   @Override
   public void showError(String message) {

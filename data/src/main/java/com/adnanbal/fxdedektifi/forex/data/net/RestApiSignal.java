@@ -97,4 +97,11 @@ public interface RestApiSignal {
       String authenticatedUserUid, boolean openOrClose);
 
 
+  /**
+   * Retrieves an {@link Observable} which will emit a result
+   * {@link SignalEntity} if patch
+   * operation is successful.
+   */
+  Observable<SignalEntity> getUpdatedSignal();
+
 }

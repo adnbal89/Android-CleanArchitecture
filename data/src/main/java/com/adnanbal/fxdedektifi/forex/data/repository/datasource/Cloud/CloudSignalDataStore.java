@@ -79,4 +79,11 @@ public class CloudSignalDataStore implements SignalDataStore {
         openOrClose);
 
   }
+
+  @Override
+  public Observable<SignalEntity> getUpdatedSignal() {
+    return this.restApiSignal.getUpdatedSignal()
+        .doOnNext(CloudSignalDataStore.this.signalCache::put);
+  }
+
 }

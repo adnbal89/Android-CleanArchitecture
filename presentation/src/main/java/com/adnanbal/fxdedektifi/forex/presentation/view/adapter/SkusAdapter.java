@@ -105,10 +105,9 @@ public class SkusAdapter extends
           SkusAdapter.this.onItemClickListener
               .onSkuItemClicked(sku);
         }
-
-        System.out.println("SKU Clicked " + sku.getDisplayTitle());
       }
     });
+
 
   }
 

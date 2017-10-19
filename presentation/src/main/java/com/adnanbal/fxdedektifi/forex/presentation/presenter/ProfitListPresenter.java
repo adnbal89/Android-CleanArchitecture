@@ -19,7 +19,7 @@ import javax.inject.Inject;
  * {@link Presenter} that controls communication between views and models of the presentation
  * layer.
  */
-public class PositionHistoryListPresenter implements Presenter {
+public class ProfitListPresenter implements Presenter {
 
   private PositionListView positionHistoryListView;
 
@@ -27,7 +27,7 @@ public class PositionHistoryListPresenter implements Presenter {
   private final PositionModelDataMapper positionModelDataMapper;
 
   @Inject
-  public PositionHistoryListPresenter(OpenPosition openPositionUseCase,
+  public ProfitListPresenter(OpenPosition openPositionUseCase,
       GetPositionHistoryList getPositionHistoryListUseCase,
       PositionModelDataMapper positionModelDataMapper) {
     this.getPositionHistoryListUseCase = getPositionHistoryListUseCase;
@@ -107,20 +107,20 @@ public class PositionHistoryListPresenter implements Presenter {
 
     @Override
     public void onComplete() {
-      PositionHistoryListPresenter.this.hideViewLoading();
+      ProfitListPresenter.this.hideViewLoading();
     }
 
     @Override
     public void onError(Throwable e) {
-      PositionHistoryListPresenter.this.hideViewLoading();
-      PositionHistoryListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-      PositionHistoryListPresenter.this.showViewRetry();
+      ProfitListPresenter.this.hideViewLoading();
+      ProfitListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+      ProfitListPresenter.this.showViewRetry();
     }
 
     @Override
     public void onNext(List<Position> positions) {
-      PositionHistoryListPresenter.this.showPositionsCollectionInView(positions);
-      PositionHistoryListPresenter.this.hideViewLoading();
+      ProfitListPresenter.this.showPositionsCollectionInView(positions);
+      ProfitListPresenter.this.hideViewLoading();
 
     }
   }

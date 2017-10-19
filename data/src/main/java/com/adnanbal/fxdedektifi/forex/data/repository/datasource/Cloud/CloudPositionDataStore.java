@@ -66,7 +66,6 @@ public class CloudPositionDataStore implements PositionDataStore {
     return this.restApiPosition.removeEntityById(positionId);
   }
 
-  //Todo : implement the method
   @Override
   public Observable<Boolean> addPositionEntity(PositionEntity positionEntity) {
     CloudPositionDataStore.this.positionCache.put(positionEntity);

@@ -30,15 +30,19 @@ public class SignalModel extends PositionModel {
   private Map<String, Boolean> users;
   private Map<String, List<String>> changedFields;
 
-  public SignalModel(String positionId) {
-    super(positionId);
+  public SignalModel() {
+    //empty constructor
   }
 
-  public SignalModel(String positionId, String pair, double volume, boolean buy_sell,
+  public SignalModel(String id) {
+    super(id);
+  }
+
+  public SignalModel(String id, String pair, double volume, boolean buy_sell,
       double statusChangePrice, String term, double openingPrice, boolean open, String status,
       String comment, Date date, Map<String, Boolean> users,
       Map<String, List<String>> changedFields) {
-    super(positionId, pair, volume, buy_sell, openingPrice, open, status, comment, date);
+    super(id, pair, volume, buy_sell, openingPrice, open, status, comment, date);
     this.statusChangePrice = statusChangePrice;
     this.term = term;
     this.users = users;
@@ -86,4 +90,6 @@ public class SignalModel extends PositionModel {
         '}';
 
   }
+
+
 }

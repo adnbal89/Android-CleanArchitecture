@@ -1,5 +1,8 @@
 package com.adnanbal.fxdedektifi.forex.presentation.view.activity;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -9,12 +12,16 @@ import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.ApplicationComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.modules.ActivityModule;
 import com.adnanbal.fxdedektifi.forex.presentation.navigation.Navigator;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.analytics.FirebaseAnalytics.Event;
 import javax.inject.Inject;
 
 /**
  * Base {@link android.app.Activity} class for every Activity in this application.
  */
 public abstract class BaseActivity extends AppCompatActivity {
+
+  private FirebaseAnalytics mFirebaseAnalytics;
 
 //  private String[] mFragmentTitles;
 //
@@ -52,7 +59,10 @@ public abstract class BaseActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     this.getApplicationComponent().inject(this);
+// Obtain the FirebaseAnalytics instance.
+    mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+    mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
 //    unbinder = ButterKnife.bind(this);
 //    mTitle = mDrawerTitle = getTitle();
 //
@@ -78,7 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         .getSupportFragmentManager().beginTransaction();
 
     fragmentTransaction.replace(containerViewId, fragment);
-    fragmentTransaction.commit();
+    fragmentTransaction.commitAllowingStateLoss();
   }
 
   /**
@@ -99,6 +109,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     return new ActivityModule(this);
   }
 
+
   protected void setUpToolbar() {
     // Find the toolbar view inside the activity layout
 
@@ -112,7 +123,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   }
 
-//  private class DrawerItemClickListener implements ListView.OnItemClickListener {
+  @Override
+  protected void onResume() {
+    super.onResume();
+
+  }
+
+  //  private class DrawerItemClickListener implements ListView.OnItemClickListener {
 //    @Override
 //    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //      selectItem(position);
@@ -177,12 +194,30 @@ public abstract class BaseActivity extends AppCompatActivity {
 //    getActionBar().setTitle(mTitle);
 //  }
 
+  public void logErrorMessageToFirebaseAnalytics(String tag, Exception exception) {
+    Bundle bundle = new Bundle();
+    bundle.putString("TAG", tag);
+    bundle.putString("Error", exception.getMessage());
+
+    mFirebaseAnalytics.logEvent(Event.SELECT_CONTENT, bundle);
+  }
+
+  /**
+   * Checks if the device has any active internet connection.
+   *
+   * @return true device with internet connection, otherwise false.
+   */
+  private boolean isThereInternetConnection() {
+    boolean isConnected;
+
+    ConnectivityManager connectivityManager =
+        (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+    isConnected = (networkInfo != null && networkInfo.isConnectedOrConnecting());
+
+    return isConnected;
+  }
 
 }
 
-//else if (itemId == R.id.action_profit) {
-//    startActivity(new Intent(this, NotificationsActivity.class));
-//    }else if (itemId == R.id.action_history) {
-//    startActivity(new Intent(this, NotificationsActivity.class));
-//    }
 

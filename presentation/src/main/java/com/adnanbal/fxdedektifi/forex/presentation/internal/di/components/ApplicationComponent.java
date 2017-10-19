@@ -22,6 +22,7 @@ import com.adnanbal.fxdedektifi.forex.domain.repository.PositionHistoryRepositor
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.SignalRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.SubscriptionRepository;
+import com.adnanbal.fxdedektifi.forex.domain.repository.UserLoginDetailsRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.UserRepository;
 import com.adnanbal.fxdedektifi.forex.presentation.external.AnalyticsInterface;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.modules.ApplicationModule;
@@ -59,4 +60,6 @@ public interface ApplicationComponent {
   AnalyticsInterface analyticsHelper();
 
   SubscriptionRepository subscriptionRepository();
+
+  UserLoginDetailsRepository userLoginDetailsRepository();
 }

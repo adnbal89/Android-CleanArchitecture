@@ -15,38 +15,24 @@
 -->
 
 <resources>
-  <string-array name="media_names">
-    <item>Big Buck Bunny</item>
-    <item>Elephants Dream</item>
-    <item>Sintel</item>
-    <item>Tears of Steel</item>
-  </string-array>
-
-  <string-array name="media_uris">
-    <item>http://archive.org/download/BigBuckBunny_328/BigBuckBunny_512kb.mp4</item>
-    <item>http://archive.org/download/ElephantsDream_277/elephant_dreams_640_512kb.mp4</item>
-    <item>http://archive.org/download/Sintel/sintel-2048-stereo_512kb.mp4</item>
-    <item>http://archive.org/download/Tears-of-Steel/tears_of_steel_720p.mp4</item>
-  </string-array>
-
 
   <string-array name="array_signal_click_menu_1">
-    <item>Open Position</item>
+    <item>Follow Signal</item>
 
   </string-array>
 
   <string-array name="array_signal_click_menu_2">
-    <item>Open Position</item>
+    <item>Follow Signal</item>
     <item>Show Comment</item>
   </string-array>
 
   <string-array name="array_signal_click_menu_3">
-    <item>Close Position</item>
+    <item>Unfollow Signal</item>
 
   </string-array>
 
   <string-array name="array_signal_click_menu_4">
-    <item>Close Position</item>
+    <item>Unfollow Signal</item>
     <item>Show Comment</item>
 
   </string-array>

@@ -18,9 +18,11 @@
 
 package com.adnanbal.fxdedektifi.forex.presentation.model;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class UserSignalModel {
+public class UserSignalModel implements Serializable {
+
 
   public Map<String, Boolean> signals;
 
@@ -38,4 +40,5 @@ public class UserSignalModel {
   public void setSignals(Map<String, Boolean> signals) {
     this.signals = signals;
   }
+
 }

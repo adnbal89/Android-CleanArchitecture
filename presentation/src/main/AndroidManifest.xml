@@ -1,151 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-
   package="com.adnanbal.fxdedektifi.forex.presentation">
 
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
   <uses-permission android:name="android.permission.WAKE_LOCK"/>
   <uses-permission android:name="com.android.vending.BILLING"/>
   <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
+  <uses-permission android:name="android.permission.VIBRATE"/>
+
 
   <application
     android:allowBackup="true"
-    android:icon="@drawable/ic_launcher"
+    android:icon="@drawable/logo5"
     android:label="@string/app_name"
-    android:name="com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication"
+    android:name=".AndroidApplication"
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     tools:ignore="GoogleAppIndexingWarning"
-    tools:replace="android:allowBackup"
-
-    >
+    tools:replace="android:allowBackup">
     <meta-data
       android:name="com.facebook.sdk.ApplicationId"
       android:value="@string/facebook_application_id"/>
 
-    <!--<activity-->
-    <!--android:label="@string/app_name"-->
-    <!--android:naforexple.presentation.view.activity.MainActivity">-->
+    <!-- <activity -->
+    <!-- android:label="@string/app_name" -->
+    <!-- android:naforexple.presentation.view.activity.MainActivity"> -->
 
-    <!--</activity>-->
+
+    <!-- </activity> -->
 
     <activity
       android:label="@string/activity_title_user_list"
-      android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.UserListActivity">
+      android:name=".view.activity.UserListActivity">
     </activity>
-
     <activity
       android:label="@string/activity_title_user_details"
-      android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.UserDetailsActivity">
+      android:name=".view.activity.UserDetailsActivity">
     </activity>
-
     <activity
       android:label="@string/activity_title_user_details"
-      android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.BillingActivity">
-
+      android:name=".view.activity.BillingActivity">
       <intent-filter>
         <category android:name="android.intent.category.BROWSABLE"/>
         <category android:name="android.intent.category.DEFAULT"/>
 
         <data android:scheme="@string/fb_login_protocol_scheme"/>
-
       </intent-filter>
     </activity>
 
+    <!-- <activity -->
+    <!-- android:label="@string/login" -->
+    <!-- android:name=".view.activity.LoginActivity"> -->
 
-    <!--<activity-->
-    <!--android:label="@string/login"-->
-    <!--android:name=".view.activity.LoginActivity">-->
 
-    <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
-    <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN"/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<action android:name="android.intent.action.VIEW"/>&ndash;&gt;-->
+    <!-- &lt;!&ndash;<intent-filter>&ndash;&gt; -->
+    <!-- &lt;!&ndash;<action android:name="android.intent.action.MAIN"/>&ndash;&gt; -->
+    <!-- &lt;!&ndash;<action android:name="android.intent.action.VIEW"/>&ndash;&gt; -->
 
-    <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
 
-    <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER"/>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;<category android:name="android.intent.category.BROWSABLE"/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<category android:name="android.intent.category.DEFAULT"/>&ndash;&gt;-->
+    <!-- &lt;!&ndash;</intent-filter>&ndash;&gt; -->
 
-    <!--&lt;!&ndash;<data android:scheme="@string/fb_login_protocol_scheme"/>&ndash;&gt;-->
-    <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
 
-    <!--</activity>-->
+    <!-- &lt;!&ndash;<intent-filter>&ndash;&gt; -->
+    <!-- &lt;!&ndash;&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER"/>&ndash;&gt;&ndash;&gt; -->
+    <!-- &lt;!&ndash;<category android:name="android.intent.category.BROWSABLE"/>&ndash;&gt; -->
+    <!-- &lt;!&ndash;<category android:name="android.intent.category.DEFAULT"/>&ndash;&gt; -->
+
+
+    <!-- &lt;!&ndash;<data android:scheme="@string/fb_login_protocol_scheme"/>&ndash;&gt; -->
+    <!-- &lt;!&ndash;</intent-filter>&ndash;&gt; -->
+
+
+    <!-- </activity> -->
 
     <activity
       android:label="@string/personal_positions"
-      android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.PersonalPositionsActivity">
+      android:name=".view.activity.PersonalPositionsActivity">
     </activity>
+    <activity android:name=".view.activity.MainActivity">
 
-    <activity android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainActivity">
+      <!-- <intent-filter> -->
+      <!-- <action android:name="android.intent.action.MAIN"/> -->
+      <!-- <action android:name="android.intent.action.VIEW"/> -->
 
-      <!--<intent-filter>-->
-      <!--<action android:name="android.intent.action.MAIN"/>-->
-      <!--<action android:name="android.intent.action.VIEW"/>-->
 
-      <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-      <!--<category android:name="android.intent.category.DEFAULT"/>-->
+      <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+      <!-- <category android:name="android.intent.category.DEFAULT"/> -->
 
-      <!--</intent-filter>-->
+
+      <!-- </intent-filter> -->
     </activity>
-
     <activity
       android:label="@string/AppName"
-      android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.LoginActivity">
-
+      android:name=".view.activity.LoginActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <action android:name="android.intent.action.VIEW"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
         <category android:name="android.intent.category.DEFAULT"/>
-
       </intent-filter>
     </activity>
-
     <activity
+      android:alwaysRetainTaskState="true"
       android:label="@string/signals"
-      android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.SignalsActivity">
+      android:launchMode="singleTop"
+      android:name=".view.activity.SignalsActivity">
     </activity>
 
-    <!--<activity-->
-    <!--android:label="@string/app_name"-->
-    <!--android:launchMode="singleTask"-->
-    <!--android:name="com.auth0.android.lock.LockActivity"-->
-    <!--android:screenOrientation="portrait"-->
-    <!--android:theme="@style/AppTheme"-->
-    <!--&gt;-->
-    <!--<intent-filter>-->
-    <!--<action android:name="android.intent.action.VIEW"/>-->
-
-    <!--<category android:name="android.intent.category.DEFAULT"/>-->
-    <!--<category android:name="android.intent.category.BROWSABLE"/>-->
-
-    <!--<data-->
-    <!--android:host="@string/auth0_domain"-->
-    <!--android:pathPrefix="/android/com.adnanbal.androiforexmple.presentation/callback"-->
-    <!--android:scheme="https"/>-->
-    <!--</intent-filter>-->
-    <!--</activity>-->
+    <!-- <activity -->
+    <!-- android:label="@string/app_name" -->
+    <!-- android:launchMode="singleTask" -->
+    <!-- android:name="com.auth0.android.lock.LockActivity" -->
+    <!-- android:screenOrientation="portrait" -->
+    <!-- android:theme="@style/AppTheme" -->
+    <!-- &gt; -->
+    <!-- <intent-filter> -->
+    <!-- <action android:name="android.intent.action.VIEW"/> -->
 
 
-    <!--<activity-->
-    <!--android:label="@string/use_case_title_subscriptions"-->
-    <!--android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.SubscriptionsActivity"-->
-    <!--android:parentActivityName="com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainActivity"-->
-    <!--tools:ignore="UnusedAttribute">-->
-    <!--<meta-data-->
-    <!--android:name="android.support.PARENT_ACTIVITY"-->
-    <!--android:value="com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainActivity"/>-->
-    <!--</activity>-->
+    <!-- <category android:name="android.intent.category.DEFAULT"/> -->
+    <!-- <category android:name="android.intent.category.BROWSABLE"/> -->
 
 
+    <!-- <data -->
+    <!-- android:host="@string/auth0_domain" -->
+    <!-- android:pathPrefix="/android/com.adnanbal.androiforexmple.presentation/callback" -->
+    <!-- android:scheme="https"/> -->
+    <!-- </intent-filter> -->
+    <!-- </activity> -->
+
+
+    <!-- <activity -->
+    <!-- android:label="@string/use_case_title_subscriptions" -->
+    <!-- android:name="com.adnanbal.fxdedektifi.forex.presentation.view.activity.SubscriptionsActivity" -->
+    <!-- android:parentActivityName="com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainActivity" -->
+    <!-- tools:ignore="UnusedAttribute"> -->
+    <!-- <meta-data -->
+    <!-- android:name="android.support.PARENT_ACTIVITY" -->
+    <!-- android:value="com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainActivity"/> -->
+    <!-- </activity> -->
+
+    <service
+      android:enabled="true"
+      android:exported="true"
+      android:name=".services.NotificationService">
+    </service>
+
+
+    <meta-data
+      android:name="io.fabric.ApiKey"
+      android:value="af1fd1bf7f1d70c1caac355fc10f4a7b073672e9"
+      tools:replace="android:value"/>
   </application>
 
 </manifest>

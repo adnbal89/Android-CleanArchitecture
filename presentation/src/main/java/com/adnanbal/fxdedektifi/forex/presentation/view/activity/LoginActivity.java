@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.R;
 import com.firebase.ui.auth.AuthUI;
@@ -21,54 +25,108 @@ import java.util.Arrays;
 
 public class LoginActivity extends BaseActivity {
 
-  private Button button;
+  @BindView(R.id.button_sign_out)
+  public Button button_sign_out;
+  @BindView(R.id.button_return)
+  public Button button_return;
+
+
   private TextView text;
   private FirebaseAuth auth;
   static final String TAG = "LoginActivity";
   private static final int RC_SIGN_IN = 123;
 
+  /*
+  * Butterknife unbinder, will be executed to clear callbacks
+   */
+  Unbinder unbinder;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
+    unbinder = ButterKnife.bind(this);
 
     auth = FirebaseAuth.getInstance();
 
-    // Obtain the views
-    button = findViewById(R.id.button);
-    text = findViewById(R.id.text);
-
-    button.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        if (!isLoggedIn()) {
-          // Fire the sign in with FireBase
-          startActivityForResult(AuthUI.getInstance().
-                  createSignInIntentBuilder().
-                  setProviders(
-                      Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-                          new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
-                          new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build())).build(),
-              RC_SIGN_IN);
-
-
-        } else {
-          // Perform sign out
-          AuthUI.getInstance()
-              .signOut(LoginActivity.this)
-              .addOnCompleteListener(new OnCompleteListener<Void>() {
-                public void onComplete(@NonNull Task<Void> task) {
-                  // User is now signed out
-                  showMessage(R.string.signed_out);
-                  updateViews();
-                }
-              });
+    Thread timerThread = new Thread() {
+      public void run() {
+        try {
+          sleep(3000);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
         }
       }
+    };
+    timerThread.start();
+
+    button_sign_out.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        AuthUI.getInstance()
+            .signOut(LoginActivity.this)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+              public void onComplete(@NonNull Task<Void> task) {
+                // User is now signed out
+                showMessage(R.string.signed_out);
+                updateViews();
+              }
+            });
+
+        button_sign_out.setVisibility(View.INVISIBLE);
+        button_return.setVisibility(View.INVISIBLE);
+      }
     });
+
+    button_return.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        updateViews();
+      }
+    });
+
     updateViews();
+
+
+//    processLogin();
+
+//    // Obtain the views
+//    button = findViewById(R.id.button);
+//    text = findViewById(R.id.text);
+//
+//    button.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View view) {
+//
+//      }
+//    });
   }
 
+  private void processLogin() {
+
+    if (!isLoggedIn()) {
+      // Fire the sign in with FireBase
+      startActivityForResult(AuthUI.getInstance().
+              createSignInIntentBuilder().
+              setProviders(
+                  Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                      new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
+                      new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build())).build(),
+          RC_SIGN_IN);
+
+    } else {
+      // Perform sign out
+      AuthUI.getInstance()
+          .signOut(LoginActivity.this)
+          .addOnCompleteListener(new OnCompleteListener<Void>() {
+            public void onComplete(@NonNull Task<Void> task) {
+              // User is now signed out
+              showMessage(R.string.signed_out);
+              updateViews();
+            }
+          });
+    }
+  }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -106,22 +164,23 @@ public class LoginActivity extends BaseActivity {
   private void updateViews() {
 
     if (isLoggedIn()) {
-      showMessage(R.string.signed_in);
-      button.setText(R.string.sign_out);
+//      button.setText(R.string.sign_out);
       FirebaseUser user = auth.getCurrentUser();
-
       this.navigator.navigateToSignals(this);
-
       AndroidApplication.userUid = user.getUid();
 
-      // Show user info
-      text.setText("UID: " + user.getUid() + "\n" +
-          "Name: " + user.getDisplayName() + "\n" +
-          "Email: " + user.getEmail());
+      button_sign_out.setVisibility(View.VISIBLE);
+      button_return.setVisibility(View.VISIBLE);
+
+//      // Show user info
+//      text.setText("UID: " + user.getUid() + "\n" +
+//          "Name: " + user.getDisplayName() + "\n" +
+//          "Email: " + user.getEmail());
 
     } else {
-      button.setText(R.string.sign_in);
-      text.setText("");
+      processLogin();
+//      button.setText(R.string.sign_in);
+//      text.setText("");
     }
   }
 
@@ -136,6 +195,7 @@ public class LoginActivity extends BaseActivity {
 
   @Override
   public void onDestroy() {
+    unbinder.unbind();
     super.onDestroy();
   }
 

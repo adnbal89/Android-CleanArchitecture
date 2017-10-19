@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.24.3'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -17,6 +32,7 @@ android {
         testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
         testApplicationId globalConfiguration.getAt("testApplicationId")
         vectorDrawables.useSupportLibrary = true
+
         multiDexEnabled true
 
         resConfigs "auto"
@@ -82,11 +98,13 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
-            ext.enableCrashlytics = false
+            ext.enableCrashlytics = true
         }
 
         release {
             signingConfig signingConfigs.release
+            ext.enableCrashlytics = true
+
         }
     }
 
@@ -106,7 +124,6 @@ android {
         }
     }
 }
-
 
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
@@ -145,7 +162,10 @@ dependencies {
 //    compile 'com.android.billingclient:billing:dp-1'
     compile 'org.solovyev.android:checkout:1.0.1'
     compile 'com.android.support:multidex:1.0.1'
+
     compile presentationDependencies.firebaseUIAuth
+    compile presentationDependencies.trialy
+    compile presentationDependencies.firebaseCore
 //    compile presentationDependencies.firebaseAuth
 
 //    compile "com.google.android.gms:play-services-auth:2.3.0"
@@ -154,6 +174,9 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.26.0'
     // Required only if Twitter login support is required
     compile("com.twitter.sdk.android:twitter-core:3.0.0@aar") { transitive = true }
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
+        transitive = true
+    }
 
 
 
@@ -172,6 +195,7 @@ dependencies {
 
 
 }
+
 apply plugin: 'com.google.gms.google-services'
 
 

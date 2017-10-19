@@ -20,10 +20,14 @@ import android.support.v7.app.AppCompatActivity;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.ApplicationComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.DaggerApplicationComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.modules.ApplicationModule;
+import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalModel;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.leakcanary.LeakCanary;
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,19 +35,33 @@ import javax.annotation.Nonnull;
 import org.solovyev.android.checkout.Billing;
 import org.solovyev.android.checkout.Purchase;
 
+
 /**
  * Android Main Application
  */
 public class AndroidApplication extends MultiDexApplication {
 
+  private FirebaseAnalytics mFirebaseAnalytics;
+
+
   private ApplicationComponent applicationComponent;
   public static String userUid;
   public static Collection<UserSignalModel> listUserSignalModel;
   public static List<Purchase> purchasedList;
+  public static List<SignalModel> listChangedSignalModel;
+  public static String accountExpiryTime;
 
   @Override
   public void onCreate() {
     super.onCreate();
+
+    final Fabric fabric = new Fabric.Builder(this)
+        .kits(new Crashlytics())
+        .debuggable(true)
+        .build();
+    Fabric.with(this, new Crashlytics());
+    Fabric.isInitialized();
+
     FacebookSdk.sdkInitialize(this);
     AppEventsLogger.activateApp(this);
 
@@ -51,6 +69,10 @@ public class AndroidApplication extends MultiDexApplication {
     this.initializeLeakDetection();
     listUserSignalModel = new ArrayList<>();
     purchasedList = new ArrayList<>();
+    listChangedSignalModel = new ArrayList<>();
+
+    // Obtain the FirebaseAnalytics instance.
+    mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
   }
 
   private void initializeInjector() {

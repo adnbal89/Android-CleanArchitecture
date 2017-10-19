@@ -85,7 +85,7 @@ public class PositionEntityDataMapper {
    * @return {@link Position} if valid {@link PositionEntity} otherwise null.
    */
   public List<Position> transform(Collection<PositionEntity> positionEntityCollection) {
-    final List<Position> positionList = new ArrayList<>(20);
+    final List<Position> positionList = new ArrayList<>();
     for (PositionEntity positionEntity : positionEntityCollection) {
       final Position position = transform(positionEntity);
       if (position != null) {

@@ -17,6 +17,7 @@ package com.adnanbal.fxdedektifi.forex.data.net;
 
 import android.support.annotation.Nullable;
 import com.adnanbal.fxdedektifi.forex.data.entity.PositionEntity;
+import com.adnanbal.fxdedektifi.forex.data.entity.UserLoginDetailsEntity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
@@ -109,6 +110,35 @@ class ApiConnection implements Callable<String> {
     i++;
     return response;
   }
+
+  /**
+   * Do a request to an api synchronously.
+   * It should not be executed in the main thread of the application.
+   *
+   * @return A string response
+   */
+  @Nullable
+  String request_postUserLoginDetailEntitySyncCall(UserLoginDetailsEntity userLoginDetailsEntity) {
+    final MediaType JSON
+        = MediaType.parse("application/json; charset=utf-8");
+
+    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
+        (JsonDeserializer<Date>) (jsonElement, type, context) -> new Date(
+            jsonElement.getAsJsonPrimitive().getAsLong()))
+        .registerTypeAdapter(Date.class,
+            (JsonSerializer<Date>) (date, type, jsonSerializationContext) -> new JsonPrimitive(
+                date.getTime()))
+
+        .create();
+    String jsonInString = gson.toJson(userLoginDetailsEntity);
+
+    RequestBody body = RequestBody.create(JSON, jsonInString);
+
+    postRequestToApi(body);
+    i++;
+    return response;
+  }
+
 
   @Nullable
   String request_putSyncCall(PositionEntity positionEntity) {
@@ -216,8 +246,6 @@ class ApiConnection implements Callable<String> {
     try {
       Response response = okHttpClient.newCall(request).execute();
       this.response = String.valueOf(response.code());
-
-      System.out.println(response.toString());
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -229,6 +257,21 @@ class ApiConnection implements Callable<String> {
         .url(this.url)
         .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_VALUE_JSON)
         .put(requestBody)
+        .build();
+
+    try {
+      this.response = okHttpClient.newCall(request).execute().body().string();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void post1RequestToApi(RequestBody requestBody) {
+    OkHttpClient okHttpClient = this.createClient();
+    final Request request = new Request.Builder()
+        .url(this.url)
+        .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_VALUE_JSON)
+        .post(requestBody)
         .build();
 
     try {

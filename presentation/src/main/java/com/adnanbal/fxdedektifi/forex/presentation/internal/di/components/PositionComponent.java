@@ -4,8 +4,8 @@ import com.adnanbal.fxdedektifi.forex.presentation.internal.di.PerActivity;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.modules.ActivityModule;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.modules.PositionModule;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.AccountAndSubscriptionsFragment;
-import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalHistoryFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.PersonalPositionsFragment;
+import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.ProfitFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.SignalsFragment;
 import dagger.Component;
 
@@ -22,7 +22,8 @@ public interface PositionComponent extends ActivityComponent {
 
   void inject(SignalsFragment signalsFragment);
 
-  void inject(PersonalHistoryFragment personalHistoryFragment);
+  void inject(ProfitFragment profitFragment);
 
   void inject(AccountAndSubscriptionsFragment accountAndSubscriptionsFragment);
+
 }
