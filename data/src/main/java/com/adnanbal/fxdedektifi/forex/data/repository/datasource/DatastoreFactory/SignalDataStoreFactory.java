@@ -48,15 +48,15 @@ public class SignalDataStoreFactory {
    * Create {@link SignalDataStore} from a signalid.
    */
   public SignalDataStore create(String signalId) {
-    SignalDataStore SignalDataStore;
+    SignalDataStore signalDataStore;
 
     if (!this.signalCache.isExpired() && this.signalCache.isCached(signalId)) {
-      SignalDataStore = new DiskSignalDataStore(this.signalCache);
+      signalDataStore = new DiskSignalDataStore(this.signalCache);
     } else {
-      SignalDataStore = createCloudDataStore();
+      signalDataStore = createCloudDataStore();
     }
 
-    return SignalDataStore;
+    return signalDataStore;
   }
 
   /**

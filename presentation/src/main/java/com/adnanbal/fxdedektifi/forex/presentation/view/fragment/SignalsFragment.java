@@ -41,11 +41,15 @@ import com.adnanbal.fxdedektifi.forex.presentation.sqlite.DatabaseHandler;
 import com.adnanbal.fxdedektifi.forex.presentation.view.SignalListView;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.PositionsLayoutManager;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.SignalsAdapter;
+import com.mobapphome.mahandroidupdater.tools.MAHUpdaterController;
+import io.fabric.sdk.android.Fabric;
 import java.util.Collection;
 import javax.inject.Inject;
 
 public class SignalsFragment extends BaseFragment implements SignalListView,
     ConfirmSignalDialogView {
+
+  static final String TAG = "SignalsFragment";
 
   /*
   * Butterknife unbinder, will be executed to clear callbacks
@@ -83,7 +87,7 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
 
   @Inject
   SignalListPresenter signalListPresenter;
-//  @Inject
+  //  @Inject
 //  UserLoginDetailsPresenter userLoginDetailsPresenter;
   @Inject
   SignalsAdapter signalsAdapter;
@@ -116,8 +120,21 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    this.getComponent(PositionComponent.class).inject(this);
 
+    // For MAHUpdater (VersionChecker) init
+    try {
+      MAHUpdaterController.init(getActivity(),
+          "https://fxingsign.firebaseio.com/versionChecker.json", null, false);
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+    }
+
+    try {
+      this.getComponent(PositionComponent.class).inject(this);
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+      getActivity().finish();
+    }
 //    UserLoginDetailsModel userLoginDetailsModel = new UserLoginDetailsModel();
 //    userLoginDetailsModel.setUserUid(AndroidApplication.userUid);
 //    userLoginDetailsPresenter.addUserLoginDetails(userLoginDetailsModel);
@@ -138,7 +155,10 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
   @Override
   public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    this.signalListPresenter.setView(this);
+    if (this.signalListPresenter != null) {
+      this.signalListPresenter.setView(this);
+
+    }
     if (savedInstanceState == null) {
       this.loadUserSignalsList(AndroidApplication.userUid);
       this.loadSignalList();
@@ -149,13 +169,17 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
   public void onResume() {
     super.onResume();
     this.signalsAdapter.notifyDataSetChanged();
-    this.signalListPresenter.resume();
+    if (this.signalListPresenter != null) {
+      this.signalListPresenter.resume();
+    }
   }
 
   @Override
   public void onPause() {
     super.onPause();
-    this.signalListPresenter.pause();
+    if (this.signalListPresenter != null) {
+      this.signalListPresenter.pause();
+    }
 
   }
 
@@ -169,7 +193,9 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
   @Override
   public void onDestroy() {
     super.onDestroy();
-    this.signalListPresenter.destroy();
+    if (this.signalListPresenter != null) {
+      this.signalListPresenter.destroy();
+    }
 
   }
 
@@ -187,13 +213,17 @@ public class SignalsFragment extends BaseFragment implements SignalListView,
 
   @Override
   public void showLoading() {
-    this.rl_progress.setVisibility(View.VISIBLE);
+    if (rl_progress != null) {
+      this.rl_progress.setVisibility(View.VISIBLE);
+    }
     this.getActivity().setProgressBarIndeterminateVisibility(true);
   }
 
   @Override
   public void hideLoading() {
-    this.rl_progress.setVisibility(View.GONE);
+    if (rl_progress != null) {
+      this.rl_progress.setVisibility(View.GONE);
+    }
     this.getActivity().setProgressBarIndeterminateVisibility(false);
   }
 

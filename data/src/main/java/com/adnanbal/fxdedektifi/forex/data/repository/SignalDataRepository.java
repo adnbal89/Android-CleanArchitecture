@@ -75,11 +75,14 @@ public class SignalDataRepository implements SignalRepository {
   public Observable<Boolean> openSignal(String positionId, String pair, double volume,
       boolean buy_sell, double openingPrice, boolean open, String status, String comment,
       double statusChangePrice, String term, Date date, Map<String, Boolean> users,
-      Map<String, List<String>> changedFields) {
+      Map<String, List<String>> changedFields, Double take_profit_price, Double stop_loss_price,
+      boolean hitStopLoss,
+      boolean hitTakeProfit) {
     final SignalDataStore signalDataStore = this.signalDataStoreFactory.create(positionId);
     SignalEntity entity = this.signalEntityDataMapper
         .createSignalEntityObject(positionId, pair, volume, buy_sell, openingPrice, open, status,
-            comment, statusChangePrice, term, date, users, changedFields);
+            comment, statusChangePrice, term, date, users, changedFields, take_profit_price,
+            stop_loss_price, hitStopLoss, hitTakeProfit);
 
     return signalDataStore.addSignalEntity(entity);
   }

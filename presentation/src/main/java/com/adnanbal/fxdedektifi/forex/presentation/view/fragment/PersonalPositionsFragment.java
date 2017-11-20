@@ -235,7 +235,7 @@ public class PersonalPositionsFragment extends BaseFragment implements PositionL
   }
 
   /**
-   * Close a positions.
+   * Close a position.
    */
   private void openPosition(PositionModel positionModel) {
     this.positionListPresenter.open(positionModel);

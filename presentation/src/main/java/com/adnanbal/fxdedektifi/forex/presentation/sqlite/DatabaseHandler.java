@@ -23,6 +23,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalDB;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
   private static final int DATABASE_VERSION = 2;
 
   // Database Name
-  private static final String DATABASE_NAME = "userSignalsManager";
+  private static final String DATABASE_NAME = "userSignalsManager_";
 
   // UserSignalDBs table name
   private static final String TABLE_USER_SIGNALS = "userSignals";
@@ -43,6 +44,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
   // Contacts Table Columns names
   private static final String KEY_ID = "id";
   private static final String KEY_UID = "uid";
+  private static final String USER_UID = "user_uid";
 
 
   public DatabaseHandler(Context context) {
@@ -53,7 +55,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
   @Override
   public void onCreate(SQLiteDatabase db) {
     String CREATE_USERSIGNALS_TABLE = "CREATE TABLE " + TABLE_USER_SIGNALS + "("
-        + KEY_ID + " INTEGER PRIMARY KEY," + KEY_UID + " TEXT" + ")";
+        + KEY_ID + " INTEGER PRIMARY KEY," + KEY_UID + " TEXT," + USER_UID + " TEXT" + ")";
     db.execSQL(CREATE_USERSIGNALS_TABLE);
   }
 
@@ -76,8 +78,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     SQLiteDatabase db = this.getWritableDatabase();
 
     ContentValues values = new ContentValues();
-    values.put(KEY_UID, userSignal.getId()); // Contact db id
-    values.put(KEY_UID, userSignal.getUid()); // Contact db uid
+    values.put(KEY_UID, userSignal.getId()); // userSignal db id
+    values.put(KEY_UID, userSignal.getUid()); // userSignal db uid
+    values.put(USER_UID, AndroidApplication.userUid); // user uid
 
     // Inserting Row
     db.insert(TABLE_USER_SIGNALS, null, values);
@@ -100,11 +103,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     return userSignalDB;
   }
 
-  public UserSignalDB getUserSignalDBbyUid(String uid) {
+  public UserSignalDB getUserSignalDBbyUser_Uid(String user_uid) {
     SQLiteDatabase db = this.getReadableDatabase();
 
-    Cursor cursor = db.query(TABLE_USER_SIGNALS, new String[]{KEY_UID}, KEY_UID + "=?",
-        new String[]{uid}, null, null, null, null);
+    Cursor cursor = db.query(TABLE_USER_SIGNALS, new String[]{USER_UID}, USER_UID + "=?",
+        new String[]{user_uid}, null, null, null, null);
     if (cursor != null) {
       cursor.moveToFirst();
     }
@@ -154,6 +157,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     return userSignalDBList;
   }
 
+  // Getting All UserSignalDBs
+  public List<UserSignalDB> getAllUserSignalDBsByUserUid() {
+    List<UserSignalDB> userSignalDBList = new ArrayList<UserSignalDB>();
+    // Select All Query
+    String selectQuery = "SELECT  * FROM " + TABLE_USER_SIGNALS;
+
+    SQLiteDatabase db = this.getWritableDatabase();
+    Cursor cursor = db.rawQuery(selectQuery, null);
+
+    // looping through all rows and adding to list
+    if (cursor.moveToFirst()) {
+      do {
+        UserSignalDB userSignalDB = new UserSignalDB();
+        userSignalDB.setId(cursor.getInt(0));
+        userSignalDB.setUid(cursor.getString(1));
+
+        // Adding userSignalDB to list
+        userSignalDBList.add(userSignalDB);
+      } while (cursor.moveToNext());
+    }
+
+    // return userSignalDB list
+    return userSignalDBList;
+  }
+
   // Updating single userSignalDB
   public int updateUserSignalDB(UserSignalDB userSignalDB) {
     SQLiteDatabase db = this.getWritableDatabase();
@@ -177,6 +205,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
   // Deleting single userSignalDB
   public void deleteAllUserSignalDB() {
     SQLiteDatabase db = this.getWritableDatabase();
+
     db.delete(TABLE_USER_SIGNALS, null, null);
 
     db.close();

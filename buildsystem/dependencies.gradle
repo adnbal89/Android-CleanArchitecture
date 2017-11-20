@@ -12,20 +12,20 @@ allprojects {
 
 ext {
     //Android
-    androidBuildToolsVersion = "26.0.1"
+    androidBuildToolsVersion = "27.0.0"
     androidMinSdkVersion = 17
-    androidTargetSdkVersion = 26
-    androidCompileSdkVersion = 26
-    androidAppCompatVersion = "26.0.1"
-    androidDesignVersion = "26.0.1"
-    appCompatV4Version = "26.0.1"
+    androidTargetSdkVersion = 27
+    androidCompileSdkVersion = 27
+    androidAppCompatVersion = "27.0.0"
+    androidDesignVersion = "27.0.0"
+    appCompatV4Version = "27.0.0"
 
     //Libraries
     daggerVersion = '2.11'
     butterKnifeVersion = '8.6.0'
-    recyclerViewVersion = '26.0.1'
+    recyclerViewVersion = '27.0.0'
     recyclerViewAnimatorsVersion = '2.2.6'
-    rxJavaVersion = '2.1.0'
+    rxJavaVersion = '2.1.1'
     rxAndroidVersion = '2.0.1'
     javaxAnnotationVersion = '1.0'
     javaxInjectVersion = '1'
@@ -36,7 +36,7 @@ ext {
     trialyVersion = '1.0.7'
     // Adnan BAL Added Libraries
     auth0LockVersion = '2.4.0'
-    percentRelativeLayoutVersion = '26.0.1'
+    percentRelativeLayoutVersion = '27.0.0'
     constraintLayoutVersion = '1.0.2'
     navigationViewVersion = '2.0.6'
     bottomBarVersion = '2.3.1'
@@ -45,10 +45,11 @@ ext {
     materialDesignDialog = '1.3.1'
     materialDialog = '0.9.4.5'
     sweetAlertDialogVersion = '1.3'
-    firebaseVersion = '11.0.4'
+    firebaseVersion = '11.4.0'
     googlePlayServicesVersion = '3.1.0'
-    firebaseAuthUIVersion = '2.3.0'
-
+    firebaseAuthUIVersion = '2.4.0'
+    materialIntroVersion = '1.6.2'
+    versionCheckerVersion = '1.1.7'
     //Billing
     checkoutVersion = '1.0.1'
 
@@ -92,7 +93,10 @@ ext {
             firebaseAuth         : "com.google.firebase:firebase-auth:${firebaseVersion}",
             firebaseUIAuth       : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}",
             trialy               : "io.trialy.library:trialy:${trialyVersion}",
-            firebaseCore         : "com.google.firebase:firebase-core:${firebaseVersion}"
+            firebaseCore         : "com.google.firebase:firebase-core:${firebaseVersion}",
+            materialIntro        : "com.heinrichreimersoftware:material-intro:${materialIntroVersion}",
+            versionChecker       : "com.mobapphome.library:mah-android-updater:${versionCheckerVersion}",
+            firebaseAppIndexing  : "com.google.firebase:firebase-appindexing:${firebaseVersion}"
 
     ]
 
@@ -136,8 +140,8 @@ ext {
             firebaseCore      : "com.google.firebase:firebase-core:${firebaseVersion}",
             firebaseMessaging : "com.google.firebase:firebase-messaging:${firebaseVersion}",
             firebaseStorage   : "com.google.firebase:firebase-storage:${firebaseVersion}",
-            firebaseUIAuth    : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}"
-//            firebaseAuth      : "com.google.firebase:firebase-auth:${firebaseVersion}"
+//            firebaseUIAuth    : "com.firebaseui:firebase-ui:${firebaseAuthUIVersion}"
+            firebaseAuth      : "com.google.firebase:firebase-auth:${firebaseVersion}"
     ]
 
     dataTestDependencies = [

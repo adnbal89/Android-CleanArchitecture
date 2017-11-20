@@ -21,10 +21,13 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     tools:ignore="GoogleAppIndexingWarning"
+    android:hardwareAccelerated="false"
+    android:largeHeap="true"
     tools:replace="android:allowBackup">
     <meta-data
       android:name="com.facebook.sdk.ApplicationId"
-      android:value="@string/facebook_application_id"/>
+      android:value="@string/facebook_application_id"
+      />
 
     <!-- <activity -->
     <!-- android:label="@string/app_name" -->
@@ -32,6 +35,11 @@
 
 
     <!-- </activity> -->
+
+    <activity
+      android:label="@string/activity_new_signal"
+      android:name=".view.activity.NewSignalActivity">
+    </activity>
 
     <activity
       android:label="@string/activity_title_user_list"
@@ -150,6 +158,10 @@
       android:exported="true"
       android:name=".services.NotificationService">
     </service>
+
+    <activity
+      android:name=".view.activity.MainIntroActivity"
+      android:theme="@style/Theme.Intro"/>
 
 
     <meta-data

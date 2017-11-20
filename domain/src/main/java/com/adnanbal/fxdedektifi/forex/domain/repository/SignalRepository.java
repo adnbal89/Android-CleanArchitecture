@@ -47,7 +47,9 @@ public interface SignalRepository {
    */
   Observable<Boolean> openSignal(String positionId, String pair, double volume, boolean buy_sell,
       double openingPrice, boolean open, String status, String comment, double statusChangePrice,
-      String term, Date date, Map<String, Boolean> users, Map<String, List<String>> changedFields);
+      String term, Date date, Map<String, Boolean> users, Map<String, List<String>> changedFields,
+      Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+      boolean hitTakeProfit);
 
   /**
    * Get an {@link Observable} which will emit a User_signal List{@link List<UserSignal>}.

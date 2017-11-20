@@ -15,7 +15,7 @@
 
   <string name="string_content_description">Non accessible view</string>
 
-  //Exception messages
+  <!-- Exception messages -->
   <string name="exception_message_generic">There was an application error</string>
   <string name="exception_message_no_connection">There is no internet connection</string>
   <string name="exception_message_user_not_found">Cannot retrieve user data. Check your internet connection</string>
@@ -24,10 +24,10 @@
   <string name="unknown_error">Unknown Error</string>
   <string name="unknown_response">Unknown Response</string>
 
-  //Miscellaneous
+  <!--Miscellaneous-->
   <string name="login">LogIn</string>
 
-  <string name="auth0_client_id">HDCACO0SodnDkLKJtEFL9Ya_Cj5gYfVA</string>
+  <string name="auth0_client_id" translatable="false">HDCACO0SodnDkLKJtEFL9Ya_Cj5gYfVA</string>
   <string name="auth0_domain">adnbal89.eu.auth0.com</string>
 
   <!-- TODO: Remove or change this placeholder text -->
@@ -46,10 +46,10 @@
   <string name="action_settings">Settings</string>
 
 
-  // App Name
+  <!-- App Name -->
   <string name="AppName">FxingSign</string>
 
-  //Bottom Navigation Bar
+  <!-- Bottom Navigation Bar -->
 
   <string name="menu">Menu</string>
   <string name="personal_positions">Signals</string>
@@ -59,26 +59,27 @@
   <string name="signal_history">History</string>
   <!-- TODO: Remove or change this placeholder text -->
 
-  //Fragment Names
+  <!--Fragment Names-->
   <string name="personal_positions_fragment">Personal Signals Fragment</string>
   <string name="signals_fragment">Signals Fragment</string>
   <string name="profit_fragment">Profit Fragment</string>
   <string name="signal_history_fragment">History Fragment</string>
 
-  //Toolbar
+  <!-- Toolbar -->
   <string name="title_personal_positions">Personal Signals</string>
   <string name="my_account">My Account</string>
   <string name="title_account">My Account</string>
   <string name="settings">Settings</string>
-  //Signal
+
+  <!-- Signal -->
   <string name="position_buy">Buy</string>
   <string name="position_sell">Sell</string>
 
-  //Signal
+  <!-- Signal -->
   <string name="signal_buy">Buy</string>
   <string name="signal_sell">Sell</string>
 
-  //Button text
+  <!-- Button text -->
   <string name="btn_text_personal_positions">Personal Signals</string>
   <string name="btn_text_signals">Signals</string>
   <string name="text_extend_membership">Extend Membership</string>
@@ -87,7 +88,7 @@
   <string name="text_total_profit">Total Profit</string>
 
 
-  //Dialog strings
+  <!-- Dialog strings -->
   <string name="text_dialog_view_title">Unfollow Signal ?</string>
   <string name="text_dialog_view_content">Do you want to unfollow this position ?</string>
   <string name="text_dialog_history_view_title">Closed Signal Details</string>
@@ -108,25 +109,35 @@
   <string name="text_dialog_close_signal_view_content">Are you sure to unfollow this position ?</string>
 
 
-  text_dialog_open_signal_view_title
+  <string name="text_dialog_view_OK">Confirm Edit</string>
+  <string name="text_OK">OK</string>
 
-  <string name="text_dialog_view_OK">OK</string>
+  <string name="text_dialog_view_Edit_Signal">Edit Signal</string>
+  <string name="text_dialog_view_Close_Signal">Close Signal</string>
   <string name="text_dialog_view_Cancel">Cancel</string>
+  <string name="add_new_Signal">Add New Signal</string>
+  <string name="ok">OK</string>
+  <string name="close_signal">Close Signal ?</string>
+  <string name="text_dialog_close_signal">Are you sure you want to close this signal ? </string>
+  <string name="text_dialog_view_Edit_Signal_content">Are you sure you want to confirm editing this signal ? </string>
+  <string name="pleaseFillRequiredFields">Please fill required fields to proceed.</string>
+  <string name="add_confirmed">Signal add completed.</string>
 
 
-  //Toast messages
+  <!--  Toast messages-->
   <string name="toast_dialog_confirmed">Signal unfollowed</string>
   <string name="text_signal_opened">Signal followed</string>
   <string name="text_signal_closed">Signal unfollowed</string>
 
   <string name="signal_closed">Closed</string>
+  <string name="closingPriceMustBeNumeric">Closing price must be numeric. Field contains invalid characters. Please correct!.</string>
 
 
-  //TextView texts
+  <!-- TextView texts-->
   <string name="text_membership_deadline">Your subscription period ends in : </string>
   <string name="subscriptions">Available Subscriptions</string>
 
-  //subscriptions
+  <!-- subscriptions-->
 
   <string name="use_case_title_skus">Use case #3. List of SKUs</string>
   <string name="use_case_desc_skus">Show a list of SKUs available for purchase. Click an item to purchase or consume it</string>
@@ -139,7 +150,7 @@
   <string name="_3_change">3. Change</string>
   <string name="buy">Buy</string>
 
-  //Google Auth Strings
+  <!-- Google Auth Strings-->
   <string name="label_google_sign_in">Firebase + Google Sign In</string>
   <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
 
@@ -214,21 +225,22 @@
   <string name="id_fmt">User ID: %s</string>
   <string name="email_fmt">Email: %s</string>
 
-  //////////////////////////////////
 
   <!-- Facebook -->
-  <string name="facebook_application_id">1585990171420088</string>
-  <string name="fb_login_protocol_scheme">fb1585990171420088</string>
+  <string name="facebook_application_id" translatable="false">1585990171420088</string>
+  <string name="fb_login_protocol_scheme" translatable="false">fb1585990171420088</string>
 
   <string name="drawer_open">Open navigation drawer</string>
   <string name="drawer_close">Close navigation drawer</string>
 
 
-  //open-close-comment popup menu options
+  <!-- open-close-comment popup menu options-->
 
   <string name="open_pos">Follow Signal</string>
   <string name="close_pos">Unfollow Signal</string>
   <string name="comment_pos">Show Comment</string>
+
+  <string name="edit_signal">Edit Signal</string>
 
   <string name="alreadyownpurchase">You already own a subscription</string>
   <string name="purchasedSubscription">You are already subscribed to </string>
@@ -242,5 +254,119 @@
 
   <string name="twitter_consumer_key" translatable="false">YOURCONSUMERKEY</string>
   <string name="twitter_consumer_secret" translatable="false">YOURCONSUMERSECRET</string>
+
+
+  <!--New Signal Fragment -->
+  <string name="pair">Pair : </string>
+  <string name="buy_sell">Buy / Sell : </string>
+  <string name="opening_price">Opening Price : </string>
+  <string name="closing_price">Closing Price : </string>
+  <string name="stop_loss_price">Stop-Loss Price : </string>
+  <string name="take_profit_price">Take-Profit Price : </string>
+  <string name="activity_new_signal">Create New Signal</string>
+  <string name="comment">Comment : </string>
+
+  <string name="no_closing_price">No Closing Price for New Signal</string>
+  <string name="pleaseFillClosingPrice">Please fill the closing price to close this signal!</string>
+
+
+  <string name="hint_openingPrice">Type position start price</string>
+  <string name="hint_closingPrice">Type only if you are closing this signal</string>
+
+  <string name="hint_stop_loss_price">Type Stop-loss price (if any)</string>
+  <string name="hint_take_profit_price">Type Take-Profit price (if any)</string>
+  <string name="hint_comment">Type your comment (if any)</string>
+  <string name="openPriceCannotBeBlank">Open Price - Take Profit and Stop Loss cannot be blank and must be numeric only.!</string>
+
+  <!-- TUTORIAL INTRO STRINGS -->
+  <string name="title_intro_solid_signals">Solid and Reliable Signals</string>
+  <string name="description_intro_solid_signals">Solid and reliable signals analysed by our professional analysts.</string>
+
+  <string name="title_no_robot">No Fixed Indicator Signals</string>
+  <string name="description_no_robot">No Robots / No Fixed Algorithms. All our signals are analysed by our professional analysts, we do not use just indicators or robot/software signals. All instruments are analysed carefully by our analysts\' special techniques.</string>
+
+  <string name="title_unique_live_signals">Unique Live Signals</string>
+  <string name="description_unique_live_signals">Live signals for better profits.</string>
+
+  <string name="title_instant_notification">Instant Notifications</string>
+  <string name="description_instant_notification">You get instant notifications when a signal is created or modified.</string>
+
+  <string name="title_profit_tracking">Profit Tracking</string>
+  <string name="description_profit_tracking">Quarterly profit tracking for better profit visualisation</string>
+
+  <string name="title_user_friendly_interface">User Friendly Interface</string>
+  <string name="description_user_friendly_interface">Easy and user friendly interface for our clients.</string>
+
+  <string name="terms_and_conditions">TERMS &amp; CONDITIONS</string>
+  <string name="terms_and_conditions_lowerCase">Terms&amp;Conditions</string>
+
+  <string name="accept">ACCEPT</string>
+  <string name="please_accept_to_proceed">Please accept Terms &amp; Conditions to proceed.</string>
+  <string name="accepted_terms_and_conditions">Terms &amp; Conditions accepted.</string>
+  <string name="title_new_signal">Add New Signal</string>
+
+  <string name="welcome">Welcome to FXingSign</string>
+  <string name="welcome_to">Welcome to</string>
+
+  <string name="termsandConditionsDoc">Using the FXingSign with payment or free means that you have accepted all of the terms and conditions contained in this agreement. You should read all of these terms carefully.\n\n
+Customers who use the FXingSign accept and declare that they are 18 years old or over, they have read and understood the terms and conditions completely and they are comitted to this agreement unconditionaly.\n\n
+FXingSign reserves the copyright of the rights for changing the prices and services &amp; products which are deem suitable at all time.\n\n
+First usage of FXingSign is free just for 30 days, for every unique user on a unique device. After 30 days of usage, FXingSign locks itself. To continue using the application, all users have to subscribe monthly. FXingSign subscriptions are renewed automatically every month, again for 30 days. Users who wish to unsubscribe, they have to cancel it from their own mobile market’s subscription list ; otherwise it will be automatically renewed. Renewed subscription fees are non-refundable, even if the subscription is canceled. Users can continue to use the application until the end of remaining days up to 30 days after cancellation. Users can not assert the reverse in any case.\n\n
+Users accept and approve in advance that they will be facing legal and criminal process if they use the source code of the application or any other attempt to obtain the source code of the application; otherwise users will be liable for every loss or demage which might rise at third-party.\n\n
+The exclusive relations with each other or with the third parties of the Users about how to use the application is their sole responsibility. FXingSign is not responsible in any way. Users will have no demands under any circumstances from FXingSign about their exclusive relations with each other and with third-parties.\n\n
+The registered or unregistered all intellectual property rights such as the title, company name, brand patents, logos, designs, information and methods located in this application are belong to the owner and operator of the application and it is the under the law protection nationally and internationally.\n\n
+The information in the application may not be reproduced, transmitted, copied, transcribed, be offered or transferred in any ways. All or a part &amp; parts of the application can not be used at another application or web site without permission.\n\n
+FXingSign, will not disclose the personal information transmitted by users to the third-parties via the application. This personal information is intended to describe the users identification and comprises the person’s name and surname, address, phone number, mobile numbers, e-mail address of the user and any other information, it will be simply called “Confidential Information”.\n\n
+We may share your personal information we collect from you, including your name, contact details, and transactions and activities, with law enforcement, government officials, or other third parties pursuant to a subpoena, court order, or other legal process or requirement applicable to FXingSign or one of its affiliates; when we need to do so to comply with law or credit card rules; or when we believe, in our sole discretion, that the disclosure of personal information is necessary to prevent physical harm or financial loss, to report suspected illegal activity or to investigate violations of our User Agreement.\n\n
+The user right must give the correct, complete and updated registration information. Otherwise, this contract shall be considered as it has been violated and the user account can be closed without giving any notice. The user is solely responsible for passwords and account security of the application and any third party sites. Otherwise, the FXingSign is not responsible for any data loss and security breaches and hardware-device loss or damages which might occur.\n\n
+If one of the terms of this contract becomes completely or partially invalid, the lagging of the contract continues to protect the validity of the contract.\n\n
+FXingSign will not commit any lower limit or upper limit for the analysis and estimates on the basis of units.\n\n
+This application has been developed in order to inform the forex traders.\n\n
+“Account management” and “investment consultancy” are not in question through the application. “Investment consulting” is only offered around with the investment advisory contract signed between brokerage firms, portfolio management companies, the bank does not accept deposits and the customer. It is the customer’s responsibilty to evaluate the information contained here in and make the decision for the investment who agree to signed the contact exclusively. The views and opinions taken here may not be appropriate for your financial situation and risk and return preferences. Therefore, your investment decision only based on the information contained at the application will not have any obligation to FXingSign. User knows that this regulation is the main condition of this agreement and knows that the main condition to use the application and User accepts and declares unconditionally.\n\n
+In highly leveraged markets such as forex stop loss and take profit use is important. In addition to this, risking 2-3% of the capital is important in terms of making money. The users who accepted the contract to fulfill these requirements is their own responsibility and will not bear any liability to FXingSign. Users know that this is the main condition of this agreement and the application and accept and declare it unconditionally.\n\n
+FXingSign never gives any warranty for the analysis and the notifications given at any time. The notifications shared here are completely under the foresight. Taken the notifications sent to the customers into account or not, sharing the notifications with third parties is the sole responsibility of the customers.\n\n
+FXingSign can change the offered services and partially or completely change the terms of this contract at any time .It is the user’s responsibility to monitor changes. While users continue to benefit from the services they deemed to have accepted these changes. Customers can not assert the reverse in any case.
+
+</string>
+
+  <!--VERSION CHECKER-->
+  <!-- noun -->
+  <string name="noun_mah_android_upd_dlg_title">Update information</string>
+  <!-- Button texts-->
+  <string name="mah_android_upd_dlg_btn_no_later_txt">Later</string>
+  <!--command verb-->
+  <string name="cmnd_verb_mah_android_upd_dlg_btn_no_close_txt">Close</string>
+  <!--command verb-->
+  <string name="cmnd_verb_mah_android_upd_dlg_btn_yes_update_txt">Update</string>
+  <!--command verb-->
+  <string name="cmnd_verb_mah_android_upd_dlg_btn_yes_install_txt">Install</string>
+  <string name="mah_android_upd_dlg_btn_yes_open_new_txt">Open new version</string>
+  <!--command verb-->
+  <string name="cmnd_verb_mah_android_upd_dlg_btn_no_uninstall_old_txt">Uninstall old</string>
+
+  <!-- Info texts-->
+  <string name="mah_android_upd_updater_info_install">Application has moved to new address. Please install newer version</string>
+  <string name="mah_android_upd_updater_info_update">New version is available. Please update application</string>
+  <string name="mah_android_upd_restricter_info_install">This is old version and does not operate. An application has moved to new address. \nPlease install newer version</string>
+  <string name="mah_android_upd_restricter_info_update">This is old version and does not operate. Please update application</string>
+  <string name="mah_android_upd_restricter_info_open_new_version">This is old version and does not operate. Please open new version</string>
+
+  <!-- Additional information-->
+  <string name="mah_android_upd_internet_update_error">Check your internet connection</string>
+  <string name="mah_android_upd_play_service_not_found">Install Google Play Services to update application</string>
+  <string name="mah_android_upd_info_popup_text">\"MAHAndroidUpdater\" library</string>
+
+  <string name="title_pair">Pair</string>
+  <string name="title_opening_price">Opening Price</string>
+  <string name="title_status">Status</string>
+  <string name="hit_stop_loss">Hit SL</string>
+  <string name="hit_take_profit">Hit TP</string>
+
+  <string name="hit_stop_loss_question">Hit SL ?</string>
+  <string name="hit_take_profit_question">Hit TP ?</string>
+
+  <string name="hint_check_if_sl">Check if Hit SL while closing pos.</string>
+  <string name="hint_check_if_tp">Check if Hit TP while closing pos.</string>
+
 
 </resources>

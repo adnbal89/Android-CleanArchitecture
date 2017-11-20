@@ -50,7 +50,8 @@ public class OpenPosition extends UseCase<Boolean, OpenPosition.Params> {
         .openPosition(params.positionId, params.pair, params.volume, params.buy_sell,
             params.openingPrice,
             params.open,
-            params.status, params.comment, params.date);
+            params.status, params.comment, params.date, params.take_profit_price,
+            params.stop_loss_price, params.hitStopLoss, params.hitTakeProfit);
   }
 
   public static final class Params {
@@ -64,9 +65,15 @@ public class OpenPosition extends UseCase<Boolean, OpenPosition.Params> {
     String status;
     String comment;
     Date date;
+    Double take_profit_price;
+    Double stop_loss_price;
+    boolean hitStopLoss;
+    boolean hitTakeProfit;
 
     private Params(String positionId, String pair, double volume, boolean buy_sell,
-        double openingPrice, boolean open, String status, String comment, Date date) {
+        double openingPrice, boolean open, String status, String comment, Date date,
+        Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+        boolean hitTakeProfit) {
 
       this.positionId = positionId;
       this.pair = pair;
@@ -77,14 +84,20 @@ public class OpenPosition extends UseCase<Boolean, OpenPosition.Params> {
       this.status = status;
       this.comment = comment;
       this.date = date;
+      this.take_profit_price = take_profit_price;
+      this.stop_loss_price = stop_loss_price;
+      this.hitStopLoss = hitStopLoss;
+      this.hitTakeProfit = hitTakeProfit;
 
     }
 
     public static OpenPosition.Params forPosition(String positionId, String pair, double volume,
         boolean buy_sell,
-        double openingPrice, boolean open, String status, String comment, Date date) {
+        double openingPrice, boolean open, String status, String comment, Date date,
+        Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+        boolean hitTakeProfit) {
       return new OpenPosition.Params(positionId, pair, volume, buy_sell, openingPrice, open, status,
-          comment, date);
+          comment, date, take_profit_price, stop_loss_price, hitStopLoss, hitTakeProfit);
     }
   }
 

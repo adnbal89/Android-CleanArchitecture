@@ -16,10 +16,366 @@
   ~  * limitations under the License.
   ~  */
   -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+
+  android:orientation="vertical"
+  android:weightSum="11">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    >
+    <TextView
+      android:id="@+id/textView_title_editSignal"
+      android:textStyle="bold"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/color_appbar_background_Primary"
+      android:gravity="center"
+      android:text="@string/edit_signal"
+      android:textColor="@color/tw__solid_white"
+      android:textSize="30sp"
+      />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="13dp"
+      android:background="@color/color_separator_line"
+      android:orientation="vertical">
+    </LinearLayout>
+  </LinearLayout>
+
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="9"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      android:weightSum="8.5">
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="5dp"
+        android:gravity="left|center_vertical"
+        android:text="@string/pair"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:paddingLeft="5dp"
+
+        android:gravity="left|center_vertical"
+        android:text="@string/buy_sell"
+        />
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:paddingLeft="5dp"
+
+        android:background="@color/color_appbar_background_Primary"
+        android:gravity="left|center_vertical"
+        android:text="@string/opening_price"
+        android:textColor="@color/tw__solid_white"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/textView_closing_price"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:paddingLeft="5dp"
+
+        android:background="@color/color_cloud"
+        android:gravity="left|center_vertical"
+        android:text="@string/closing_price"
+        android:textColor="@color/tw__solid_white"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:paddingLeft="5dp"
+        android:background="@color/darkred"
+
+        android:gravity="left|center_vertical"
+        android:text="@string/stop_loss_price"
+        android:textColor="@color/tw__solid_white"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:paddingLeft="5dp"
+        android:background="@color/darkgreen"
+
+        android:gravity="left|center_vertical"
+        android:text="@string/take_profit_price"
+        android:textColor="@color/tw__solid_white"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.25"
+        android:paddingLeft="5dp"
+
+        android:gravity="left|center_vertical"
+        android:text="@string/comment"
+        />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:paddingLeft="5dp"
+
+        android:gravity="left|center_vertical"
+        android:text="@string/hit_stop_loss_question"
+        />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:paddingLeft="5dp"
+
+        android:gravity="left|center_vertical"
+        android:text="@string/hit_take_profit_question"
+        />
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="2"
+      android:orientation="vertical"
+      android:weightSum="8.5">
+
+      <Spinner
+        android:id="@+id/spinner_pair"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:entries="@array/array_pairs"
+        android:gravity="center"
+        />
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+      <Spinner
+        android:id="@+id/spinner_buy_sell"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:entries="@array/array_buy_sell"
+        android:gravity="center"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+      <EditText
+        android:id="@+id/editText_opening_price"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:gravity="start|center"
+        android:hint="@string/hint_openingPrice"
+        android:textSize="12sp"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+      <EditText
+        android:id="@+id/editText_closing_price"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:gravity="start|center"
+        android:hint="@string/hint_closingPrice"
+        android:textSize="12sp"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+      <EditText
+        android:id="@+id/editText_stop_loss_price"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+
+        android:gravity="start|center"
+        android:hint="@string/hint_stop_loss_price"
+        android:textSize="12sp"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+      <EditText
+        android:id="@+id/editText_take_profit_price"
+        style="@style/FirebaseUI.TextInputEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:gravity="start|center"
+        android:hint="@string/hint_take_profit_price"
+        android:textSize="12sp"/>
+      <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+
+      <EditText
+        android:id="@+id/editText_comment"
+        style="@style/FirebaseUI.TextInputEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.25"
+        android:gravity="start|center"
+        android:hint="@string/hint_comment"
+        android:textSize="15sp"/>
+
+      <CheckBox
+        android:id="@+id/checkbox_sl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:gravity="start|center"
+        android:hint="@string/hint_check_if_sl"
+        android:textSize="12sp"/>
+
+      <CheckBox
+        android:id="@+id/checkbox_tp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:gravity="start|center"
+        android:hint="@string/hint_check_if_tp"
+        android:textSize="12sp"/>
+
+      <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_separator_line"
+        android:orientation="vertical">
+      </LinearLayout>
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <Button
+      android:id="@+id/button_ok"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:background="@color/tw__blue_default"
+      android:text="@string/text_dialog_view_OK"
+      android:textColor="@color/tw__solid_white"/>
+
+    <Button
+      android:id="@+id/button_close"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:background="@color/tw__blue_default"
+      android:text="@string/text_dialog_view_Close_Signal"
+      android:textColor="@color/tw__solid_white"/>
+
+    <Button
+      android:id="@+id/button_cancel"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:background="@color/tw__blue_default"
+      android:text="@string/text_dialog_view_Cancel"
+      android:textColor="@color/tw__solid_white"/>
+  </LinearLayout>
 
 </LinearLayout>

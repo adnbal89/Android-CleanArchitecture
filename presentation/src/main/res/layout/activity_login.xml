@@ -17,8 +17,10 @@
     >
     <Button
       android:id="@+id/button_return"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginRight="10dp"
       android:background="@drawable/ic_right"
       android:gravity="end"
       android:visibility="invisible"/>
@@ -33,7 +35,7 @@
     android:layout_above="@+id/ll_logo"
     android:layout_centerHorizontal="true"
     android:gravity="center"
-    android:text="Welcome to"
+    android:text="@string/welcome_to"
     android:textColor="#dc63b3e4"
     android:textSize="30sp"/>
 
@@ -65,6 +67,7 @@
       android:textColor="#dc63b3e4"
       android:textSize="50sp"/>
 
+
     <Button
       android:id="@+id/button_sign_out"
       android:layout_width="match_parent"
@@ -78,6 +81,5 @@
       android:visibility="gone"/>
 
   </LinearLayout>
-
 
 </RelativeLayout>

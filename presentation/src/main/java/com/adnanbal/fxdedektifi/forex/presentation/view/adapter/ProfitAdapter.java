@@ -19,17 +19,18 @@
 package com.adnanbal.fxdedektifi.forex.presentation.view.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.adnanbal.fxdedektifi.forex.presentation.R;
 import com.adnanbal.fxdedektifi.forex.presentation.model.PositionModel;
 import com.adnanbal.fxdedektifi.forex.presentation.util.DateFormatter;
-import com.adnanbal.fxdedektifi.forex.presentation.util.DoubleToString;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -94,27 +95,88 @@ public class ProfitAdapter extends
 
 //    holder.textViewStatus.setText(positionModel.getStatus());
 
-    holder.textViewPositionVolume.setText(DoubleToString.convertFrom(positionModel.getVolume()));
+    if (positionModel.isHitStopLoss()) {
+      holder.status.setText(context.getResources().getString(R.string.hit_stop_loss));
+      holder.status
+          .setTextColor(
+              context.getResources().getColor(R.color.color_textview_personal_signals_sell));
+    } else if (positionModel.isHitTakeProfit()) {
+      holder.status.setText(context.getResources().getString(R.string.hit_take_profit));
+      holder.status.setTextColor(
+          context.getResources().getColor(R.color.hit_take_profit_color));
 
-    if (positionModel.getPair().contains("JPY")) {
-      holder.textViewProfit.setText(String.valueOf(
-          Double
-              .valueOf(100 * (positionModel.getClosingPrice() - positionModel.getOpeningPrice()))
-              .intValue()));
     } else {
-      holder.textViewProfit.setText(String.valueOf(
-          Double
-              .valueOf(10000 * (positionModel.getClosingPrice() - positionModel.getOpeningPrice()))
-              .intValue()));
+      holder.status.setText(context.getResources().getString(R.string.signal_closed));
+      holder.status.setTextColor(
+          context.getResources().getColor(R.color.textView_closed_color));
     }
+    holder.status
+        .setTypeface(holder.status.getTypeface(), Typeface.BOLD_ITALIC);
 
-    if ((positionModel.getClosingPrice() - positionModel.getOpeningPrice()) > 0) {
+    if (positionModel.isBuy_sell()) {
 
-      holder.textViewProfit.setTextColor(
-          context.getResources().getColor(R.color.color_textview_personal_signals_buy));
+      if (positionModel.getPair().contains("JPY")) {
+        holder.textViewProfit.setText(String.valueOf(
+            Float
+                .valueOf(100 * (float) (positionModel.getClosingPrice() - positionModel
+                    .getOpeningPrice()))
+        ));
+      } else if (positionModel.getPair().contains("XAU")) {
+        holder.textViewProfit.setText(String.valueOf(
+            Float
+                .valueOf(10 * (float) (positionModel.getClosingPrice() - positionModel
+                    .getOpeningPrice()))
+        ));
+      } else {
+        holder.textViewProfit.setText(String.valueOf(
+            Float
+                .valueOf(
+                    10000 * (float) (positionModel.getClosingPrice() - positionModel
+                        .getOpeningPrice()))
+        ));
+      }
+
+      if ((positionModel.getClosingPrice() - positionModel.getOpeningPrice()) > 0) {
+
+        holder.textViewProfit.setTextColor(
+            context.getResources().getColor(R.color.color_textview_personal_signals_buy));
+      } else {
+        holder.textViewProfit.setTextColor(
+            context.getResources().getColor(R.color.color_textview_personal_signals_sell));
+      }
     } else {
-      holder.textViewProfit.setTextColor(
-          context.getResources().getColor(R.color.color_textview_personal_signals_sell));
+
+      if (positionModel.getPair().contains("JPY")) {
+        holder.textViewProfit.setText(String.valueOf(
+            Float
+                .valueOf(100 * (float) (positionModel.getOpeningPrice() - positionModel
+                    .getClosingPrice()))
+        ));
+      }
+      if (positionModel.getPair().contains("XAU")) {
+        holder.textViewProfit.setText(String.valueOf(
+            Float
+                .valueOf(10 * (float) (positionModel.getOpeningPrice() - positionModel
+                    .getClosingPrice()))
+        ));
+      } else {
+        holder.textViewProfit.setText(String.valueOf(
+            Float
+                .valueOf(
+                    10000 * (float) (positionModel.getOpeningPrice() - positionModel
+                        .getClosingPrice()))
+        ));
+      }
+
+      if ((positionModel.getClosingPrice() - positionModel.getOpeningPrice()) > 0) {
+
+        holder.textViewProfit.setTextColor(
+            context.getResources().getColor(R.color.color_textview_personal_signals_sell));
+      } else {
+        holder.textViewProfit.setTextColor(
+            context.getResources().getColor(R.color.color_textview_personal_signals_buy));
+      }
+
     }
 
     holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +193,10 @@ public class ProfitAdapter extends
     holder.textView_Open_To_Close
         .setText(String.valueOf(positionModel.getOpeningPrice()) + " -> " + String
             .valueOf(positionModel.getClosingPrice()));
+
+    if (positionModel.getComment() != null && !positionModel.getComment().isEmpty()) {
+      holder.profit_comment.setImageResource(R.drawable.ic_comment_alternative);
+    }
   }
 
   @Override
@@ -176,13 +242,15 @@ public class ProfitAdapter extends
     //    @BindView(R.id.tv_personal_history_status)
 //    TextView textViewStatus;
     @BindView(R.id.tv_personal_history_volume)
-    TextView textViewPositionVolume;
+    TextView status;
     @BindView(R.id.tv_personal_history_profit)
     TextView textViewProfit;
     @BindView(R.id.tv_open_to_close)
     TextView textView_Open_To_Close;
     @BindView(R.id.tv_personal_history_close_date)
     TextView textView_Close_Date;
+    @BindView(R.id.profit_comment)
+    ImageView profit_comment;
 
     PositionViewHolder(View itemView) {
       super(itemView);

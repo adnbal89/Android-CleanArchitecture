@@ -1,10 +1,12 @@
 package com.adnanbal.fxdedektifi.forex.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
 /**
  * Position Entity used in the data layer.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PositionEntity {
 
   private String id;
@@ -19,6 +21,26 @@ public class PositionEntity {
   private String status;
   private String comment;
   private Date date;
+  Double take_profit_price;
+  Double stop_loss_price;
+  private boolean hitStopLoss;
+  private boolean hitTakeProfit;
+
+  public boolean isHitStopLoss() {
+    return hitStopLoss;
+  }
+
+  public void setHitStopLoss(boolean hitStopLoss) {
+    this.hitStopLoss = hitStopLoss;
+  }
+
+  public boolean isHitTakeProfit() {
+    return hitTakeProfit;
+  }
+
+  public void setHitTakeProfit(boolean hitTakeProfit) {
+    this.hitTakeProfit = hitTakeProfit;
+  }
 
   public PositionEntity() {
     //empty
@@ -26,7 +48,9 @@ public class PositionEntity {
 
 
   public PositionEntity(String id, String pair, double volume, boolean buy_sell,
-      double openingPrice, boolean open, String status, String comment, Date date) {
+      double openingPrice, boolean open, String status, String comment, Date date,
+      Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+      boolean hitTakeProfit) {
     this.id = id;
     this.pair = pair;
     this.volume = volume;
@@ -36,6 +60,10 @@ public class PositionEntity {
     this.status = status;
     this.comment = comment;
     this.date = date;
+    this.take_profit_price = take_profit_price;
+    this.stop_loss_price = stop_loss_price;
+    this.hitStopLoss = hitStopLoss;
+    this.hitTakeProfit = hitTakeProfit;
   }
 
   public String getId() {
@@ -126,10 +154,27 @@ public class PositionEntity {
     this.date = date;
   }
 
+  public Double getTake_profit_price() {
+    return take_profit_price;
+  }
+
+  public void setTake_profit_price(Double take_profit_price) {
+    this.take_profit_price = take_profit_price;
+  }
+
+  public Double getStop_loss_price() {
+    return stop_loss_price;
+  }
+
+  public void setStop_loss_price(Double stop_loss_price) {
+    this.stop_loss_price = stop_loss_price;
+  }
+
+
   @Override
   public String toString() {
     return "PositionEntity{" +
-        "positionId=" + id +
+        "id='" + id + '\'' +
         ", pair='" + pair + '\'' +
         ", buy_sell=" + buy_sell +
         ", volume=" + volume +
@@ -139,6 +184,11 @@ public class PositionEntity {
         ", open=" + open +
         ", status='" + status + '\'' +
         ", comment='" + comment + '\'' +
+        ", date=" + date +
+        ", take_profit_price=" + take_profit_price +
+        ", stop_loss_price=" + stop_loss_price +
+        ", hitStopLoss=" + hitStopLoss +
+        ", hitTakeProfit=" + hitTakeProfit +
         '}';
   }
 }

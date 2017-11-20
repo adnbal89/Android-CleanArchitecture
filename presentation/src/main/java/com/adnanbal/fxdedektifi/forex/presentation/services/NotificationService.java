@@ -30,8 +30,6 @@ import android.os.IBinder;
 import android.provider.Settings.System;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
-import com.adnanbal.fxdedektifi.forex.data.exception.NetworkConnectionException;
 import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.R;
 import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
@@ -73,6 +71,7 @@ public class NotificationService extends Service {
     Firebase.setAndroidContext(getApplicationContext());
 
     Firebase myFirebaseRef = new Firebase("https://fxingsign.firebaseio.com/");
+
     if (isThereInternetConnection()) {
 
       myFirebaseRef.child("signal").addChildEventListener(new ChildEventListener() {
@@ -109,11 +108,9 @@ public class NotificationService extends Service {
           signalModel = dataSnapshot.getValue(SignalModel.class);
           signalModel.setId(dataSnapshot.getKey());
 
-            if (!AndroidApplication.listChangedSignalModel.contains(signalModel)) {
-              AndroidApplication.listChangedSignalModel.add(signalModel);
-            }
-
-
+          if (!AndroidApplication.listChangedSignalModel.contains(signalModel)) {
+            AndroidApplication.listChangedSignalModel.add(signalModel);
+          }
 
           //TODO : Notification impl. code
           if (signalModel.getClosingPrice() != 0) {
@@ -194,9 +191,8 @@ public class NotificationService extends Service {
     notificationManager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
 
     builder =
-        new NotificationCompat.Builder(this, "1")
+        new NotificationCompat.Builder(this)
             .setSmallIcon(R.drawable.ic_comment_alternative)
-            .setBadgeIconType(R.drawable.ic_launcher)
             .setVibrate(new long[]{1000, 1000})
             .setSound(System.DEFAULT_NOTIFICATION_URI)
             .setAutoCancel(true);

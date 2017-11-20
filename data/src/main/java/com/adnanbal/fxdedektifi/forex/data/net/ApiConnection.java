@@ -16,6 +16,7 @@
 package com.adnanbal.fxdedektifi.forex.data.net;
 
 import android.support.annotation.Nullable;
+import com.adnanbal.fxdedektifi.forex.data.entity.NewPositionEntity;
 import com.adnanbal.fxdedektifi.forex.data.entity.PositionEntity;
 import com.adnanbal.fxdedektifi.forex.data.entity.UserLoginDetailsEntity;
 import com.google.gson.Gson;
@@ -63,6 +64,10 @@ class ApiConnection implements Callable<String> {
   }
 
   static ApiConnection createPost(String url) throws MalformedURLException {
+    return new ApiConnection(url);
+  }
+
+  static ApiConnection createPut(String url) throws MalformedURLException {
     return new ApiConnection(url);
   }
 
@@ -118,6 +123,57 @@ class ApiConnection implements Callable<String> {
    * @return A string response
    */
   @Nullable
+  String request_postSyncCall(NewPositionEntity newPositionEntity) {
+    final MediaType JSON
+        = MediaType.parse("application/json; charset=utf-8");
+
+    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
+        (JsonDeserializer<Date>) (jsonElement, type, context) -> new Date(
+            jsonElement.getAsJsonPrimitive().getAsLong()))
+        .registerTypeAdapter(Date.class,
+            (JsonSerializer<Date>) (date, type, jsonSerializationContext) -> new JsonPrimitive(
+                date.getTime()))
+
+        .create();
+    String jsonInString = gson.toJson(newPositionEntity);
+
+    RequestBody body = RequestBody.create(JSON, jsonInString);
+
+    postRequestToApi(body);
+    i++;
+    return response;
+  }
+
+
+  @Nullable
+  String request_postNewSignalSyncCall(NewPositionEntity newPositionEntity) {
+    final MediaType JSON
+        = MediaType.parse("application/json; charset=utf-8");
+
+    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
+        (JsonDeserializer<Date>) (jsonElement, type, context) -> new Date(
+            jsonElement.getAsJsonPrimitive().getAsLong()))
+        .registerTypeAdapter(Date.class,
+            (JsonSerializer<Date>) (date, type, jsonSerializationContext) -> new JsonPrimitive(
+                date.getTime()))
+
+        .create();
+    String jsonInString = gson.toJson(newPositionEntity);
+
+    RequestBody body = RequestBody.create(JSON, jsonInString);
+
+    postRequestToApiNewSignal(body);
+    i++;
+    return response;
+  }
+
+  /**
+   * Do a request to an api synchronously.
+   * It should not be executed in the main thread of the application.
+   *
+   * @return A string response
+   */
+  @Nullable
   String request_postUserLoginDetailEntitySyncCall(UserLoginDetailsEntity userLoginDetailsEntity) {
     final MediaType JSON
         = MediaType.parse("application/json; charset=utf-8");
@@ -161,6 +217,29 @@ class ApiConnection implements Callable<String> {
     i++;
     return response;
   }
+
+  @Nullable
+  String request_putNewSignalSyncCall(NewPositionEntity newPositionEntity) {
+    final MediaType JSON
+        = MediaType.parse("application/json; charset=utf-8");
+
+    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
+        (JsonDeserializer<Date>) (jsonElement, type, context) -> new Date(
+            jsonElement.getAsJsonPrimitive().getAsLong()))
+        .registerTypeAdapter(Date.class,
+            (JsonSerializer<Date>) (date, type, jsonSerializationContext) -> new JsonPrimitive(
+                date.getTime()))
+
+        .create();
+    String jsonInString = gson.toJson(newPositionEntity);
+
+    RequestBody body = RequestBody.create(JSON, jsonInString);
+
+    putRequestToApi(body);
+    i++;
+    return response;
+  }
+
 
   @Nullable
   String request_patchSyncCall(Map<String, Boolean> userSignalMap) {
@@ -251,7 +330,37 @@ class ApiConnection implements Callable<String> {
     }
   }
 
+  private void postRequestToApiNewSignal(RequestBody requestBody) {
+    OkHttpClient okHttpClient = this.createClient();
+    final Request request = new Request.Builder()
+        .url(this.url)
+        .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_VALUE_JSON)
+        .post(requestBody)
+        .build();
+
+    try {
+      this.response = okHttpClient.newCall(request).execute().body().string();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   private void postRequestToApi(RequestBody requestBody) {
+    OkHttpClient okHttpClient = this.createClient();
+    final Request request = new Request.Builder()
+        .url(this.url)
+        .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_VALUE_JSON)
+        .put(requestBody)
+        .build();
+
+    try {
+      this.response = okHttpClient.newCall(request).execute().body().string();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void putRequestToApi(RequestBody requestBody) {
     OkHttpClient okHttpClient = this.createClient();
     final Request request = new Request.Builder()
         .url(this.url)

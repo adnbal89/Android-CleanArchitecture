@@ -18,9 +18,12 @@
 
 package com.adnanbal.fxdedektifi.forex.presentation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
 import java.util.Date;
 
-public class ProfitModel {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ProfitModel implements Serializable {
 
   Date date;
   double open_price;

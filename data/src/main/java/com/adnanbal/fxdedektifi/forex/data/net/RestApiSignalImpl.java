@@ -31,6 +31,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
 import com.firebase.client.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import io.reactivex.Observable;
@@ -59,6 +60,7 @@ public class RestApiSignalImpl extends BaseFirebaseDataSource implements RestApi
   private final Context context;
   private final SignalEntityJsonMapper signalEntityJsonMapper;
   Firebase myFirebaseRef;
+  private FirebaseAuth auth;
 
 
   /**
@@ -103,6 +105,7 @@ public class RestApiSignalImpl extends BaseFirebaseDataSource implements RestApi
     return Observable.create(emitter -> {
 
       Firebase myFirebaseRef = new Firebase("https://fxingsign.firebaseio.com/");
+
       if (isThereInternetConnection()) {
 
         myFirebaseRef.child("signal").addValueEventListener(new ValueEventListener() {

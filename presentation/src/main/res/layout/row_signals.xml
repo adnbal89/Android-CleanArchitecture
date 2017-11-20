@@ -9,9 +9,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingStart="5dp"
-    android:paddingEnd="10dp"
+    android:paddingEnd="5dp"
     android:background="@drawable/custom_bg"
-
     android:minHeight="60dp"
     android:orientation="horizontal"
     android:weightSum="10">
@@ -21,9 +20,9 @@
       android:id="@+id/iv_tick"
       android:layout_width="0dp"
       android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:paddingStart="5dp"
-      android:paddingEnd="5dp"
+      android:layout_weight="0.75"
+      android:paddingStart="2dp"
+      android:paddingEnd="2dp"
       android:gravity="center"
       android:src="@drawable/ic_tick_blue"
       android:visibility="visible"/>
@@ -44,9 +43,9 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingTop="3dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:textColor="@color/color_textview_personal_positions_pair"
-        android:textSize="12sp"
+        android:textSize="11sp"
         />
       <TextView
         android:id="@+id/tv_date"
@@ -54,7 +53,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingBottom="3dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:textColor="@color/color_textview_profit_grey"
         android:textSize="11sp"
         />
@@ -64,7 +63,7 @@
     <LinearLayout
       android:layout_width="0dp"
       android:layout_height="match_parent"
-      android:layout_weight="5"
+      android:layout_weight="5.5"
       android:orientation="horizontal"
       android:weightSum="10"
       >
@@ -72,31 +71,56 @@
         android:id="@+id/tv_signal_buy_sell"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="1.6"
         android:gravity="center"
         android:textColor="@color/color_textview_personal_positions_buy"
-        android:textSize="12sp"
+        android:textSize="10sp"
 
         />
 
       <TextView
         android:id="@+id/tv_signal_opening_price"
         android:layout_width="0dp"
+        android:paddingLeft="2dp"
         android:layout_height="match_parent"
-        android:layout_weight="7"
+        android:layout_weight="2.80"
         android:gravity="center"
         android:textColor="@color/color_textview_opening_price"
-        android:textSize="12sp"
+        android:textSize="10sp"
 
+        />
+
+      <TextView
+        android:id="@+id/tv_signal_tp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2.80"
+        android:gravity="center"
+        android:textColor="@color/color_textview_opening_price"
+        android:textSize="10sp"
+        />
+
+      <TextView
+        android:id="@+id/tv_signal_sl"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2.80"
+        android:gravity="center"
+        android:textColor="@color/color_textview_opening_price"
+        android:textSize="10sp"
         />
 
 
     </LinearLayout>
     <ImageView
       android:id="@+id/signal_status"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
       android:layout_weight="1"
+      android:paddingLeft="5dp"
+      android:paddingRight="5dp"
+      android:paddingBottom="5dp"
+      android:paddingTop="5dp"
       android:layout_gravity="center"
       app:srcCompat="@drawable/green_circle"
       />
@@ -105,7 +129,7 @@
       android:id="@+id/signal_comment"
       android:layout_width="0dp"
       android:layout_height="match_parent"
-      android:layout_weight="1"
+      android:layout_weight="0.75"
       android:gravity="center"
       />
 

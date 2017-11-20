@@ -25,6 +25,7 @@ import com.adnanbal.fxdedektifi.forex.data.cache.SignalCacheImpl;
 import com.adnanbal.fxdedektifi.forex.data.cache.UserCache;
 import com.adnanbal.fxdedektifi.forex.data.cache.UserCacheImpl;
 import com.adnanbal.fxdedektifi.forex.data.executor.JobExecutor;
+import com.adnanbal.fxdedektifi.forex.data.repository.NewSignalDataRepository;
 import com.adnanbal.fxdedektifi.forex.data.repository.PositionDataRepository;
 import com.adnanbal.fxdedektifi.forex.data.repository.PositionHistoryDataRepository;
 import com.adnanbal.fxdedektifi.forex.data.repository.SignalDataRepository;
@@ -33,6 +34,7 @@ import com.adnanbal.fxdedektifi.forex.data.repository.UserDataRepository;
 import com.adnanbal.fxdedektifi.forex.data.repository.UserLoginDetailsDataRepository;
 import com.adnanbal.fxdedektifi.forex.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.forex.domain.executor.ThreadExecutor;
+import com.adnanbal.fxdedektifi.forex.domain.repository.NewSignalRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionHistoryRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.SignalRepository;
@@ -43,6 +45,7 @@ import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.UIThread;
 import com.adnanbal.fxdedektifi.forex.presentation.external.AnalyticsInterface;
 import com.adnanbal.fxdedektifi.forex.presentation.firebase.FirebaseAnalyticsHelper;
+import com.adnanbal.fxdedektifi.forex.presentation.presenter.NewSignalPresenter;
 import com.adnanbal.fxdedektifi.forex.presentation.presenter.SignalListPresenter;
 import com.adnanbal.fxdedektifi.forex.presentation.presenter.UserLoginDetailsPresenter;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -98,6 +101,13 @@ public class ApplicationModule {
   public UserLoginDetailsPresenter provideUserLoginDetailsPresenter(
       UserLoginDetailsPresenter userLoginDetailsPresenter) {
     return userLoginDetailsPresenter;
+  }
+
+  @Provides
+  @Singleton
+  public NewSignalPresenter provideNewSignalPresenter(
+      NewSignalPresenter newSignalPresenter) {
+    return newSignalPresenter;
   }
 
   @Provides
@@ -181,6 +191,13 @@ public class ApplicationModule {
   UserLoginDetailsRepository provideUserLoginDetailsRepository(
       UserLoginDetailsDataRepository userLoginDetailsDataRepository) {
     return userLoginDetailsDataRepository;
+  }
+
+  @Provides
+  @Singleton
+  NewSignalRepository provideNewSignalRepository(
+      NewSignalDataRepository newSignalDataRepository) {
+    return newSignalDataRepository;
   }
 
 

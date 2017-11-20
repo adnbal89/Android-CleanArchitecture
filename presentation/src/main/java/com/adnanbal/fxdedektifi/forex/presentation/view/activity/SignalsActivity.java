@@ -27,6 +27,7 @@ import static io.trialy.library.Constants.STATUS_TRIAL_RUNNING;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -36,8 +37,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -66,9 +69,11 @@ import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.ProfitFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.ProfitFragment.PositionHistoryListListener;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.SignalsFragment;
 import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.SignalsFragment.SignalListListener;
+import com.adnanbal.fxdedektifi.forex.presentation.view.fragment.TermsAndConditionsMainFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
+import com.google.firebase.auth.FirebaseAuth;
 import io.fabric.sdk.android.Fabric;
 import io.trialy.library.Trialy;
 import io.trialy.library.TrialyCallback;
@@ -98,6 +103,8 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   private static final Boolean OPEN = true;
   private static final Boolean CLOSED = false;
 
+  Intent notificationServiceStartIntent;
+
   private ActivityCheckout mCheckout;
 
   @BindView(R.id.appbar)
@@ -108,6 +115,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   NavigationView navigationViewDrawer;
   @BindView(R.id.idBottomBar)
   BottomNavigationView bottomNavigationView;
+
 
   DatabaseHandler db;
 
@@ -124,6 +132,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   private Toast toast;
 
   static final String TAG = "SignalsActivity";
+  SharedPreferences prefs = null;
 
   public static Intent getCallingIntent(Context context) {
     return new Intent(context, SignalsActivity.class);
@@ -150,9 +159,16 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 //
 //    request.loadSkus(SUBSCRIPTION, SKUS);
 //    request.loadSkus(ProductTypes.IN_APP, SKUS);
+    prefs = getSharedPreferences("com.adnanbal.fxdedektifi.forex.presentation", MODE_PRIVATE);
+
+    if (prefs.getBoolean("firstrun", true)) {
+      this.navigator.navigateToMainIntroActivity(this);
+      prefs.edit().putBoolean("firstrun", false).apply();
+    }
 
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     setContentView(com.adnanbal.fxdedektifi.forex.presentation.R.layout.activity_layout);
+
     unbinder = ButterKnife.bind(this);
 
     setUpToolbar_();
@@ -161,12 +177,8 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
     this.initializeInjector();
 
-    //Trial period Checker
-    mTrialy = new Trialy(this, "P5KQU2O7WCBYWBA340B");
-    mTrialy.checkTrial("default", mTrialyCallback);
-    mTrialy.enableLogging();
-
     db = new DatabaseHandler(this);
+
 
   }
 
@@ -178,14 +190,17 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
 
   private void normalStart() {
-    bottomNavigationView.setVisibility(View.VISIBLE);
+    if (bottomNavigationView != null) {
+      bottomNavigationView.setVisibility(View.VISIBLE);
+    }
+
     navigationViewDrawer.getMenu().findItem(R.id.nav_item_signals_fragment).setVisible(true);
 
     /*
      * START NOTIFICATION SERVICE
      */
     // use this to start and trigger a service
-    Intent notificationServiceStartIntent = new Intent(this, NotificationService.class);
+    notificationServiceStartIntent = new Intent(this, NotificationService.class);
     notificationServiceStartIntent.putExtra("counter", counter);
     startService(notificationServiceStartIntent);
     /*
@@ -256,10 +271,10 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
         List<Purchase> purchaseList = products.get(ProductTypes.SUBSCRIPTION).getPurchases();
 //        List<Purchase> purchaseInapList = products.get(ProductTypes.IN_APP).getPurchases();
 
-        if(timeRemaining<0)
+        if (timeRemaining < 0) {
           AndroidApplication.accountExpiryTime = "0";
-        else{
-          int days = (int)(timeRemaining/(24*3600));
+        } else {
+          int days = (int) (timeRemaining / (24 * 3600));
           AndroidApplication.accountExpiryTime = Integer.toString(days);
         }
 
@@ -270,7 +285,9 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
         } else {
           normalStart();
         }
-        mCheckout.stop();
+        if (mCheckout != null) {
+          mCheckout.stop();
+        }
       }
     });
 
@@ -278,7 +295,12 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
 
   private void limitedStart() {
-
+    try {
+      stopService(notificationServiceStartIntent);
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG,
+          "NotificationService is already not running. Cannot stop already stopped service");
+    }
     bottomNavigationView.setVisibility(View.GONE);
     navigationViewDrawer.getMenu().findItem(R.id.nav_item_signals_fragment).setVisible(false);
     getSupportActionBar().setTitle(R.string.my_account);
@@ -373,6 +395,18 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
                 new AccountAndSubscriptionsFragment());
             return true;
 
+          case R.id.new_signal:
+            //create new signal, so null signal model is put to the intent-
+            navigator.navigateToNewSignalActivity(context(), null);
+            return true;
+
+          case R.id.action_settings:
+            getSupportActionBar().setTitle(R.string.terms_and_conditions_lowerCase);
+            uncheckAllMenuItems(navigationViewDrawer);
+            addFragment(
+                com.adnanbal.fxdedektifi.forex.presentation.R.id.fragmentContainer,
+                new TermsAndConditionsMainFragment());
+            return true;
 
         }
         //If above criteria does not meet then default is false;
@@ -380,6 +414,22 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
       }
     });
 
+  }
+
+  private void uncheckAllMenuItems(NavigationView navigationView) {
+    final Menu menu = navigationView.getMenu();
+    for (int i = 0; i < menu.size(); i++) {
+      MenuItem item = menu.getItem(i);
+      if (item.hasSubMenu()) {
+        SubMenu subMenu = item.getSubMenu();
+        for (int j = 0; j < subMenu.size(); j++) {
+          MenuItem subMenuItem = subMenu.getItem(j);
+          subMenuItem.setChecked(false);
+        }
+      } else {
+        item.setChecked(false);
+      }
+    }
   }
 
   private void initializeInjector() {
@@ -416,8 +466,12 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
   @Override
   protected void onDestroy() {
-    unbinder.unbind();
-    mCheckout.stop();
+    if (unbinder != null) {
+      unbinder.unbind();
+    }
+    if (mCheckout != null) {
+      mCheckout.stop();
+    }
     counter = 0;
     super.onDestroy();
   }
@@ -426,7 +480,24 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.appbar_menu, menu);
+    String tempUserEmail = "null";
+
+    if (FirebaseAuth.getInstance().getCurrentUser().getEmail() != null) {
+      tempUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    } else {
+      Fabric.getLogger().i(TAG,
+          "UserEmail is not get from FirebaseAuth, please be advised. User redirected to LoginActivity");
+      navigator.navigateToLogin(this);
+    }
+
+    if (tempUserEmail.equals("fatihkoc905@gmail.com") || tempUserEmail
+        .equals("adnbal89@gmail.com")) {
+      getMenuInflater().inflate(R.menu.appbar_menu_admin, menu);
+
+    } else {
+      getMenuInflater().inflate(R.menu.appbar_menu, menu);
+    }
+
     return true;
   }
 
@@ -458,7 +529,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
     if (view instanceof PersonalPositionsFragment) {
       mMaterialDialog.title(R.string.text_dialog_view_title)
           .content(R.string.text_dialog_view_content)
-          .positiveText(R.string.text_dialog_view_OK)
+          .positiveText(R.string.text_OK)
           .negativeText(R.string.text_dialog_view_Cancel)
           .cancelable(true);
     } else if (view instanceof ProfitFragment) {
@@ -467,12 +538,12 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
         mMaterialDialog.title(R.string.text_dialog_view_comment_content)
             .content(positionModel.getComment())
-            .negativeText(R.string.text_dialog_view_OK)
+            .negativeText(R.string.text_OK)
             .cancelable(true);
 
       } else {
         mMaterialDialog.title(R.string.text_dialog_no_content_title)
-            .negativeText(R.string.text_dialog_view_OK)
+            .negativeText(R.string.text_OK)
             .cancelable(true);
       }
 
@@ -495,28 +566,37 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
       }
     }
 
-    //if position is already closed/not open/ No tick is present
-    if (!signalIdList.contains(signalModel.getId())) {
-      //and comment is empty or null
-      if (signalModel.getComment() == null || signalModel.getComment().isEmpty()) {
-        dialog.items(R.array.array_signal_click_menu_1);
-      } else {
-        dialog.items(R.array.array_signal_click_menu_2);
-      }
+    if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("fatihkoc905@gmail.com")
+        || FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("adnbal89@gmail.com")) {
+
+      dialog.items(R.array.array_signal_click_menu_admin);
 
     } else {
-      //if position is already open/ tick is present
-      if (signalModel.getComment() != null && !signalModel.getComment().isEmpty()) {
-        dialog.items(R.array.array_signal_click_menu_4);
-      } else if ((signalModel.getComment() != null && signalModel.getComment().isEmpty())
-          || signalModel.getComment() == null) {
-        dialog.items(R.array.array_signal_click_menu_3);
-      }
 
+      //if position is already closed/not open/ No tick is present
+      if (!signalIdList.contains(signalModel.getId())) {
+        //and comment is empty or null
+        if (signalModel.getComment() == null || signalModel.getComment().isEmpty()) {
+          dialog.items(R.array.array_signal_click_menu_1);
+        } else {
+          dialog.items(R.array.array_signal_click_menu_2);
+        }
+
+      } else {
+        //if position is already open/ tick is present
+        if (signalModel.getComment() != null && !signalModel.getComment().isEmpty()) {
+          dialog.items(R.array.array_signal_click_menu_4);
+        } else if ((signalModel.getComment() != null && signalModel.getComment().isEmpty())
+            || signalModel.getComment() == null) {
+          dialog.items(R.array.array_signal_click_menu_3);
+        }
+
+      }
     }
 
     /**
      * Material Dialog callback, 0 : show comment , 1 : open  signal , 2: close signal, Show comment is only available when exists
+     * 3 : Edit signal : only available to admin login.
      */
     List<String> finalSignalIdList = signalIdList;
     dialog.itemsCallback(new MaterialDialog.ListCallback() {
@@ -539,7 +619,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
             mMaterialDialog.title(R.string.text_dialog_open_signal_view_title)
                 .content(R.string.text_dialog_open_signal_view_content)
-                .positiveText(R.string.text_dialog_view_OK)
+                .positiveText(R.string.text_OK)
                 .negativeText(R.string.text_dialog_view_Cancel)
                 .cancelable(true).show();
           } else if (text.toString().contains(getString(R.string.close_pos))) {
@@ -558,20 +638,16 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
             mMaterialDialog.title(R.string.text_dialog_close_signal_view_title)
                 .content(R.string.text_dialog_close_signal_view_content)
-                .positiveText(R.string.text_dialog_view_OK)
+                .positiveText(R.string.text_OK)
                 .negativeText(R.string.text_dialog_view_Cancel)
                 .cancelable(true).show();
 
-          } else if (!signalIdList.contains(signalModel.getId()) && which == 1) {
-            mMaterialDialog.title(R.string.text_dialog_view_signal_title)
-                .content(signalModel.getComment())
-                .negativeText(R.string.text_dialog_view_OK)
-                .cancelable(true);
-            mMaterialDialog.show();
+          } else if (text.toString().contains(getString(R.string.edit_signal))) {
+            navigator.navigateToNewSignalActivity(SignalsActivity.this, signalModel);
           } else if (text.toString().contains(getString(R.string.comment_pos))) {
             mMaterialDialog.title(R.string.text_dialog_view_signal_title)
                 .content(signalModel.getComment())
-                .negativeText(R.string.text_dialog_view_OK)
+                .negativeText(R.string.text_OK)
                 .cancelable(true);
             mMaterialDialog.show();
           }
@@ -636,7 +712,7 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
   @Override
   public Context context() {
-    return null;
+    return this;
   }
 
   @Override
@@ -679,6 +755,12 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
   @Override
   protected void onResume() {
     super.onResume();
+
+    //Trial period Checker
+    mTrialy = new Trialy(this, "P5KQU2O7WCBYWBA340B");
+    mTrialy.checkTrial("default", mTrialyCallback);
+    mTrialy.enableLogging();
+
     UserSignalModel temp = new UserSignalModel();
     Map<String, Boolean> tempMap = new HashMap<>();
 
@@ -726,7 +808,9 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
           break;
         case STATUS_TRIAL_JUST_ENDED:
+
           initializeApp(true, timeRemaining);
+          AndroidApplication.backtackFragmentList.clear();
 
           break;
         case STATUS_TRIAL_NOT_YET_STARTED:
@@ -735,6 +819,8 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
           break;
         case STATUS_TRIAL_OVER:
           initializeApp(true, timeRemaining);
+          AndroidApplication.backtackFragmentList.clear();
+
           break;
       }
       Log.i("TRIALY", "Returned status: " + Trialy.getStatusMessage(status));
@@ -742,8 +828,50 @@ public class SignalsActivity extends BaseActivity implements HasComponent<Positi
 
   };
 
+
+  //pop previous fragment when back button pressed. We are also organizing the left drawer
+  // menu check item according to selected(popped fragment)
   @Override
-  protected void onPause() {
-    super.onPause();
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+      if (this.getSupportFragmentManager().getBackStackEntryCount() <= 1) {
+        AndroidApplication.backtackFragmentList.clear();
+        finish();
+        return true;
+      } else {
+
+        if (AndroidApplication.backtackFragmentList.size() > 1) {
+          AndroidApplication.backtackFragmentList
+              .remove(AndroidApplication.backtackFragmentList.size() - 1);
+          Integer checkedItem = AndroidApplication.backtackFragmentList
+              .get(AndroidApplication.backtackFragmentList.size() - 1);
+          if (checkedItem == 0) {
+            getSupportActionBar().setTitle(R.string.signals);
+            navigationViewDrawer.setCheckedItem(R.id.nav_item_signals_fragment);
+            bottomNavigationView.setVisibility(View.VISIBLE);
+          } else if (checkedItem == 1) {
+            getSupportActionBar().setTitle(R.string.profit);
+            navigationViewDrawer.setCheckedItem(R.id.nav_item_profit_fragment);
+            bottomNavigationView.setVisibility(View.VISIBLE);
+          } else if (checkedItem == 2) {
+            getSupportActionBar().setTitle(R.string.my_account);
+            navigationViewDrawer.setCheckedItem(R.id.nav_item_my_account_fragment);
+          } else if (checkedItem == 3) {
+            getSupportActionBar().setTitle(R.string.terms_and_conditions_lowerCase);
+            uncheckAllMenuItems(navigationViewDrawer);
+            bottomNavigationView.setVisibility(View.VISIBLE);
+          }
+
+        }
+
+        getSupportFragmentManager().popBackStack();
+        return true;
+      }
+
+      // If there are no fragments on stack perform the original back button event
+    }
+
+    return super.onKeyDown(keyCode, event);
   }
 }

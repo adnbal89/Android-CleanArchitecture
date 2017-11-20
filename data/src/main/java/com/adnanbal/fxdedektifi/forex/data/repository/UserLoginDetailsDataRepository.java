@@ -51,7 +51,8 @@ public class UserLoginDetailsDataRepository implements UserLoginDetailsRepositor
 
 
   @Override
-  public Observable<Boolean> addUserLoginDetails(String id, String userUid, Map<String, String> date) {
+  public Observable<Boolean> addUserLoginDetails(String id, String userUid,
+      Map<String, String> date) {
     final UserLoginDetailsDataStore userLoginDetailsDataStore = this.userLoginDetailsDataStoreFactory
         .create(id);
     UserLoginDetailsEntity entity = this.userLoginDetailsEntityDataMapper

@@ -18,6 +18,7 @@ package com.adnanbal.fxdedektifi.forex.presentation.internal.di.components;
 import android.content.Context;
 import com.adnanbal.fxdedektifi.forex.domain.executor.PostExecutionThread;
 import com.adnanbal.fxdedektifi.forex.domain.executor.ThreadExecutor;
+import com.adnanbal.fxdedektifi.forex.domain.repository.NewSignalRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionHistoryRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.PositionRepository;
 import com.adnanbal.fxdedektifi.forex.domain.repository.SignalRepository;
@@ -62,4 +63,6 @@ public interface ApplicationComponent {
   SubscriptionRepository subscriptionRepository();
 
   UserLoginDetailsRepository userLoginDetailsRepository();
+
+  NewSignalRepository newSignalRepository();
 }

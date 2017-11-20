@@ -18,6 +18,9 @@
 
 package com.adnanbal.fxdedektifi.forex.presentation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SubscriptionModel {
 
   private String name;

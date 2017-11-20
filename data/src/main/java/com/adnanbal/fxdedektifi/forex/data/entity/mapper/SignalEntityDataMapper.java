@@ -63,6 +63,10 @@ public class SignalEntityDataMapper {
       signal.setDate(signalEntity.getDate());
       signal.setUsers(signalEntity.getUsers());
       signal.setChangedFields(signalEntity.getChangedFields());
+      signal.setTake_profit_price(signalEntity.getTake_profit_price());
+      signal.setStop_loss_price(signalEntity.getStop_loss_price());
+      signal.setHitStopLoss(signalEntity.isHitStopLoss());
+      signal.setHitTakeProfit(signalEntity.isHitTakeProfit());
 
     }
     return signal;
@@ -89,7 +93,9 @@ public class SignalEntityDataMapper {
   public SignalEntity createSignalEntityObject(String positionId, String pair, double volume,
       boolean buy_sell,
       double openingPrice, boolean open, String status, String comment, double statusChangePrice,
-      String term, Date date, Map<String, Boolean> users, Map<String, List<String>> changedFields) {
+      String term, Date date, Map<String, Boolean> users, Map<String, List<String>> changedFields,
+      Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+      boolean hitTakeProfit) {
 
     SignalEntity signalEntity;
     signalEntity = new SignalEntity();
@@ -109,6 +115,11 @@ public class SignalEntityDataMapper {
     signalEntity.setDate(date);
     signalEntity.setUsers(users);
     signalEntity.setChangedFields(changedFields);
+    signalEntity.setTake_profit_price(take_profit_price);
+    signalEntity.setStop_loss_price(stop_loss_price);
+    signalEntity.setHitStopLoss(hitStopLoss);
+    signalEntity.setHitTakeProfit(hitTakeProfit);
+
     return signalEntity;
   }
 

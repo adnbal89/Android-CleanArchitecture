@@ -3,10 +3,148 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+  <LinearLayout
+    android:id="@+id/title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/color_appbar_background_Primary_material_light"
+    android:orientation="vertical"
+
+    >
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:paddingStart="5dp"
+      android:paddingEnd="5dp"
+      android:minHeight="60dp"
+      android:orientation="horizontal"
+      android:weightSum="10">
+
+
+      <TextView
+        android:id="@+id/iv_tick"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.75"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:gravity="center"
+        android:textColor="@color/tw__solid_white"
+        android:textSize="11sp"
+        android:visibility="visible"/>
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        >
+
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:paddingBottom="3dp"
+          android:gravity="center"
+          android:text="@string/title_pair"
+          android:textColor="@color/tw__solid_white"
+          android:textSize="11sp"
+          />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5.5"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <TextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1.6"
+          android:gravity="center"
+          android:text="Buy/Sell"
+          android:textColor="@color/tw__solid_white"
+          android:textSize="11sp"
+
+          />
+
+        <TextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="2.80"
+          android:gravity="center"
+          android:text="@string/title_opening_price"
+          android:textColor="@color/tw__solid_white"
+          android:textSize="11sp"
+
+          />
+
+        <TextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="2.80"
+          android:gravity="center"
+          android:text="TP"
+          android:textColor="@color/tw__solid_white"
+          android:textSize="11sp"
+
+          />
+
+        <TextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="2.80"
+          android:gravity="center"
+          android:text="SL"
+          android:textColor="@color/tw__solid_white"
+          android:textSize="11sp"
+
+          />
+
+
+      </LinearLayout>
+      <TextView
+        android:id="@+id/signal_status"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+
+        android:text="@string/title_status"
+        android:textColor="@color/tw__solid_white"
+        android:textSize="11sp"
+        />
+
+      <TextView
+        android:id="@+id/signal_comment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.75"
+        android:gravity="center"
+        android:textColor="@color/tw__solid_white"
+        android:textSize="11sp"
+        />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/line_separator_signal"
+      android:layout_width="fill_parent"
+      android:layout_height="1dp"
+      android:background="@color/color_separator_line"
+      android:orientation="vertical">
+    </LinearLayout>
+
+  </LinearLayout>
   <android.support.v7.widget.RecyclerView
     android:id="@+id/rv_signals"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_below="@+id/title_bar"
     android:scrollbars="vertical"
     />
 

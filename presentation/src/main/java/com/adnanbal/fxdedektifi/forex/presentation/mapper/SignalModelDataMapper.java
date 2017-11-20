@@ -62,6 +62,11 @@ public class SignalModelDataMapper {
     signalModel.setDate(signal.getDate());
     signalModel.setUsers(signal.getUsers());
     signalModel.setChangedFields(signal.getChangedFields());
+    signalModel.setTake_profit_price(signal.getTake_profit_price());
+    signalModel.setStop_loss_price(signal.getStop_loss_price());
+    signalModel.setHitStopLoss(signal.isHitStopLoss());
+    signalModel.setHitTakeProfit(signal.isHitTakeProfit());
+
     return signalModel;
   }
 

@@ -144,7 +144,10 @@ public class PositionListPresenter implements Presenter {
             OpenPosition.Params.forPosition(positionModel.getId(), positionModel.getPair(),
                 positionModel.getVolume(), positionModel.isBuy_sell(),
                 positionModel.getOpeningPrice(), positionModel.isOpen(), positionModel.getStatus(),
-                positionModel.getComment(), positionModel.getDate()
+                positionModel.getComment(), positionModel.getDate(),
+                positionModel.getTake_profit_price(),
+                positionModel.getStop_loss_price(), positionModel.isHitStopLoss(),
+                positionModel.isHitTakeProfit()
             ));
   }
 

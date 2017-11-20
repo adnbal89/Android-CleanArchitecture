@@ -11,6 +11,7 @@ import com.adnanbal.fxdedektifi.forex.presentation.exception.ErrorMessageFactory
 import com.adnanbal.fxdedektifi.forex.presentation.mapper.PositionModelDataMapper;
 import com.adnanbal.fxdedektifi.forex.presentation.model.PositionModel;
 import com.adnanbal.fxdedektifi.forex.presentation.view.PositionListView;
+import io.fabric.sdk.android.Fabric;
 import java.util.Collection;
 import java.util.List;
 import javax.inject.Inject;
@@ -20,6 +21,8 @@ import javax.inject.Inject;
  * layer.
  */
 public class ProfitListPresenter implements Presenter {
+
+  static final String TAG = "ProfitListPresenter";
 
   private PositionListView positionHistoryListView;
 
@@ -68,7 +71,11 @@ public class ProfitListPresenter implements Presenter {
 
 
   public void onPositionClicked(PositionModel positionModel) {
-    this.positionHistoryListView.viewPosition(positionModel);
+    if (positionHistoryListView != null)
+
+    {
+      this.positionHistoryListView.viewPosition(positionModel);
+    }
   }
 
   private void showViewLoading() {
@@ -76,15 +83,21 @@ public class ProfitListPresenter implements Presenter {
   }
 
   private void hideViewLoading() {
-    this.positionHistoryListView.hideLoading();
+    if (positionHistoryListView != null) {
+      this.positionHistoryListView.hideLoading();
+    }
   }
 
   private void showViewRetry() {
-    this.positionHistoryListView.showRetry();
+    if (positionHistoryListView != null) {
+      this.positionHistoryListView.showRetry();
+    }
   }
 
   private void hideViewRetry() {
-    this.positionHistoryListView.hideRetry();
+    if (positionHistoryListView != null) {
+      this.positionHistoryListView.hideRetry();
+    }
   }
 
   private void showErrorMessage(ErrorBundle errorBundle) {
@@ -119,9 +132,12 @@ public class ProfitListPresenter implements Presenter {
 
     @Override
     public void onNext(List<Position> positions) {
-      ProfitListPresenter.this.showPositionsCollectionInView(positions);
-      ProfitListPresenter.this.hideViewLoading();
-
+      try {
+        ProfitListPresenter.this.showPositionsCollectionInView(positions);
+        ProfitListPresenter.this.hideViewLoading();
+      } catch (Exception e) {
+        Fabric.getLogger().e(TAG, e.getMessage());
+      }
     }
   }
 }

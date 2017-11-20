@@ -13,21 +13,21 @@
     android:background="@drawable/custom_bg"
     android:minHeight="50dp"
     android:orientation="horizontal"
-    android:weightSum="4">
+    android:weightSum="5">
 
     <LinearLayout
       android:layout_width="0dp"
       android:layout_height="match_parent"
-      android:layout_weight="2"
+      android:layout_weight="3"
       android:paddingLeft="5dp"
       android:gravity="center_vertical"
       android:orientation="horizontal"
-      android:weightSum="2">
+      android:weightSum="2.5">
 
       <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="1.15"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:weightSum="2"
@@ -39,7 +39,7 @@
           android:layout_width="match_parent"
           android:layout_height="0dp"
           android:layout_weight="1"
-          android:paddingStart="5dp"
+          android:paddingStart="10dp"
           android:paddingEnd="5dp"
           android:gravity="start|center_vertical"
 
@@ -51,7 +51,7 @@
           android:layout_width="wrap_content"
           android:layout_height="0dp"
           android:layout_weight="1"
-          android:paddingStart="3dp"
+          android:paddingStart="8dp"
           android:paddingEnd="3dp"
           android:gravity="start|center_vertical"
           android:textColor="@color/color_textview_profit_grey"
@@ -63,7 +63,7 @@
       <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="1.35"
         android:gravity="start|center_vertical"
         android:orientation="horizontal"
         android:weightSum="3"
@@ -73,7 +73,7 @@
           android:id="@+id/tv_personal_history_buy_sell"
           android:layout_width="0dp"
           android:layout_height="match_parent"
-          android:layout_weight="1.5"
+          android:layout_weight="1.10"
           android:paddingStart="5dp"
           android:paddingEnd="5dp"
           android:gravity="start|center_vertical"
@@ -85,17 +85,29 @@
           android:id="@+id/tv_personal_history_volume"
           android:layout_width="0dp"
           android:layout_height="match_parent"
-          android:layout_weight="1.5"
+          android:layout_weight="1.10"
           android:paddingStart="5dp"
           android:paddingEnd="5dp"
           android:gravity="start|center_vertical"
           android:textColor="@color/color_textview_personal_positions_pair"
           android:textSize="10sp"
           />
+
+        <ImageView
+          android:id="@+id/profit_comment"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="0.80"
+          android:paddingStart="5dp"
+          android:paddingEnd="5dp"
+          android:gravity="start|center_vertical"
+
+          />
       </LinearLayout>
 
 
     </LinearLayout>
+
 
     <LinearLayout
       android:layout_width="0dp"
@@ -103,13 +115,14 @@
       android:layout_weight="2"
       android:orientation="vertical"
       android:weightSum="2"
+
       >
       <TextView
         android:id="@+id/tv_personal_history_close_date"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingRight="20dp"
+        android:paddingRight="15dp"
         android:gravity="end|center_vertical"
         android:textColor="@color/color_textview_profit_grey"
         android:textSize="12sp"/>
@@ -119,13 +132,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingRight="20dp"
+        android:paddingRight="15dp"
         android:gravity="end|center_vertical"
-
         android:textColor="@color/color_textview_personal_positions_profit"
         android:textSize="12sp"/>
 
     </LinearLayout>
+
+
   </LinearLayout>
   <LinearLayout
     android:id="@+id/linear123"

@@ -58,11 +58,13 @@ public class PositionDataRepository implements PositionRepository {
   @Override
   public Observable<Boolean> openPosition(String positionId, String pair, double volume,
       boolean buy_sell,
-      double openingPrice, boolean open, String status, String comment, Date date) {
+      double openingPrice, boolean open, String status, String comment, Date date,
+      Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+      boolean hitTakeProfit) {
     final PositionDataStore positionDataStore = this.positionDataStoreFactory.create(positionId);
     PositionEntity entity = this.positionEntityDataMapper
         .createPositionEntityObject(positionId, pair, volume, buy_sell, openingPrice, open, status,
-            comment, date);
+            comment, date, take_profit_price, stop_loss_price, hitStopLoss, hitTakeProfit);
 
     //.map(this.positionEntityDataMapper::transform);
     return positionDataStore

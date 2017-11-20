@@ -43,7 +43,6 @@ import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.R;
 import com.adnanbal.fxdedektifi.forex.presentation.internal.di.components.PositionComponent;
 import com.adnanbal.fxdedektifi.forex.presentation.model.SubscriptionModel;
-import com.adnanbal.fxdedektifi.forex.presentation.navigation.Navigator;
 import com.adnanbal.fxdedektifi.forex.presentation.presenter.SubscriptionListPresenter;
 import com.adnanbal.fxdedektifi.forex.presentation.view.SubscriptionListView;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.SkusAdapter;
@@ -63,7 +62,6 @@ import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.RequestListener;
-import org.solovyev.android.checkout.ResponseCodes;
 import org.solovyev.android.checkout.Sku;
 import org.solovyev.android.checkout.UiCheckout;
 
@@ -72,13 +70,9 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
   private AccountAndSubscriptionsFragment.PurchaseListListener purchaseListListener;
 
   private static final List<String> SKUS = Arrays
-      .asList("weekly_subscription", "monthly_subscription",
-          "three_monthly_subscription", "six_month_subscription",
-          "yearly_subscription");
-  private final List<Inventory.Callback> mInventoryCallbacks = new ArrayList<>();
-
-  Navigator navigator;
-
+      .asList("monthly",
+          "three_month", "six_month"
+      );
 
   /**
    * Interface for listening signal list events.
@@ -267,24 +261,36 @@ public class AccountAndSubscriptionsFragment extends BaseFragment implements Sub
 
   @Override
   public void showLoading() {
-    this.rl_progress.setVisibility(View.VISIBLE);
+    if (rl_progress != null) {
+      this.rl_progress.setVisibility(View.VISIBLE);
+    }
     this.getActivity().setProgressBarIndeterminateVisibility(true);
   }
 
   @Override
   public void hideLoading() {
-    this.rl_progress.setVisibility(View.GONE);
+    if (rl_progress != null) {
+      this.rl_progress.setVisibility(View.GONE);
+    }
     this.getActivity().setProgressBarIndeterminateVisibility(false);
   }
 
   @Override
   public void showRetry() {
-    this.rl_retry.setVisibility(View.VISIBLE);
+    if (rl_retry != null)
+
+    {
+      this.rl_retry.setVisibility(View.VISIBLE);
+    }
   }
 
   @Override
   public void hideRetry() {
-    this.rl_retry.setVisibility(View.GONE);
+    if (rl_retry != null)
+
+    {
+      this.rl_retry.setVisibility(View.GONE);
+    }
   }
 
   @Override

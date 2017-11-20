@@ -151,14 +151,27 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
 //      holder.textViewStatus.setText(signalModel.getStatus());
 
       holder.textViewOpeningPrice
-          .setText(DoubleToString.convertFrom(signalModel.getOpeningPrice()) + " -> " + DoubleToString
-              .convertFrom(signalModel.getClosingPrice()));
+          .setText(
+              DoubleToString.convertFrom(signalModel.getOpeningPrice()) + " -> " + DoubleToString
+                  .convertFrom(signalModel.getClosingPrice()));
 
-      holder.textViewBuySell.setText(context.getResources().getString(R.string.signal_closed));
+      if (signalModel.isHitStopLoss()) {
+        holder.textViewBuySell.setText(context.getResources().getString(R.string.hit_stop_loss));
+        holder.textViewBuySell
+            .setTextColor(
+                context.getResources().getColor(R.color.color_textview_personal_signals_sell));
+      } else if (signalModel.isHitTakeProfit()) {
+        holder.textViewBuySell.setText(context.getResources().getString(R.string.hit_take_profit));
+        holder.textViewBuySell.setTextColor(
+            context.getResources().getColor(R.color.hit_take_profit_color));
+
+      } else {
+        holder.textViewBuySell.setText(context.getResources().getString(R.string.signal_closed));
+        holder.textViewBuySell.setTextColor(
+            context.getResources().getColor(R.color.textView_closed_color));
+      }
       holder.textViewBuySell
           .setTypeface(holder.textViewBuySell.getTypeface(), Typeface.BOLD_ITALIC);
-      holder.textViewBuySell.setTextColor(
-          context.getResources().getColor(R.color.color_textview_personal_signals_sell));
 
 
     } else if (signalModel.getStatus().equals("updated")) {
@@ -192,6 +205,14 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
         }
       }
     });
+
+    if (signalModel.getStop_loss_price() != null) {
+      holder.tv_signal_sl.setText(DoubleToString.convertFrom(signalModel.getStop_loss_price()));
+    }
+    if (signalModel.getTake_profit_price() != null) {
+      holder.tv_signal_tp.setText(DoubleToString.convertFrom(signalModel.getTake_profit_price()));
+
+    }
 
   }
 
@@ -245,7 +266,7 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
     TextView textViewBuySell;
     @BindView(R.id.tv_signal_opening_price)
     TextView textViewOpeningPrice;
-//    @BindView(R.id.tv_signal_status)
+    //    @BindView(R.id.tv_signal_status)
 //    TextView textViewStatus;
     @BindView(R.id.signal_status)
     ImageView imageViewSignalStatus;
@@ -253,6 +274,10 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalVi
     ImageView imageViewSignalComment;
     @BindView(R.id.tv_date)
     TextView date;
+    @BindView(R.id.tv_signal_tp)
+    TextView tv_signal_tp;
+    @BindView(R.id.tv_signal_sl)
+    TextView tv_signal_sl;
 
     SignalViewHolder(View itemView) {
       super(itemView);

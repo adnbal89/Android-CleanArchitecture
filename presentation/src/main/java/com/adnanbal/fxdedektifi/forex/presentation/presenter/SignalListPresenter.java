@@ -18,6 +18,7 @@ import com.adnanbal.fxdedektifi.forex.presentation.mapper.UserSignalModelDataMap
 import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.model.UserSignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.view.SignalListView;
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -114,37 +115,72 @@ public class SignalListPresenter implements Presenter {
   }
 
   public void onSignalClicked(SignalModel signalModel) {
-    this.signalListView.viewSignal(signalModel);
+    if (signalListView != null) {
+      this.signalListView.viewSignal(signalModel);
+    }
   }
 
 
   private void showViewLoading() {
-    this.signalListView.showLoading();
+    try {
+      if (signalListView != null) {
+        this.signalListView.showLoading();
+      }
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+    }
   }
 
   private void hideViewLoading() {
-    this.signalListView.hideLoading();
+    try {
+      if (signalListView != null) {
+        this.signalListView.hideLoading();
+      }
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+    }
   }
 
   private void showViewRetry() {
-    this.signalListView.showRetry();
+    try {
+      if (signalListView != null) {
+        this.signalListView.showRetry();
+      }
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+    }
   }
 
   private void hideViewRetry() {
-    this.signalListView.hideRetry();
+    try {
+      if (signalListView != null) {
+        this.signalListView.hideRetry();
+      }
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+    }
   }
 
   private void showErrorMessage(ErrorBundle errorBundle) {
     String errorMessage = ErrorMessageFactory.create(this.signalListView.context(),
         errorBundle.getException());
-    this.signalListView.showError(errorMessage);
+    try {
+      if (signalListView != null) {
+        this.signalListView.showError(errorMessage);
+      }
+    } catch (
+        Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+    }
   }
 
   private void showSignalsCollectionInView(Collection<Signal> signalsCollection) {
     final Collection<SignalModel> signalModelsCollection =
         this.signalModelDataMapper.transform(signalsCollection);
 
-    this.signalListView.renderSignalList(signalModelsCollection);
+    if (signalListView != null) {
+      this.signalListView.renderSignalList(signalModelsCollection);
+    }
   }
 
 
@@ -206,20 +242,32 @@ public class SignalListPresenter implements Presenter {
 
     @Override
     public void onComplete() {
-      SignalListPresenter.this.hideViewLoading();
+      try {
+        SignalListPresenter.this.hideViewLoading();
+      } catch (Exception e) {
+        Fabric.getLogger().e(TAG, e.getMessage());
+      }
     }
 
     @Override
     public void onError(Throwable e) {
-      SignalListPresenter.this.hideViewLoading();
-      SignalListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-      SignalListPresenter.this.showViewRetry();
+      try {
+        SignalListPresenter.this.hideViewLoading();
+        SignalListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+        SignalListPresenter.this.showViewRetry();
+      } catch (Exception er) {
+        Fabric.getLogger().e(TAG, er.getMessage());
+      }
     }
 
     @Override
     public void onNext(List<Signal> signals) {
-      SignalListPresenter.this.showSignalsCollectionInView(signals);
-      SignalListPresenter.this.hideViewLoading();
+      try {
+        SignalListPresenter.this.showSignalsCollectionInView(signals);
+        SignalListPresenter.this.hideViewLoading();
+      } catch (Exception e) {
+        Fabric.getLogger().e(TAG, e.getMessage());
+      }
     }
   }
 
@@ -233,9 +281,13 @@ public class SignalListPresenter implements Presenter {
 
     @Override
     public void onError(Throwable e) {
-      SignalListPresenter.this.hideViewLoading();
-      SignalListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+      try {
+        SignalListPresenter.this.hideViewLoading();
+        SignalListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
 //      SignalListPresenter.this.showViewSignalCloseFailed();
+      } catch (Exception er) {
+        Fabric.getLogger().e(TAG, er.getMessage());
+      }
     }
 
     @Override
@@ -253,14 +305,22 @@ public class SignalListPresenter implements Presenter {
 
     @Override
     public void onComplete() {
-      SignalListPresenter.this.hideViewLoading();
+      try {
+        SignalListPresenter.this.hideViewLoading();
+      } catch (Exception e) {
+        Fabric.getLogger().e(TAG, e.getMessage());
+      }
     }
 
     @Override
     public void onError(Throwable e) {
-      SignalListPresenter.this.hideViewLoading();
-      SignalListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-      SignalListPresenter.this.showViewRetry();
+      try {
+        SignalListPresenter.this.hideViewLoading();
+        SignalListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+        SignalListPresenter.this.showViewRetry();
+      } catch (Exception er) {
+        Fabric.getLogger().e(TAG, er.getMessage());
+      }
     }
 
     @Override
@@ -290,24 +350,36 @@ public class SignalListPresenter implements Presenter {
   }
 
   //Deprecated. Delegated to a sticky service
-  //Updated Signal observer for getting currently updated signal
+//Updated Signal observer for getting currently updated signal
   private final class UpdatedSignalObserver extends DefaultObserver<Signal> {
 
     @Override
     public void onComplete() {
-      SignalListPresenter.this.hideViewLoading();
+      try {
+        SignalListPresenter.this.hideViewLoading();
+      } catch (Exception e) {
+        Fabric.getLogger().e(TAG, e.getMessage());
+      }
     }
 
     @Override
     public void onError(Throwable e) {
-      SignalListPresenter.this.hideViewLoading();
-      SignalListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-      SignalListPresenter.this.showViewRetry();
+      try {
+        SignalListPresenter.this.hideViewLoading();
+        SignalListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+        SignalListPresenter.this.showViewRetry();
+      } catch (Exception er) {
+        Fabric.getLogger().e(TAG, er.getMessage());
+      }
     }
 
     @Override
     public void onNext(Signal signal) {
-      SignalListPresenter.this.hideViewLoading();
+      try {
+        SignalListPresenter.this.hideViewLoading();
+      } catch (Exception e) {
+        Fabric.getLogger().e(TAG, e.getMessage());
+      }
 //      SignalListPresenter.this.showUpdateNotification(signal);
     }
   }

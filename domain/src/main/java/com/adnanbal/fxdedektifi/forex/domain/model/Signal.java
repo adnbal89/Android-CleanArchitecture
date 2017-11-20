@@ -36,8 +36,12 @@ public class Signal extends Position {
   public Signal(String positionId, String pair, double volume, boolean buy_sell,
       double openingPrice,
       double statusChangePrice, String term, String status, boolean open, String comment, Date date,
-      Map<String, Boolean> users, Map<String, List<String>> changedFields) {
-    super(positionId, pair, volume, buy_sell, openingPrice, open, status, comment, date);
+      Map<String, Boolean> users, Map<String, List<String>> changedFields, Double take_profit_price,
+      Double stop_loss_price, boolean hitStopLoss,
+      boolean hitTakeProfit) {
+    super(positionId, pair, volume, buy_sell, openingPrice, open, status, comment, date,
+        take_profit_price, stop_loss_price, hitStopLoss,
+        hitTakeProfit);
     this.statusChangePrice = statusChangePrice;
     this.term = term;
     this.users = users;

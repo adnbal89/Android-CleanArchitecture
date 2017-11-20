@@ -28,12 +28,27 @@ public class UserSignalDB {
     this.uid = uid;
   }
 
+  public UserSignalDB(int id, String uid, String userUid) {
+    this.id = id;
+    this.uid = uid;
+    this.userUid = userUid;
+  }
+
   public UserSignalDB(String uid) {
     this.uid = uid;
   }
 
   int id;
   String uid;
+  String userUid;
+
+  public String getUserUid() {
+    return userUid;
+  }
+
+  public void setUserUid(String userUid) {
+    this.userUid = userUid;
+  }
 
   public int getId() {
     return id;

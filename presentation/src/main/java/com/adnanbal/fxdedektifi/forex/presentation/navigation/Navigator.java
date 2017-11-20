@@ -17,7 +17,11 @@ package com.adnanbal.fxdedektifi.forex.presentation.navigation;
 
 import android.content.Context;
 import android.content.Intent;
+import com.adnanbal.fxdedektifi.forex.presentation.model.SignalModel;
 import com.adnanbal.fxdedektifi.forex.presentation.view.activity.BillingActivity;
+import com.adnanbal.fxdedektifi.forex.presentation.view.activity.LoginActivity;
+import com.adnanbal.fxdedektifi.forex.presentation.view.activity.MainIntroActivity;
+import com.adnanbal.fxdedektifi.forex.presentation.view.activity.NewSignalActivity;
 import com.adnanbal.fxdedektifi.forex.presentation.view.activity.PersonalPositionsActivity;
 import com.adnanbal.fxdedektifi.forex.presentation.view.activity.SignalsActivity;
 import com.adnanbal.fxdedektifi.forex.presentation.view.activity.UserDetailsActivity;
@@ -44,6 +48,18 @@ public class Navigator {
   public void navigateToUserList(Context context) {
     if (context != null) {
       Intent intentToLaunch = UserListActivity.getCallingIntent(context);
+      context.startActivity(intentToLaunch);
+    }
+  }
+
+  /**
+   * Goes to the main tutorial intro screen.
+   *
+   * @param context A Context needed to open the destiny activity.
+   */
+  public void navigateToMainIntroActivity(Context context) {
+    if (context != null) {
+      Intent intentToLaunch = MainIntroActivity.getCallingIntent(context);
       context.startActivity(intentToLaunch);
     }
   }
@@ -111,6 +127,18 @@ public class Navigator {
   }
 
   /**
+   * Goes to the given Login screen.
+   *
+   * @param context A Context needed to open the destiny activity.
+   */
+  public void navigateToLogin(Context context) {
+    if (context != null) {
+      Intent intentToLaunch = LoginActivity.getCallingIntent(context);
+      context.startActivity(intentToLaunch);
+    }
+  }
+
+  /**
    * Goes to the given signals screen.
    *
    * @param context A Context needed to open the destiny activity.
@@ -118,6 +146,19 @@ public class Navigator {
   public void navigateToMyAccountAndSubscriptionsActivity(Context context) {
     if (context != null) {
       Intent intentToLaunch = BillingActivity.getCallingIntent(context);
+      context.startActivity(intentToLaunch);
+    }
+  }
+
+  /**
+   * Goes to the given signals screen.
+   *
+   * @param context A Context needed to open the destiny activity.
+   */
+  public void navigateToNewSignalActivity(Context context, SignalModel signalModel) {
+    if (context != null) {
+      Intent intentToLaunch = NewSignalActivity.getCallingIntent(context);
+      intentToLaunch.putExtra("signalModelToEdit", signalModel);
       context.startActivity(intentToLaunch);
     }
   }

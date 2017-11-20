@@ -80,8 +80,8 @@ public class RestApiUserLoginDetailsImpl implements RestApiUserLoginDetails {
   //Todo : correct sync call
   private String postEntitytoApi(UserLoginDetailsEntity userLoginDetailsEntity)
       throws MalformedURLException {
-    String apiUrl = API_URL_POST_USER_LOGIN_DETAILS + "/" + userLoginDetailsEntity.getUserUid() + JSON_EXTENSION;
-
+    String apiUrl = API_URL_POST_USER_LOGIN_DETAILS + "/" + userLoginDetailsEntity.getUserUid()
+        + JSON_EXTENSION;
 
     userLoginDetailsEntity.setDate(ServerValue.TIMESTAMP);
     return ApiConnection.createPost(apiUrl)

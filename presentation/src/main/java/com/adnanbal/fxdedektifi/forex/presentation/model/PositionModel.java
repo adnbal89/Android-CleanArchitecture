@@ -1,11 +1,14 @@
 package com.adnanbal.fxdedektifi.forex.presentation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Class that represents a position in the presentation layer.
  */
-public class PositionModel {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PositionModel implements Serializable {
 
   private String id;
   private String pair;
@@ -19,13 +22,35 @@ public class PositionModel {
   private String status;
   private String comment;
   private Date date;
+  private Double stop_loss_price;
+  private Double take_profit_price;
+  private boolean hitStopLoss;
+  private boolean hitTakeProfit;
+
+  public boolean isHitStopLoss() {
+    return hitStopLoss;
+  }
+
+  public void setHitStopLoss(boolean hitStopLoss) {
+    this.hitStopLoss = hitStopLoss;
+  }
+
+  public boolean isHitTakeProfit() {
+    return hitTakeProfit;
+  }
+
+  public void setHitTakeProfit(boolean hitTakeProfit) {
+    this.hitTakeProfit = hitTakeProfit;
+  }
 
   public PositionModel() {
     //empty constructor for Gson Mapper
   }
 
   public PositionModel(String id, String pair, double volume, boolean buy_sell,
-      double openingPrice, boolean open, String status, String comment, Date date) {
+      double openingPrice, boolean open, String status, String comment, Date date,
+      Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+      boolean hitTakeProfit) {
     this.id = id;
     this.pair = pair;
     this.volume = volume;
@@ -35,10 +60,16 @@ public class PositionModel {
     this.status = status;
     this.comment = comment;
     this.date = date;
+    this.take_profit_price = take_profit_price;
+    this.stop_loss_price = stop_loss_price;
+    this.hitStopLoss = hitStopLoss;
+    this.hitTakeProfit = hitTakeProfit;
   }
 
   public PositionModel(String pair, double volume, boolean buy_sell,
-      double openingPrice, boolean open, String status, String comment, Date date) {
+      double openingPrice, boolean open, String status, String comment, Date date,
+      Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+      boolean hitTakeProfit) {
     this.pair = pair;
     this.volume = volume;
     this.buy_sell = buy_sell;
@@ -47,6 +78,10 @@ public class PositionModel {
     this.status = status;
     this.comment = comment;
     this.date = date;
+    this.take_profit_price = take_profit_price;
+    this.stop_loss_price = stop_loss_price;
+    this.hitStopLoss = hitStopLoss;
+    this.hitTakeProfit = hitTakeProfit;
   }
 
 
@@ -143,10 +178,26 @@ public class PositionModel {
     this.date = date;
   }
 
+  public Double getStop_loss_price() {
+    return stop_loss_price;
+  }
+
+  public void setStop_loss_price(Double stop_loss_price) {
+    this.stop_loss_price = stop_loss_price;
+  }
+
+  public Double getTake_profit_price() {
+    return take_profit_price;
+  }
+
+  public void setTake_profit_price(Double take_profit_price) {
+    this.take_profit_price = take_profit_price;
+  }
+
   @Override
   public String toString() {
     return "PositionModel{" +
-        "id=" + id +
+        "id='" + id + '\'' +
         ", pair='" + pair + '\'' +
         ", buy_sell=" + buy_sell +
         ", volume=" + volume +
@@ -156,6 +207,11 @@ public class PositionModel {
         ", open=" + open +
         ", status='" + status + '\'' +
         ", comment='" + comment + '\'' +
+        ", date=" + date +
+        ", stop_loss_price=" + stop_loss_price +
+        ", take_profit_price=" + take_profit_price +
+        ", hitStopLoss=" + hitStopLoss +
+        ", hitTakeProfit=" + hitTakeProfit +
         '}';
   }
 

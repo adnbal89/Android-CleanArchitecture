@@ -18,6 +18,9 @@
 
 package com.adnanbal.fxdedektifi.forex.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SubscriptionEntity {
 
   String name;

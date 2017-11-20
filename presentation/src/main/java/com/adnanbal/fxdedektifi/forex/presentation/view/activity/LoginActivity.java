@@ -1,5 +1,6 @@
 package com.adnanbal.fxdedektifi.forex.presentation.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.adnanbal.fxdedektifi.forex.presentation.AndroidApplication;
 import com.adnanbal.fxdedektifi.forex.presentation.R;
+import com.adnanbal.fxdedektifi.forex.presentation.sqlite.DatabaseHandler;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -21,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.mobapphome.mahandroidupdater.tools.MAHUpdaterController;
 import java.util.Arrays;
 
 public class LoginActivity extends BaseActivity {
@@ -36,17 +39,25 @@ public class LoginActivity extends BaseActivity {
   static final String TAG = "LoginActivity";
   private static final int RC_SIGN_IN = 123;
 
+  DatabaseHandler db;
+
   /*
   * Butterknife unbinder, will be executed to clear callbacks
    */
   Unbinder unbinder;
 
+
+  public static Intent getCallingIntent(Context context) {
+    return new Intent(context, LoginActivity.class);
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
-    unbinder = ButterKnife.bind(this);
 
+    db = new DatabaseHandler(this);
+    unbinder = ButterKnife.bind(this);
     auth = FirebaseAuth.getInstance();
 
     Thread timerThread = new Thread() {
@@ -63,6 +74,7 @@ public class LoginActivity extends BaseActivity {
     button_sign_out.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
+        auth.signOut();
         AuthUI.getInstance()
             .signOut(LoginActivity.this)
             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -72,6 +84,8 @@ public class LoginActivity extends BaseActivity {
                 updateViews();
               }
             });
+
+        android.os.Process.killProcess(android.os.Process.myPid());
 
         button_sign_out.setVisibility(View.INVISIBLE);
         button_return.setVisibility(View.INVISIBLE);
@@ -86,7 +100,6 @@ public class LoginActivity extends BaseActivity {
     });
 
     updateViews();
-
 
 //    processLogin();
 
@@ -116,15 +129,20 @@ public class LoginActivity extends BaseActivity {
 
     } else {
       // Perform sign out
+      auth.signOut();
+
       AuthUI.getInstance()
           .signOut(LoginActivity.this)
           .addOnCompleteListener(new OnCompleteListener<Void>() {
             public void onComplete(@NonNull Task<Void> task) {
               // User is now signed out
+              db.deleteAllUserSignalDB();
+
               showMessage(R.string.signed_out);
               updateViews();
             }
           });
+
     }
   }
 
@@ -166,9 +184,13 @@ public class LoginActivity extends BaseActivity {
     if (isLoggedIn()) {
 //      button.setText(R.string.sign_out);
       FirebaseUser user = auth.getCurrentUser();
-      this.navigator.navigateToSignals(this);
-      AndroidApplication.userUid = user.getUid();
+//      this.navigator.navigateToNewSignalActivity(this);
+//      this.navigator.navigateToSignals(this);
 
+      this.navigator.navigateToSignals(this);
+
+      AndroidApplication.userUid = user.getUid();
+      AndroidApplication.userEmail = user.getEmail();
       button_sign_out.setVisibility(View.VISIBLE);
       button_return.setVisibility(View.VISIBLE);
 
@@ -195,8 +217,10 @@ public class LoginActivity extends BaseActivity {
 
   @Override
   public void onDestroy() {
+    MAHUpdaterController.end();
     unbinder.unbind();
     super.onDestroy();
   }
+
 
 }

@@ -76,6 +76,7 @@ dependencies {
     compile dataDependencies.firebaseDatabase
     compile dataDependencies.firebaseCore
     compile 'com.firebase:firebase-client-android:2.5.2'
+    compile dataDependencies.firebaseAuth
 
 
 

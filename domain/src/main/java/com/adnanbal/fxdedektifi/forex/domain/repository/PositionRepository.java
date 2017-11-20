@@ -32,6 +32,8 @@ public interface PositionRepository {
    * Get an {@link Observable} which will emit a closed {@link Position}.
    */
   Observable<Boolean> openPosition(String positionId, String pair, double volume, boolean buy_sell,
-      double openingPrice, boolean open, String status, String comment, Date date);
+      double openingPrice, boolean open, String status, String comment, Date date,
+      Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+      boolean hitTakeProfit);
 
 }

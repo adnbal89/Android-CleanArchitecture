@@ -40,6 +40,10 @@ public class PositionModelDataMapper {
     positionModel.setOpen(position.isOpen());
     positionModel.setComment(position.getComment());
     positionModel.setDate(position.getDate());
+    positionModel.setTake_profit_price(position.getTake_profit_price());
+    positionModel.setStop_loss_price(position.getStop_loss_price());
+    positionModel.setHitStopLoss(position.isHitStopLoss());
+    positionModel.setHitTakeProfit(position.isHitTakeProfit());
 
     return positionModel;
   }

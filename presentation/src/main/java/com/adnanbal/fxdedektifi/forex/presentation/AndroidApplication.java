@@ -26,7 +26,6 @@ import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.squareup.leakcanary.LeakCanary;
 import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,6 +49,8 @@ public class AndroidApplication extends MultiDexApplication {
   public static List<Purchase> purchasedList;
   public static List<SignalModel> listChangedSignalModel;
   public static String accountExpiryTime;
+  public static String userEmail;
+  public static List<Integer> backtackFragmentList;
 
   @Override
   public void onCreate() {
@@ -60,7 +61,6 @@ public class AndroidApplication extends MultiDexApplication {
         .debuggable(true)
         .build();
     Fabric.with(this, new Crashlytics());
-    Fabric.isInitialized();
 
     FacebookSdk.sdkInitialize(this);
     AppEventsLogger.activateApp(this);
@@ -70,9 +70,12 @@ public class AndroidApplication extends MultiDexApplication {
     listUserSignalModel = new ArrayList<>();
     purchasedList = new ArrayList<>();
     listChangedSignalModel = new ArrayList<>();
+    backtackFragmentList = new ArrayList<>();
 
     // Obtain the FirebaseAnalytics instance.
     mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+
   }
 
   private void initializeInjector() {
@@ -86,9 +89,9 @@ public class AndroidApplication extends MultiDexApplication {
   }
 
   private void initializeLeakDetection() {
-    if (BuildConfig.DEBUG) {
-      LeakCanary.install(this);
-    }
+//    if (BuildConfig.DEBUG) {
+//      LeakCanary.install(this);
+//    }
   }
 
   @Nonnull

@@ -87,7 +87,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     final FragmentTransaction fragmentTransaction = this
         .getSupportFragmentManager().beginTransaction();
 
+    if (fragment.getClass().getSimpleName().equals("SignalsFragment")) {
+      AndroidApplication.backtackFragmentList.add(0);
+    } else if (fragment.getClass().getSimpleName().equals("ProfitFragment")) {
+      AndroidApplication.backtackFragmentList.add(1);
+    } else if (fragment.getClass().getSimpleName().equals("AccountAndSubscriptionsFragment")) {
+      AndroidApplication.backtackFragmentList.add(2);
+    } else if (fragment.getClass().getSimpleName().equals("TermsAndConditionsMainFragment")) {
+      AndroidApplication.backtackFragmentList.add(3);
+    }
+
     fragmentTransaction.replace(containerViewId, fragment);
+    fragmentTransaction.addToBackStack(null);
     fragmentTransaction.commitAllowingStateLoss();
   }
 
@@ -211,7 +222,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     boolean isConnected;
 
     ConnectivityManager connectivityManager =
-        (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
     isConnected = (networkInfo != null && networkInfo.isConnectedOrConnecting());
 

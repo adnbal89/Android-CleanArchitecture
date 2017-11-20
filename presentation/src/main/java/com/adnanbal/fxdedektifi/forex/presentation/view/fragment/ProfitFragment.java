@@ -47,6 +47,7 @@ import com.adnanbal.fxdedektifi.forex.presentation.view.PositionListView;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.PositionsLayoutManager;
 import com.adnanbal.fxdedektifi.forex.presentation.view.adapter.ProfitAdapter;
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.animation.Easing.EasingOption;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -64,7 +65,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -74,6 +75,20 @@ import javax.inject.Inject;
 public class ProfitFragment extends BaseFragment implements PositionListView,
     OnChartGestureListener,
     ConfirmDialogView {
+
+  static final String TAG = "ProfitFragment";
+
+  public static final int[] MATERIAL_COLORS = {
+      rgb("#2ecc71"), rgb("#f1c40f"), rgb("#ff9800"), rgb("#3498db")
+  };
+
+  public static int rgb(String hex) {
+    int color = (int) Long.parseLong(hex.replace("#", ""), 16);
+    int r = (color >> 16) & 0xFF;
+    int g = (color >> 8) & 0xFF;
+    int b = (color >> 0) & 0xFF;
+    return Color.rgb(r, g, b);
+  }
 
   /*
   * Butterknife unbinder, will be executed to clear callbacks
@@ -126,6 +141,7 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
   @BindView(R.id.barChartProfit)
   BarChart barChartProfit;
 
+
   private Typeface tf;
 
 
@@ -145,7 +161,12 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    this.getComponent(PositionComponent.class).inject(this);
+    try {
+      this.getComponent(PositionComponent.class).inject(this);
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+      getActivity().finish();
+    }
   }
 
 
@@ -170,100 +191,181 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
     year = cal.get(Calendar.YEAR);
 
     if (year == current_year) {
-      if (positionModel.getPair().contains("JPY")) {
 
-        if (month < 3) {
-          first_quarter_profit +=
-              (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 100;
-        } else if (month >= 3 && month < 6) {
-          second_quarter_profit += (positionModel.getClosingPrice() - positionModel
-              .getOpeningPrice()) / 100;
-        } else if (month >= 6 && month < 9) {
-          third_quarter_profit +=
-              (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 100;
-        } else if (month >= 9 && month < 12) {
-          fourth_quarter_profit +=
-              (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 100;
+      if (positionModel.isBuy_sell()) {
+
+        if (positionModel.getPair().contains("JPY")) {
+
+          if (month < 3) {
+            first_quarter_profit +=
+                (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 100;
+          } else if (month >= 3 && month < 6) {
+            second_quarter_profit += (positionModel.getClosingPrice() - positionModel
+                .getOpeningPrice()) / 100;
+          } else if (month >= 6 && month < 9) {
+            third_quarter_profit +=
+                (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 100;
+          } else if (month >= 9 && month < 12) {
+            fourth_quarter_profit +=
+                (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 100;
+          }
+
+        } else if (positionModel.getPair().contains("XAU")) {
+
+          if (month < 3) {
+            first_quarter_profit +=
+                (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 1000;
+          } else if (month >= 3 && month < 6) {
+            second_quarter_profit += (positionModel.getClosingPrice() - positionModel
+                .getOpeningPrice()) / 100;
+          } else if (month >= 6 && month < 9) {
+            third_quarter_profit +=
+                (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 1000;
+          } else if (month >= 9 && month < 12) {
+            fourth_quarter_profit +=
+                (positionModel.getClosingPrice() - positionModel.getOpeningPrice()) / 1000;
+          }
+
+        } else {
+
+          if (month < 3) {
+            first_quarter_profit += (positionModel.getClosingPrice() - positionModel
+                .getOpeningPrice());
+          } else if (month >= 3 && month < 6) {
+            second_quarter_profit += (positionModel.getClosingPrice() - positionModel
+                .getOpeningPrice());
+          } else if (month >= 6 && month < 9) {
+            third_quarter_profit += (positionModel.getClosingPrice() - positionModel
+                .getOpeningPrice());
+          } else if (month >= 9 && month < 12) {
+            fourth_quarter_profit +=
+                (positionModel.getClosingPrice() - positionModel.getOpeningPrice());
+          }
         }
 
       } else {
 
-        if (month < 3) {
-          first_quarter_profit += (positionModel.getClosingPrice() - positionModel
-              .getOpeningPrice());
-        } else if (month >= 3 && month < 6) {
-          second_quarter_profit += (positionModel.getClosingPrice() - positionModel
-              .getOpeningPrice());
-        } else if (month >= 6 && month < 9) {
-          third_quarter_profit += (positionModel.getClosingPrice() - positionModel
-              .getOpeningPrice());
-        } else if (month >= 9 && month < 12) {
-          fourth_quarter_profit +=
-              (positionModel.getClosingPrice() - positionModel.getOpeningPrice());
+        if (positionModel.getPair().contains("JPY")) {
+
+          if (month < 3) {
+            first_quarter_profit +=
+                (positionModel.getOpeningPrice() - positionModel.getClosingPrice()) / 100;
+          } else if (month >= 3 && month < 6) {
+            second_quarter_profit += (positionModel.getOpeningPrice() - positionModel
+                .getClosingPrice()) / 100;
+          } else if (month >= 6 && month < 9) {
+            third_quarter_profit +=
+                (positionModel.getOpeningPrice() - positionModel.getClosingPrice()) / 100;
+          } else if (month >= 9 && month < 12) {
+            fourth_quarter_profit +=
+                (positionModel.getOpeningPrice() - positionModel.getClosingPrice()) / 100;
+          }
+
+        } else if (positionModel.getPair().contains("XAU")) {
+
+          if (month < 3) {
+            first_quarter_profit +=
+                (positionModel.getOpeningPrice() - positionModel.getClosingPrice()) / 1000;
+          } else if (month >= 3 && month < 6) {
+            second_quarter_profit += (positionModel.getOpeningPrice() - positionModel
+                .getClosingPrice()) / 100;
+          } else if (month >= 6 && month < 9) {
+            third_quarter_profit +=
+                (positionModel.getOpeningPrice() - positionModel.getClosingPrice()) / 1000;
+          } else if (month >= 9 && month < 12) {
+            fourth_quarter_profit +=
+                (positionModel.getOpeningPrice() - positionModel.getClosingPrice()) / 1000;
+          }
+
+        } else {
+
+          if (month < 3) {
+            first_quarter_profit += (positionModel.getOpeningPrice() - positionModel
+                .getClosingPrice());
+          } else if (month >= 3 && month < 6) {
+            second_quarter_profit += (positionModel.getOpeningPrice() - positionModel
+                .getClosingPrice());
+          } else if (month >= 6 && month < 9) {
+            third_quarter_profit += (positionModel.getOpeningPrice() - positionModel
+                .getClosingPrice());
+          } else if (month >= 9 && month < 12) {
+            fourth_quarter_profit +=
+                (positionModel.getOpeningPrice() - positionModel.getClosingPrice());
+          }
         }
       }
-
     }
   }
 
 
   private void setUpPieChart() {
+    try {
+      pieChart.getDescription().setEnabled(false);
 
-    pieChart.getDescription().setEnabled(false);
+      Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
 
-    Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
+      pieChart.setCenterTextTypeface(tf);
+      pieChart.setCenterText(generateCenterText());
+      pieChart.setCenterTextSize(5f);
+      pieChart.setCenterTextTypeface(tf);
 
-    pieChart.setCenterTextTypeface(tf);
-    pieChart.setCenterText(generateCenterText());
-    pieChart.setCenterTextSize(5f);
-    pieChart.setCenterTextTypeface(tf);
+      // radius of the center hole in percent of maximum radius
+      pieChart.setHoleRadius(32f);
+      pieChart.setTransparentCircleRadius(26f);
 
-    // radius of the center hole in percent of maximum radius
-    pieChart.setHoleRadius(32f);
-    pieChart.setTransparentCircleRadius(26f);
+      Legend l = pieChart.getLegend();
 
-    Legend l = pieChart.getLegend();
-    l.setTextSize(5f);
-    l.setVerticalAlignment(LegendVerticalAlignment.TOP);
-    l.setHorizontalAlignment(LegendHorizontalAlignment.RIGHT);
-    l.setOrientation(LegendOrientation.VERTICAL);
-    l.setDrawInside(false);
+      l.setTextSize(5f);
+      l.setVerticalAlignment(LegendVerticalAlignment.TOP);
+      l.setHorizontalAlignment(LegendHorizontalAlignment.RIGHT);
+      l.setOrientation(LegendOrientation.VERTICAL);
+      l.setDrawInside(false);
 
-    pieChart.setData(generatePieData());
+      pieChart.setDrawEntryLabels(false);
 
-    pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+      pieChart.setData(generatePieData());
 
-    // barChartProfit.spin(2000, 0, 360);}
+      pieChart.animateY(1400, EasingOption.EaseInOutQuad);
+
+      // barChartProfit.spin(2000, 0, 360);}
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+    }
   }
 
 
   ////////////// BAR CHART START ///////////////////////
   private void setUpBarChart() {
-    // create a new chart object
-    barChartProfit.getDescription().setEnabled(false);
-    barChartProfit.setOnChartGestureListener(this);
+    try {
 
-    barChartProfit.setDrawGridBackground(false);
-    barChartProfit.setDrawBarShadow(false);
+      // create a new chart object
+      barChartProfit.getDescription().setEnabled(false);
+      barChartProfit.setOnChartGestureListener(this);
 
-    Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
+      barChartProfit.setDrawGridBackground(false);
+      barChartProfit.setDrawBarShadow(false);
 
-    barChartProfit.setData(generateBarData());
+      Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
 
-    Legend l = barChartProfit.getLegend();
-    l.setEnabled(false);
+      barChartProfit.setData(generateBarData());
 
+      Legend l = barChartProfit.getLegend();
+      l.setEnabled(false);
 
-    YAxis leftAxis = barChartProfit.getAxisLeft();
-    leftAxis.setTypeface(tf);
-    leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+      YAxis leftAxis = barChartProfit.getAxisLeft();
+      leftAxis.setTypeface(tf);
+//      leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+      leftAxis.resetAxisMinimum();
+      leftAxis.setStartAtZero(false);
 
-    barChartProfit.getAxisRight().setEnabled(false);
+      barChartProfit.getAxisRight().setEnabled(false);
 
-    XAxis xAxis = barChartProfit.getXAxis();
-    xAxis.setEnabled(false);
-    barChartProfit.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-
+      XAxis xAxis = barChartProfit.getXAxis();
+      xAxis.setEnabled(false);
+      barChartProfit.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+    } catch (Exception e) {
+      Fabric.getLogger().e(TAG, e.getMessage());
+    }
 //    // programatically add the chart
 //    barChartFrameLayout.addView(barChartProfit);
   }
@@ -297,18 +399,36 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
 //      entries1.add(new PieEntry((float) (totalProfit / (Math.random() * 5)), "Quarter " + (i + 1)));
 //    }
 
-    entries1.add(new PieEntry((float) (10000 * first_quarter_profit), "Quarter 1"));
-    entries1.add(new PieEntry((float) (10000 * second_quarter_profit), "Quarter 2"));
-    entries1.add(new PieEntry((float) (10000 * third_quarter_profit), "Quarter 3"));
-    entries1.add(new PieEntry((float) (10000 * fourth_quarter_profit), "Quarter 4"));
+    if (first_quarter_profit < 0) {
+      entries1.add(new PieEntry((float) (-10000 * first_quarter_profit), "Quarter 1"));
+    } else if (first_quarter_profit > 0) {
+      entries1.add(new PieEntry((float) (10000 * first_quarter_profit), "Quarter 1"));
+    }
+    if (second_quarter_profit < 0) {
+      entries1.add(new PieEntry((float) (-10000 * second_quarter_profit), "Quarter 2"));
+    } else if (second_quarter_profit > 0) {
+      entries1.add(new PieEntry((float) (10000 * second_quarter_profit), "Quarter 2"));
+    }
+    if (third_quarter_profit < 0) {
+      entries1.add(new PieEntry((float) (-10000 * third_quarter_profit), "Quarter 3"));
+    } else if (third_quarter_profit > 0) {
+      entries1.add(new PieEntry((float) (10000 * third_quarter_profit), "Quarter 3"));
+    }
+    if (fourth_quarter_profit < 0) {
+      entries1.add(new PieEntry((float) (-10000 * fourth_quarter_profit), "Quarter 4"));
+    } else if (fourth_quarter_profit > 0) {
+      entries1.add(new PieEntry((float) (10000 * fourth_quarter_profit), "Quarter 4"));
+    }
 
 //    entries1.add(new PieEntry((float) totalProfit, "Total Profit"));
 
     PieDataSet ds1 = new PieDataSet(entries1, getResources().getString(R.string.in_pips));
 
-    ds1.setColors(ColorTemplate.MATERIAL_COLORS);
-    ds1.setSliceSpace(1f);
+    ds1.setColors(MATERIAL_COLORS);
+    ds1.setSliceSpace(0f);
+
     ds1.setValueTextColor(Color.BLACK);
+
     ds1.setValueTextSize(8f);
 
     PieData d = new PieData(ds1);
@@ -326,15 +446,24 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
 //    for (int i = 0; i < count; i++) {
 //      entries1.add(new PieEntry((float) (totalProfit / (Math.random() * 5)), "Quarter " + (i + 1)));
 //    }
-    entries.add(new BarEntry(1, (float) (10000 * first_quarter_profit)));
-    entries.add(new BarEntry(2, (float) (10000 * second_quarter_profit)));
-    entries.add(new BarEntry(3, (float) (10000 * third_quarter_profit)));
-    entries.add(new BarEntry(4, (float) (10000 * fourth_quarter_profit)));
+
+    if (first_quarter_profit < 0 || first_quarter_profit > 0) {
+      entries.add(new BarEntry(1, (float) (10000 * first_quarter_profit)));
+    }
+    if (second_quarter_profit < 0 || second_quarter_profit > 0) {
+      entries.add(new BarEntry(2, (float) (10000 * second_quarter_profit)));
+    }
+    if (third_quarter_profit < 0 || third_quarter_profit > 0) {
+      entries.add(new BarEntry(3, (float) (10000 * third_quarter_profit)));
+    }
+    if (fourth_quarter_profit < 0 || fourth_quarter_profit > 0) {
+      entries.add(new BarEntry(4, (float) (10000 * fourth_quarter_profit)));
+    }
 
 //    entries1.add(new PieEntry((float) totalProfit, "Total Profit"));
     BarDataSet ds = new BarDataSet(entries, null);
 
-    ds.setColors(ColorTemplate.MATERIAL_COLORS);
+    ds.setColors(MATERIAL_COLORS);
     ds.setValueTextColor(Color.BLACK);
     ds.setValueTextSize(8f);
     sets.add(ds);
@@ -378,7 +507,9 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
   @Override
   public void onDestroy() {
     super.onDestroy();
-    this.profitListPresenter.destroy();
+    if (this.profitListPresenter != null) {
+      this.profitListPresenter.destroy();
+    }
 
   }
 
@@ -386,6 +517,7 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
   public void onDetach() {
     super.onDetach();
     this.positionHistoryListListener = null;
+
   }
 
   @Override
@@ -395,13 +527,17 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
 
   @Override
   public void showLoading() {
-    this.rl_progress.setVisibility(View.VISIBLE);
+    if (rl_progress != null) {
+      this.rl_progress.setVisibility(View.VISIBLE);
+    }
     this.getActivity().setProgressBarIndeterminateVisibility(true);
   }
 
   @Override
   public void hideLoading() {
-    this.rl_progress.setVisibility(View.GONE);
+    if (rl_progress != null) {
+      this.rl_progress.setVisibility(View.GONE);
+    }
     this.getActivity().setProgressBarIndeterminateVisibility(false);
   }
 
@@ -422,10 +558,14 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
     }
 
     double tempTotalProfit = 0;
+    first_quarter_profit = 0;
+    second_quarter_profit = 0;
+    third_quarter_profit = 0;
+    fourth_quarter_profit = 0;
 
     for (Iterator iterator = positionModelCollection.iterator(); iterator.hasNext(); ) {
       PositionModel positionModel = (PositionModel) iterator.next();
-      tempTotalProfit = tempTotalProfit + positionModel.getProfit();
+      tempTotalProfit += tempTotalProfit;
 
       calculate_quarterly_profit(positionModel);
     }
@@ -467,7 +607,6 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
     this.showToastMessage(message);
   }
 
-
   /**
    * Loads all positions.
    */
@@ -491,7 +630,6 @@ public class ProfitFragment extends BaseFragment implements PositionListView,
           }
         }
       };
-
 
   @Override
   public void onChartGestureStart(MotionEvent me,

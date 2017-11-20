@@ -18,13 +18,16 @@ repositories {
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
 
-    compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.0'
 
+    dataBinding {
+        enabled = true
+    }
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 27
 
         applicationId globalConfiguration.getAt("androidApplicationId")
         versionCode globalConfiguration.getAt("androidVersionCode")
@@ -52,7 +55,6 @@ android {
         preDexLibraries true
         maxProcessCount 8
         javaMaxHeapSize "2g"
-
         // Instead of setting the heap size for the DEX process, increase Gradle's
         // heap size to enable dex-in-process. To learm more, read the next section.
         // javaMaxHeapSize "2048m"
@@ -98,7 +100,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
-            ext.enableCrashlytics = true
+            ext.enableCrashlytics = false
         }
 
         release {
@@ -164,8 +166,15 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 
     compile presentationDependencies.firebaseUIAuth
+
     compile presentationDependencies.trialy
     compile presentationDependencies.firebaseCore
+
+    compile presentationDependencies.materialIntro
+    compile 'com.github.apl-devs:appintro:v4.2.2'
+    compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
+    compile presentationDependencies.versionChecker
+    compile presentationDependencies.firebaseAppIndexing
 //    compile presentationDependencies.firebaseAuth
 
 //    compile "com.google.android.gms:play-services-auth:2.3.0"
@@ -174,11 +183,13 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.26.0'
     // Required only if Twitter login support is required
     compile("com.twitter.sdk.android:twitter-core:3.0.0@aar") { transitive = true }
-    compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
-
-
+    compile('com.github.ganfra:material-spinner:2.0.0') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
 
     androidTestCompile presentationTestDependencies.mockito
     androidTestCompile presentationTestDependencies.dexmaker

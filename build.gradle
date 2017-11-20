@@ -23,8 +23,8 @@ allprojects {
     ext {
 
         androidApplicationId = 'com.adnanbal.fxdedektifi.forex.presentation'
-        androidVersionCode = 7
-        androidVersionName = "7beta"
+        androidVersionCode = 17
+        androidVersionName = "1.1.4r"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
         testApplicationId = 'com.adnanbal.fxdedektifi.forex.presentation.test'
     }

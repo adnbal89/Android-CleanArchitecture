@@ -47,6 +47,10 @@ public class PositionEntityDataMapper {
       position.setStatus(positionEntity.getStatus());
       position.setComment(positionEntity.getComment());
       position.setDate(positionEntity.getDate());
+      position.setTake_profit_price(positionEntity.getTake_profit_price());
+      position.setStop_loss_price(positionEntity.getStop_loss_price());
+      position.setHitStopLoss(positionEntity.isHitStopLoss());
+      position.setHitTakeProfit(positionEntity.isHitTakeProfit());
     }
     return position;
   }
@@ -54,7 +58,9 @@ public class PositionEntityDataMapper {
 
   public PositionEntity createPositionEntityObject(String positionId, String pair, double volume,
       boolean buy_sell,
-      double openingPrice, boolean open, String status, String comment, Date date) {
+      double openingPrice, boolean open, String status, String comment, Date date,
+      Double take_profit_price, Double stop_loss_price, boolean hitStopLoss,
+      boolean hitTakeProfit) {
 
     PositionEntity positionEntity;
     positionEntity = new PositionEntity();
@@ -70,6 +76,10 @@ public class PositionEntityDataMapper {
     positionEntity.setStatus(status);
     positionEntity.setComment(comment);
     positionEntity.setDate(date);
+    positionEntity.setTake_profit_price(take_profit_price);
+    positionEntity.setStop_loss_price(stop_loss_price);
+    positionEntity.setHitStopLoss(hitStopLoss);
+    positionEntity.setHitTakeProfit(hitTakeProfit);
 
     return positionEntity;
   }

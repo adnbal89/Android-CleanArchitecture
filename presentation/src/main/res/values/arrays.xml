@@ -22,27 +22,82 @@
   </string-array>
 
   <string-array name="array_signal_click_menu_2">
-    <item>Follow Signal</item>
-    <item>Show Comment</item>
+    <item>@string/open_pos</item>
+    <item>@string/comment_pos</item>
   </string-array>
 
   <string-array name="array_signal_click_menu_3">
-    <item>Unfollow Signal</item>
+    <item>@string/close_pos</item>
 
   </string-array>
 
   <string-array name="array_signal_click_menu_4">
-    <item>Unfollow Signal</item>
-    <item>Show Comment</item>
+    <item>@string/close_pos</item>
+    <item>@string/comment_pos</item>
 
   </string-array>
 
+  <string-array name="array_signal_click_menu_admin">
+    <item>@string/comment_pos</item>
+    <item>@string/edit_signal</item>
+  </string-array>
 
   <string-array name="array_fragment_titles">
-    <item>My Account</item>
-    <item>Signals</item>
-    <item>History</item>
+    <item>@string/my_account</item>
+    <item>@string/signals</item>
+    <item>@string/signal_history</item>
+  </string-array>
 
+  <string-array name="array_pairs">
+    <item>AUDUSD</item>
+    <item>EURUSD</item>
+    <item>GBPUSD</item>
+    <item>USDJPY</item>
+    <item>USDTRY</item>
+    <item>EURTRY</item>
+
+    <item>XAUUSD</item>
+    <item>XAGUSD</item>
+
+    <item>US30(DOW)</item>
+    <item>DE30(DAX)</item>
+    <item>WTI</item>
+
+    <item>SP500</item>
+
+    <item>NZDUSD</item>
+    <item>USDCAD</item>
+    <item>USDCHF</item>
+    <item>AUDCAD</item>
+    <item>AUDCHF</item>
+    <item>AUDJPY</item>
+    <item>AUDNZD</item>
+    <item>CADCHF</item>
+    <item>CADJPY</item>
+    <item>CHFJPY</item>
+    <item>EURAUD</item>
+    <item>EURCAD</item>
+    <item>EURCHF</item>
+    <item>EURGBP</item>
+    <item>EURJPY</item>
+    <item>EURNZD</item>
+    <item>GBPAUD</item>
+    <item>GBPCAD</item>
+    <item>GBPCHF</item>
+    <item>GBPJPY</item>
+    <item>GBPNZD</item>
+    <item>NZDCAD</item>
+    <item>NZDCHF</item>
+    <item>NZDJPY</item>
+    <item>EURMXN</item>
+    <item>GBPTRY</item>
+    <item>USDMXN</item>
+    <item>USDZAR</item>
+  </string-array>
+
+  <string-array name="array_buy_sell">
+    <item>@string/position_buy</item>
+    <item>@string/position_sell</item>
   </string-array>
 
 </resources>

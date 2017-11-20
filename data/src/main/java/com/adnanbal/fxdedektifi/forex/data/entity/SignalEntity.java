@@ -18,6 +18,7 @@
 
 package com.adnanbal.fxdedektifi.forex.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.Map;
 /**
  * Signal Entity used in the data layer.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SignalEntity extends PositionEntity {
 
   private double statusChangePrice;
@@ -39,8 +41,12 @@ public class SignalEntity extends PositionEntity {
   public SignalEntity(String id, String pair, double volume, boolean buy_sell,
       double statusChangePrice, String term, double openingPrice, boolean open, String status,
       String comment, Date date, Map<String, Boolean> users,
-      Map<String, List<String>> changedFields) {
-    super(id, pair, volume, buy_sell, openingPrice, open, status, comment, date);
+      Map<String, List<String>> changedFields, Double take_profit_price, Double stop_loss_price,
+      boolean hitStopLoss,
+      boolean hitTakeProfit) {
+    super(id, pair, volume, buy_sell, openingPrice, open, status, comment, date, take_profit_price,
+        stop_loss_price, hitStopLoss,
+        hitTakeProfit);
     this.statusChangePrice = statusChangePrice;
     this.term = term;
     this.users = users;
